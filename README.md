@@ -48,13 +48,13 @@ Packaging The Plugin
 To deploy the plugin, you must have admin privileges on a Wordpress site. If you've set up your
 own site on your local machine, you should have the needed privileges. Follow these steps:
 
-* In the upper menu of the Wordpress site, find the menu with the <b>site name</b> click the <b>Dashboard</b> menu item.
+* In the upper menu of the Wordpress site, find the menu with the <b>site name</b>. Click the <b>Dashboard</b> menu item.
 * In the dashboard panel, click the <b>Plugins</b> option.
 * Find the <b>Parler for Wordpress</b> plugin and click its <b>Deactivate</b> option.
 * Find the <b>Parler for Wordpress</b> plugin and click its <b>Delete</b> option.
 * Go to the top of the <b>Plugins</b> page and click the <b>Add New</b> button.
 * Go to the top of the <b>Add Plugins</b> page and click the <b>Upload Plugin</b> button.
-* Use the <Chose File</b> button to select your .zip file. Then click the <b>Install Now</b> button.
+* Use the <b>Chose File</b> button to select your .zip file. Then click the <b>Install Now</b> button.
 * When the option <b>Activate Now</b> appears. Click it.
 
 Trouble Shooting
