@@ -42,3 +42,23 @@ Packaging The Plugin
 --------------------
  Once you've followed the above steps, you're ready to package the plugin for deployment. To do this, just zip up 
  the directory containing the code.
+ 
+ Deploying The Plugin
+ --------------------
+To deploy the plugin, you must have admin privileges on a Wordpress site. If you've set up your
+own site on your local machine, you should have the needed privileges. Follow these steps:
+
+* In the upper menu of the Wordpress site, find the menu with the <b>site name</b> click the <b>Dashboard</b> menu item.
+* In the dashboard panel, click the <b>Plugins</b> option.
+* Find the <b>Parler for Wordpress</b> plugin and click its <b>Deactivate</b> option.
+* Find the <b>Parler for Wordpress</b> plugin and click its <b>Delete</b> option.
+* Go to the top of the <b>Plugins</b> page and click the <b>Add New</b> button.
+* Go to the top of the <b>Add Plugins</b> page and click the <b>Upload Plugin</b> button.
+* Use the <Chose File</b> button to select your .zip file. Then click the <b>Install Now</b> button.
+* When the option <b>Activate Now</b> appears. Click it.
+
+Trouble Shooting
+----------------
+* If you get an error saying your plugin is too large, open the file <b>php/php.ini</b> in your
+ Wordpress instalation and change <b>upload_max_filesize</b>
+
