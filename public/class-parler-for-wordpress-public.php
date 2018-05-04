@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/public
+ * @package    Parler_For_Wordpress
+ * @subpackage Parler_For_Wordpress/public
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/public
+ * @package    Parler_For_Wordpress
+ * @subpackage Parler_For_Wordpress/public
  * @author     Your Name <email@example.com>
  */
 class Parler_For_WordpressPublic {

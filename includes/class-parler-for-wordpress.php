@@ -9,8 +9,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Parler_For_Wordpress
+ * @subpackage Parler_For_Wordpress/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Parler_For_Wordpress
+ * @subpackage Parler_For_Wordpress/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name {
+class Parler_For_Wordpress {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -72,7 +72,7 @@ class Plugin_Name {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'plugin-name';
+		$this->plugin_name = 'parler-for-wordpress';
 
 		$this->load_dependencies();
 		$this->set_locale();

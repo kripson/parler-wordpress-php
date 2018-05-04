@@ -10,18 +10,16 @@
  *
  * @link              http://example.com
  * @since             1.0.0
- * @package           Plugin_Name
+ * @package           Parler_For_Wordpress
  *
  * @wordpress-plugin
- * Plugin Name:       WordPress Plugin Boilerplate
- * Plugin URI:        http://example.com/plugin-name-uri/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Plugin Name:       Parler For WordPress
+ * Plugin URI:        http://parlet.com/parler-for-wordpress-uri/
+ * Description:       Integrates Parler into the WordPress comment system.
  * Version:           1.0.0
- * Author:            Your Name or Your Company
- * Author URI:        http://example.com/
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       plugin-name
+ * Author:            Seaboden
+ * Author URI:        http://parler.com/
+ * Text Domain:       parler-for-wordpress
  * Domain Path:       /languages
  */
 
@@ -75,7 +73,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-parler-for-wordpress.php';
  */
 function run_plugin_name() {
 
-	$plugin = new Plugin_Name();
+	$plugin = new Parler_For_Wordpress();
 	$plugin->run();
 
 }
