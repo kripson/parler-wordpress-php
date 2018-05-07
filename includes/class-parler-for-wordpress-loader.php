@@ -10,17 +10,16 @@ function post_published_notification( $ID, $post ) {
     $permalink = get_permalink( $ID );
     $excerpt =  get_the_excerpt($post);
     $post_date = get_the_date( "YmdHis", $ID );
-    $headers = ['Authorization' => 'bMUaENxJxOowxe3ECn61NOYx8BbIXIZqfTJa2RFYIjSmwJm455tz6THkeZaolhaYzqiTfFmj7IyvlMkmUQW7JhRFnti3eGt7IC4V1kVIXP1bRxiPBn08Uj1gTMRGzcuK'];
     $client = new GuzzleHttp\Client([
         'base_uri' => $PARLER_POST_SERVER,
     ]);
     $client->post($PARLER_POST_PATH, [
-        $headers,
+        'headers' => [ 'Authorization' => 'bMUaENxJxOowxe3ECn61NOYx8BbIXIZqfTJa2RFYIjSmwJm455tz6THkeZaolhaYzqiTfFmj7IyvlMkmUQW7JhRFnti3eGt7IC4V1kVIXP1bRxiPBn08Uj1gTMRGzcuK' ],
         GuzzleHttp\RequestOptions::JSON => [
             'title'         => $title,
             'excerpt'       => $excerpt,
             'permalink'     => $permalink,
-            '$post_date'    => $post_date
+            'createdAt'    => $post_date
         ]
     ]);
 }
