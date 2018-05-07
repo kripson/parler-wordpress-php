@@ -4,10 +4,11 @@ These comments become integrated into the Parler.
 
 Getting Started
 ---------------
-To properly use this code you'll need PHP and Wordpress. Wordpress, in turn, has other perquisites.
+To properly use this code you'll need PHP, composer, and Wordpress. Wordpress, in turn, has other perquisites.
 See 
 
 * [PHP Installation and Configuration](http://php.net/manual/en/install.php)
+* [Download Composer](https://getcomposer.org/download/)
 * [Installing WordPress](https://codex.wordpress.org/Installing_WordPress)
 
 If you wish to install React on your system in order to work with the React components used by 
@@ -40,8 +41,9 @@ To access the code from parler-worrdpress-react, follow these steps:
 
 Packaging The Plugin
 --------------------
- Once you've followed the above steps, you're ready to package the plugin for deployment. To do this, just zip up 
- the directory containing the code.
+ Once you've followed the above steps, you're ready to package the plugin for deployment. Follow these steps:
+* Run composer install
+* Zip up the directory containing the code.
  
  Deploying The Plugin
  --------------------

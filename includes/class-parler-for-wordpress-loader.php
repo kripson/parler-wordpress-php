@@ -1,15 +1,29 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
 
-/**
- * Register all actions and filters for the plugin
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Parler_For_Wordpress
- * @subpackage Parler_For_Wordpress/includes
- */
-
+function post_published_notification( $ID, $post ) {
+    $PARLER_POST_SERVER = 'http://199.233.61.28:8080';
+    $PARLER_POST_PATH = '/Talkr/post/retroactive';
+//    $PARLER_POST_SERVER = 'http://localhost:3000';
+//    $PARLER_POST_PATH = '/log';
+    $title = $post->post_title;
+    $permalink = get_permalink( $ID );
+    $excerpt =  get_the_excerpt($post);
+    $post_date = get_the_date( "YmdHis", $ID );
+    $headers = ['Authorization' => 'bMUaENxJxOowxe3ECn61NOYx8BbIXIZqfTJa2RFYIjSmwJm455tz6THkeZaolhaYzqiTfFmj7IyvlMkmUQW7JhRFnti3eGt7IC4V1kVIXP1bRxiPBn08Uj1gTMRGzcuK'];
+    $client = new GuzzleHttp\Client([
+        'base_uri' => $PARLER_POST_SERVER,
+    ]);
+    $client->post($PARLER_POST_PATH, [
+        $headers,
+        GuzzleHttp\RequestOptions::JSON => [
+            'title'         => $title,
+            'excerpt'       => $excerpt,
+            'permalink'     => $permalink,
+            '$post_date'    => $post_date
+        ]
+    ]);
+}
 /**
  * Register all actions and filters for the plugin.
  *
@@ -50,8 +64,9 @@ class Parler_For_WordpressLoader {
 
 		$this->actions = array();
 		$this->filters = array();
+        add_action( 'publish_post', 'post_published_notification', 10, 2 );
 
-	}
+    }
 
 	/**
 	 * Add a new action to the collection to be registered with WordPress.
@@ -65,6 +80,7 @@ class Parler_For_WordpressLoader {
 	 */
 	public function add_action( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
+
 	}
 
 	/**

@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Parler For WordPress
- * Plugin URI:        http://parlet.com/parler-for-wordpress-uri/
+ * Plugin URI:        http://localhost:3000/commentloader
  * Description:       Integrates Parler into the WordPress comment system.
  * Version:           1.0.0
  * Author:            Seaboden
