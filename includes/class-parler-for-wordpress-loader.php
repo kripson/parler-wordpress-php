@@ -1,5 +1,4 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 
 function post_published_notification( $ID, $post ) {
     $PARLER_POST_SERVER = 'http://199.233.61.28:8080';

@@ -2,6 +2,9 @@
 Parler For Wordpress is a plugin which enables people to add comments to Wordpress articles.
 These comments become integrated into the Parler.
 
+Use Composer to install project dependencies. In the PHPStorm IDE, use Tools/Composer/Install. You'll
+need to point it to a PHP install on your machine. Alternatively, see the Composer instructions below.
+
 Getting Started
 ---------------
 To properly use this code you'll need PHP, composer, and Wordpress. Wordpress, in turn, has other perquisites.
