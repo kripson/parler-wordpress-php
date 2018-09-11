@@ -1,18 +1,41 @@
 <?php
+    use GuzzleHttp\Client;
 
 function post_published_notification( $ID, $post ) {
-    $PARLER_POST_SERVER = 'http://199.233.61.28:8080';
-    $PARLER_POST_PATH = '/Talkr/post/retroactive';
+    $PARLER_POST_SERVER = 'http://par.pw/';
+    $PARLER_POST_PATH = 'v1/post/retroactive';
 //    $PARLER_POST_SERVER = 'http://localhost:3000';
 //    $PARLER_POST_PATH = '/log';
     $title = $post->post_title;
     $permalink = get_permalink( $ID );
     $excerpt =  get_the_excerpt($post);
     $post_date = get_the_date( "YmdHis", $ID );
-    $client = new GuzzleHttp\Client([
-        'base_uri' => $PARLER_POST_SERVER,
-    ]);
-    $client->post($PARLER_POST_PATH, [
+    error_log("requestinfo");
+    error_log($title);
+    error_log($permalink);
+    error_log($excerpt);
+    error_log($post_date);
+    $url = 'http://par.pw/v1/post/retroactive';
+    $array_with_parameters = array('title' => $title,
+	   			   'excerpt' => $excerpt,
+			           'permalink' => $permalink,
+			           'createdAt' => $post_date);
+    $data = wp_remote_post($url, array(
+	        'headers'     => array('Authorization' => 'HAPiIrgU0f9LhbLorQ2dGXiqNI0xyNaQ9sE6AV1vszDJq60KAOQqzciwRX1qMDYi52bWo7fcoHwK2ZZvWpZmMqEvOhrRONzYlTBFf7CdxVnrvH7UGejgcdAPC3aMxwz0', 'Content-Type' => 'application/json; charset=utf-8'),
+                'body'        => json_encode($array_with_parameters),
+		'method'      => 'POST',
+		'data_format' => 'body',
+	));
+    error_log($data);
+    	{/*$url = 'http://par.pw/v1/post/retroactive';
+    wp_remote_post($url, array('headers' => [ 'Authorization' => 'bMUaENxJxOowxe3ECn61NOYx8BbIXIZqfTJa2RFYIjSmwJm455tz6THkeZaolhaYzqiTfFmj7IyvlMkmUQW7JhRFnti3eGt7IC4V1kVIXP1bRxiPBn08Uj1gTMRGzcuK' ],
+            'title'         => $title,
+            'excerpt'       => $excerpt,
+            'permalink'     => $permalink,
+            'createdAt'    => $post_date
+
+    $client = new GuzzleHttp\Client(['base_uri' => $PARLER_POST_SERVER]);
+    $response = $client->post($PARLER_POST_PATH, [
         'headers' => [ 'Authorization' => 'bMUaENxJxOowxe3ECn61NOYx8BbIXIZqfTJa2RFYIjSmwJm455tz6THkeZaolhaYzqiTfFmj7IyvlMkmUQW7JhRFnti3eGt7IC4V1kVIXP1bRxiPBn08Uj1gTMRGzcuK' ],
         GuzzleHttp\RequestOptions::JSON => [
             'title'         => $title,
@@ -20,7 +43,9 @@ function post_published_notification( $ID, $post ) {
             'permalink'     => $permalink,
             'createdAt'    => $post_date
         ]
-    ]);
+     ]);
+     var_dump($response);
+     */}
 }
 /**
  * Register all actions and filters for the plugin.
