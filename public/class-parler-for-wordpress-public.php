@@ -73,7 +73,7 @@ class Parler_For_WordpressPublic {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class Parler_For_WordpressPublic {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/parler-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 

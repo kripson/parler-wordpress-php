@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://example.com
+ * @link              http://home.parler.com/
  * @since             1.0.0
  * @package           Parler_For_Wordpress
  *
  * @wordpress-plugin
  * Plugin Name:       Parler For WordPress
- * Plugin URI:        http://localhost:3000/commentloader
- * Description:       Integrates Parler into the WordPress comment system.
+ * Plugin URI:        http://home.parler.com/
+ * Description:       A Social News and Content Engagement System working to increase community activity, grow audience exposure, and drive site traffic.
  * Version:           1.0.0
- * Author:            Seaboden
- * Author URI:        http://parler.com/
+ * Author:            Parler LLC
+ * Author URI:        http://home.parler.com/
  * Text Domain:       parler-for-wordpress
  * Domain Path:       /languages
  */
