@@ -71,9 +71,20 @@ class Parler_For_WordpressPublic {
 		 * The Parler_For_WordpressLoader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
+		 *
+		 *
+		 * Staging
+		 *
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'https://s3-us-west-2.amazonaws.com/plugin-file/production/parler-for-wordpress-public.css', array(), $this->version, 'all' );
+		*
+		*
+		*Production
+		*
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'http://plugin.parler.com/staging/parler-for-wordpress-public.css', array(), $this->version, 'all' );
+		 *
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'https://s3-us-west-2.amazonaws.com/plugin-file/production/parler-for-wordpress-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -94,9 +105,19 @@ class Parler_For_WordpressPublic {
 		 * The Parler_For_WordpressLoader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
+		 *
+		 *
+		 * Staging
+		 *
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'https://s3-us-west-2.amazonaws.com/plugin-file/production/parler-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
+		*
+		*
+		* Production
+		*
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'http://plugin.parler.com/staging/parler-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/parler-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'https://s3-us-west-2.amazonaws.com/plugin-file/production/parler-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 
