@@ -152,11 +152,17 @@ class Parler_For_Wordpress {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Parler_For_WordpressAdmin( $this->get_plugin_name(), $this->get_version() );
+        if ( is_admin() ) { // admin actions
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+            $plugin_admin = new Parler_For_WordpressAdmin($this->get_plugin_name(), $this->get_version());
+            // Register admin page
+            $plugin_admin->register_settings_page();
 
+            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        } else {
+            // non-admin enqueues, actions, and filters
+        }
 	}
 
 	/**
