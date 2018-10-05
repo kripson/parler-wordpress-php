@@ -48,8 +48,8 @@ Packaging The Plugin
 * Run composer install
 * Zip up the directory containing the code.
  
- Deploying The Plugin
- --------------------
+Deploying The Plugin
+--------------------
 To deploy the plugin, you must have admin privileges on a Wordpress site. If you've set up your
 own site on your local machine, you should have the needed privileges. Follow these steps:
 
@@ -67,3 +67,6 @@ Trouble Shooting
 * If you get an error saying your plugin is too large, open the file <b>php/php.ini</b> in your
  Wordpress instalation and change <b>upload_max_filesize</b>
 
+Notes
+-----
+This was originally based off of [this boilerplate](https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate)

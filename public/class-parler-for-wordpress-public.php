@@ -18,7 +18,7 @@
  *
  * @package    Parler_For_Wordpress
  * @subpackage Parler_For_Wordpress/public
- * @author     Your Name <email@example.com>
+ * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 class Parler_For_WordpressPublic
 {
@@ -76,9 +76,11 @@ class Parler_For_WordpressPublic
          * class.
          */
 
-		wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css', array(), $this->version, 'all' );
-//        wp_enqueue_style($this->plugin_name, '/wp-content/plugins/parler/public/css/parler-for-wordpress-public.css', array(), $this->version, 'all');
-
+        if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
+            wp_enqueue_style($this->plugin_name, '/wp-content/plugins/parler/public/css/parler-for-wordpress-public.css', array(), $this->version, 'all');
+        } else {
+            wp_enqueue_style($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css', array(), $this->version, 'all');
+        }
     }
 
     /**
@@ -101,9 +103,11 @@ class Parler_For_WordpressPublic
          * class.
          */
 
-		wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js', array( 'jquery' ), $this->version, false );
-//        wp_enqueue_script($this->plugin_name, '/wp-content/plugins/parler/public/js/parler-for-wordpress-public.js', array('jquery'), $this->version, false);
-
+        if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
+            wp_enqueue_script($this->plugin_name, '/wp-content/plugins/parler/public/js/parler-for-wordpress-public.js', array('jquery'), $this->version, false);
+        } else {
+            wp_enqueue_script($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js', array('jquery'), $this->version, false);
+        }
     }
 
 }

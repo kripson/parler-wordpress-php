@@ -1,2 +1,22 @@
 {
+  "name": "parler/parler-wordpress-plugin",
+  "description": "WordPress plugin for Parler",
+  "keywords": [
+    "wordpress",
+    "parler",
+    "comments"
+  ],
+  "homepage": "https://parler.com/",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Josh Copeland",
+      "email": "josh@remotedevforce.com"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.4.0",
+    "composer/installers": "v1.2.0"
+  }
 }

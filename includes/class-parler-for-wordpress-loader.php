@@ -1,9 +1,10 @@
 <?php
 
+// @todo refactor this into a class and replace the auth link with perm token
 function post_published_notification($ID, $post)
 {
-    $PARLER_POST_SERVER = 'https://par.pw/';
-//    $PARLER_POST_SERVER = 'https://staging.par.pw/'; // staging
+//    $PARLER_POST_SERVER = 'https://par.pw/';
+    $PARLER_POST_SERVER = 'https://staging.par.pw/'; // staging
 //    $PARLER_POST_SERVER = 'http://localhost:3000/'; // localhost
     $PARLER_POST_PATH = 'v1/post/retroactive';
 
@@ -27,6 +28,7 @@ function post_published_notification($ID, $post)
     );
 
 }
+// END TODO
 
 /**
  * Register all actions and filters for the plugin.
@@ -35,9 +37,12 @@ function post_published_notification($ID, $post)
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
+ * @link       https://parler.com
+ * @since      1.0.0
+ *
  * @package    Parler_For_Wordpress
  * @subpackage Parler_For_Wordpress/includes
- * @author     Your Name <email@example.com>
+ * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 class Parler_For_WordpressLoader
 {
