@@ -70,3 +70,7 @@ Trouble Shooting
 Notes
 -----
 This was originally based off of [this boilerplate](https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate)
+
+TODOs
+-----
+ * Add some better text feedback after activation of plugin

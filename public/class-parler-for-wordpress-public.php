@@ -63,7 +63,6 @@ class Parler_For_WordpressPublic
      */
     public function enqueue_styles()
     {
-
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -77,9 +76,9 @@ class Parler_For_WordpressPublic
          */
 
         if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
-            wp_enqueue_style($this->plugin_name, '/wp-content/plugins/parler/public/css/parler-for-wordpress-public.css', array(), $this->version, 'all');
+            wp_enqueue_style($this->plugin_name, '/wp-content/plugins/parler/public/css/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all');
         } else {
-            wp_enqueue_style($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css', array(), $this->version, 'all');
+            wp_enqueue_style($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all');
         }
     }
 
@@ -90,6 +89,18 @@ class Parler_For_WordpressPublic
      */
     public function enqueue_scripts()
     {
+        function parler_async_scripts($url)
+        {
+            if ( strpos( $url, '#parlerasync') === false )
+                return $url;
+            else if ( is_admin() )
+                return str_replace( '#parlerasync', '', $url );
+            else
+                return str_replace( '#parlerasync', '', $url )."' async='async";
+        }
+
+        add_filter( 'clean_url', 'parler_async_scripts', 11, 1 );
+
 
         /**
          * This function is provided for demonstration purposes only.
@@ -104,9 +115,9 @@ class Parler_For_WordpressPublic
          */
 
         if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
-            wp_enqueue_script($this->plugin_name, '/wp-content/plugins/parler/public/js/parler-for-wordpress-public.js', array('jquery'), $this->version, false);
+            wp_enqueue_script($this->plugin_name, '/wp-content/plugins/parler/public/js/parler-for-wordpress-public.js#parlerasync', array('jquery'), $this->version, false);
         } else {
-            wp_enqueue_script($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js', array('jquery'), $this->version, false);
+            wp_enqueue_script($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js#parlerasync', array('jquery'), $this->version, false);
         }
     }
 

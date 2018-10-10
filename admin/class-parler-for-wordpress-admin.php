@@ -47,6 +47,12 @@ class Parler_For_WordpressAdmin
         $this->plugin_name = $plugin_name;
         $this->version = $version;
 
+        $this->load_classes();
+    }
+
+    private function load_classes()
+    {
+        require_once plugin_dir_path(__FILE__) . '../includes/class-parler-api-service.php';
     }
 
     /**
@@ -69,12 +75,12 @@ class Parler_For_WordpressAdmin
          * class.
          */
         if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
-            wp_enqueue_style($this->plugin_name, '/wp-content/plugins/parler/public/css/parler-for-wordpress-public.css', array(), $this->version, 'all');
+            wp_enqueue_style($this->plugin_name, '/wp-content/plugins/parler/public/css/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all');
         } else {
-            wp_enqueue_style($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css', array(), $this->version, 'all');
+            wp_enqueue_style($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all');
         }
 
-        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/parler-for-wordpress-admin.css', array(), $this->version, 'all');
+        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/parler-for-wordpress-admin.css#parlerasync', array(), $this->version, 'all');
 
     }
 
@@ -99,9 +105,9 @@ class Parler_For_WordpressAdmin
          */
 
         if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
-            wp_enqueue_script($this->plugin_name, '/wp-content/plugins/parler/public/js/parler-for-wordpress-public.js', array('jquery'), $this->version, false);
+            wp_enqueue_script($this->plugin_name, '/wp-content/plugins/parler/public/js/parler-for-wordpress-public.js#parlerasync', array('jquery'), $this->version, false);
         } else {
-            wp_enqueue_script($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js', array('jquery'), $this->version, false);
+            wp_enqueue_script($this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js#parlerasync', array('jquery'), $this->version, false);
         }
 
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/parler-for-wordpress-admin.js', array('jquery'), $this->version, false);
@@ -145,19 +151,33 @@ class Parler_For_WordpressAdmin
         // Register Settings
 
         // Integration Settings
-        register_setting('parler-integration-settings', 'parler_temp_token', array('default' => null));
-        register_setting('parler-integration-settings', 'parler_api_secret', array('default' => null));
+        register_setting('parler-settings', 'parler_temp_token', array('default' => null));
+        register_setting('parler-settings', 'parler_api_secret', array('default' => null));
 
         // Display Settings
-        register_setting('parler-display-settings', 'parler_enabled', array('default' => false));
-        register_setting('parler-display-settings', 'parler_custom_width', array('default' => '480px'));
+        register_setting('parler-settings', 'parler_enabled', array('default' => false));
+        register_setting('parler-settings', 'parler_custom_width', array('default' => '480px'));
     }
 
     public function parler_options_page()
     {
-        $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
+        // See if we already have the secret stored
+        $secretKey = get_option('parler_api_secret');
+        // Setup active tab option
+        $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
+        if (!$secretKey) {
+            $activeTab = 'setup';
+        }
 
-        var_dump($_GET);
+        $tempToken = isset($_GET['temp_token']) ? $_GET['temp_token'] : null;
+        if ($tempToken) {
+            // Lets get a plugin key
+            $parlerApiService = new Parler_Api_Service($tempToken);
+            // Get domain name
+            $domainName = $_SERVER['SERVER_NAME']; // Not sure if this will always be set
+            $parlerApiService->getPluginKey($domainName);
+        }
+        // Set the SSO url based on envrionment
         if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
             $ssoUrl = 'http://staging-parler-sso.s3-website-us-west-2.amazonaws.com/?source=';
         } else {
@@ -168,57 +188,64 @@ class Parler_For_WordpressAdmin
             <h1>Parler Settings</h1>
             <h2 class="nav-tab-wrapper">
                 <a href="?page=parler&tab=setup"
-                   class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
-                <a href="?page=parler&tab=general"
-                   class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
-                <a href="?page=parler&tab=import"
-                   class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>">Import</a>
+                   class="nav-tab <?php echo $activeTab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
+                <?php if ($secretKey) { ?>
+                    <a href="?page=parler&tab=general"
+                       class="nav-tab <?php echo $activeTab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
+                    <a href="?page=parler&tab=import"
+                       class="nav-tab <?php echo $activeTab == 'import' ? 'nav-tab-active' : ''; ?>">Import</a>
+                <?php } ?>
             </h2>
             <?php
-            if ($active_tab == 'general') {
-                ?>
-                <form method="post" action="options.php"><?php
-                    settings_fields('parler-display-settings');
-                    do_settings_sections('parler-display-settings');
-                    ?>
-                    <table class="form-table">
-                        <tr valign="top">
-                            <th scope="row">Default Comment Location<br/>
-                                <p style="font-weight: normal;">Place comments in the default wordpress comments
-                                    location.</p></th>
-                            <td><input type="checkbox" name="parler_enabled" value="1"
-                                    <?php checked(get_option('parler_enabled'), 1); ?>/>
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                            <th scope="row">Custom Width<br/>
-                                <p style="font-weight: normal;">Manually adjust the commenting sections maximum width.
-                                    Leave empty for fluid width.</p></th>
-                            <td><input type="text" name="parler_custom_width" value="
-                            <?php echo esc_attr(get_option('parler_custom_width')); ?>"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <?php submit_button(); ?>
-                </form> <?php
-            } else if ($active_tab == 'setup') {
+            if ($activeTab == 'setup') {
                 ?><h2>Setup Parler</h2>
-                <?php if ($parlerApiSecret = get_option('parler_api_secret')) { ?>
+                <?php
+                if ($parlerApiSecret) { ?>
                     <p>Integration Completed</p>
+                    <div style="max-width: <?php echo esc_attr(get_option('parler_custom_width')); ?>">
+                        <div id="comments"></div>
+                    </div>
                 <?php } else { // Integration Incomplete
                     $sourceUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                     ?>
 
                     <p>To activate the Parler Commenting System, simply click on Login button below.</p>
                     <a href="<?php echo $ssoUrl . urlencode($sourceUrl); ?>">
-                        <button>Sign in to Parler</button>
+                        Sign in to Parler
                     </a>
                 <?php } ?>
-                <div style="max-width: <?php echo get_option('parley_custom_width'); ?>">
-                    <div id="comments"></div>
-                </div>
+                </form>
                 <?php
-            } else if ($active_tab == 'import') {
+            } else if ($activeTab == 'general') {
+                ?>
+                <form method="post" action="options.php"><?php
+                    settings_fields('parler-settings');
+                    do_settings_sections('parler-settings');
+                    ?>
+                    <table class="form-table">
+                        <tr valign="top">
+                            <th scope="row"><label for="parler_enabled">Default Comment Location</label><br/>
+                                <p style="font-weight: normal;">Place comments in the default wordpress comments
+                                    location.</p></th>
+                            <td><input title="Toggle Parler Comments" type="checkbox" name="parler_enabled"
+                                       value="1"
+                                    <?php checked(get_option('parler_enabled'), 1); ?>/>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row"><label for="parler_custom_width">Custom Width</label><br/>
+                                <p style="font-weight: normal;">Manually adjust the commenting sections maximum
+                                    width.
+                                    Leave empty for fluid width.</p></th>
+                            <td><input title="Enter a custom width" type="text" name="parler_custom_width"
+                                       value="<?php echo esc_attr(get_option('parler_custom_width')); ?>"
+                                       class="parler-text-entry"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <?php submit_button(); ?>
+                </form> <?php
+            } else if ($activeTab == 'import') {
 
             } else {
 

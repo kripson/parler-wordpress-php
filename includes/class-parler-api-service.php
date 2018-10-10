@@ -13,8 +13,8 @@
 class Parler_Api_Service
 {
 
-    const STAGING_PARLER_HOST = 'https://staging.par.pw/';
-    const PROD_PARLER_HOST = 'https://par.pw/';
+    const STAGING_PARLER_HOST = 'https://staging.par.pw/v1/';
+    const PROD_PARLER_HOST = 'https://par.pw/v1/';
 
     /**
      * An API secret key for Authentication.
@@ -78,7 +78,6 @@ class Parler_Api_Service
     public function post($urlPath, $requestParams)
     {
         $apiUri = $this->getParlerHost() . $urlPath;
-
         $parlerResponse = wp_remote_post($apiUri, array(
             'body' => $requestParams,
             'headers' => array(
@@ -88,6 +87,15 @@ class Parler_Api_Service
         ));
 
         return $this->get_response_body($parlerResponse);
+    }
+
+    /**
+     * @param string $domain The domain to verify
+     */
+    public function getPluginKey($domain)
+    {
+        $payload = array('domain' => $domain);
+        var_dump($this->post('plugin/key', json_encode($payload)));
     }
 
     /**
