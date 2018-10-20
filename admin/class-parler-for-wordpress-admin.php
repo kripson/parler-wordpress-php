@@ -148,11 +148,17 @@ class Parler_For_WordpressAdmin
             return;
         }
 
-        // Register Settings
+        /* * * Register Settings * * */
 
-        // Integration Settings
-        register_setting('parler-settings', 'parler_temp_token', array('default' => null));
-        register_setting('parler-settings', 'parler_api_secret', array('default' => null));
+        // Parler Integration Settings
+        register_setting('parler-settings', 'parler_api_token', array('default' => null));
+        register_setting('parler-settings', 'parler_user_id', array('default' => null));
+        register_setting('parler-settings', 'parler_username', array('default' => null));
+        register_setting('parler-settings', 'parler_profile_name', array('default' => null));
+        // Plugin Settings for Parler
+        register_setting('parler-settings', 'parler_plugin_token', array('default' => null));
+        register_setting('parler-settings', 'parler_plugin_domain', array('default' => null));
+        register_setting('parler-settings', 'parler_plugin_hash', array('default' => null));
 
         // Display Settings
         register_setting('parler-settings', 'parler_enabled', array('default' => false));
@@ -161,8 +167,20 @@ class Parler_For_WordpressAdmin
 
     public function parler_options_page()
     {
+        if (isset($_GET['integration']) && $_GET['integration'] === 'clear') {
+            update_option('parler_api_token', null);
+            update_option('parler_user_id', null);
+            update_option('parler_username', null);
+            update_option('parler_profile_name', null);
+            update_option('parler_plugin_token', null);
+            update_option('parler_plugin_domain', null);
+            update_option('parler_plugin_hash', null);
+            echo '<script> window.location="?page=parler"; </script>';
+            exit();
+        }
+
         // See if we already have the secret stored
-        $secretKey = get_option('parler_api_secret');
+        $secretKey = get_option('parler_api_token');
         // Setup active tab option
         $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
         if (!$secretKey) {
@@ -171,18 +189,42 @@ class Parler_For_WordpressAdmin
 
         $tempToken = isset($_GET['temp_token']) ? $_GET['temp_token'] : null;
         if ($tempToken) {
-            // Lets get a plugin key
-            $parlerApiService = new Parler_Api_Service($tempToken);
-            // Get domain name
-            $domainName = $_SERVER['SERVER_NAME']; // Not sure if this will always be set
-            $parlerApiService->getPluginKey($domainName);
+            // Lets get a permanent token and a plugin key
+            $parlerApiService = new Parler_Api_Service();
+            // Get perm token
+            $secretKey = $parlerApiService->getPermToken($tempToken);
+            if ($secretKey) {
+                $parlerApiService->setSecretKey($secretKey);
+                // Get domain name
+                $domainName = $_SERVER['SERVER_NAME']; // Not sure if this will always be set
+                $hashPass = $parlerApiService->getPluginKey($domainName);
+                $verificationDir = '/.well-known';
+                $verificationFile = "$verificationDir/parler-domain.txt";
+                // Check/create directory
+                if (!is_dir($verificationDir)) {
+                    mkdir($verificationDir, 0777);
+                }
+                $fp = fopen($_SERVER['DOCUMENT_ROOT'] . $verificationFile, "wb");
+
+                if ($fp) {
+                    fwrite($fp, $hashPass);
+                    fclose($fp);
+                } else {
+                    echo "<br /><h3>An error occured when trying to save the verification file to <b>$verificationFile</b></h3><br />";
+                    echo "<h4>Please save the following access key into <b>$verificationFile</b></h4><br />";
+                    echo "<b>$hashPass</b>";
+                    echo "<br /><p><a href='?page=parler&verify=plugin'>Click here</a> once the file is saved and can be <a href='$verificationFile'>viewed</a></p>";
+                }
+
+            }
         }
-        // Set the SSO url based on envrionment
+        // Set the parler-display-settings url based on envrionment
         if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
-            $ssoUrl = 'http://staging-parler-sso.s3-website-us-west-2.amazonaws.com/?source=';
+            $ssoUrl = 'https://sso.staging.parler.com/?source=';
         } else {
             $ssoUrl = 'https://sso.parler.com/?source=';
         }
+        ////// VIEWS
         ?>
         <div class="wrap">
             <h1>Parler Settings</h1>
@@ -200,12 +242,17 @@ class Parler_For_WordpressAdmin
             if ($activeTab == 'setup') {
                 ?><h2>Setup Parler</h2>
                 <?php
-                if ($parlerApiSecret) { ?>
+                // Integration Complete
+                if ($secretKey) { ?>
                     <p>Integration Completed</p>
                     <div style="max-width: <?php echo esc_attr(get_option('parler_custom_width')); ?>">
                         <div id="comments"></div>
                     </div>
-                <?php } else { // Integration Incomplete
+                    <br />
+                    <p>Click the link below only if you need to redo your integration key</p>
+                    <a href="?page=parler&integration=clear" onclick="return confirm('Are you sure you want to remove your API keys?');">Terminate Integration</a>
+                <?php } else {
+                    // Integration Incomplete
                     $sourceUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                     ?>
 
@@ -213,9 +260,8 @@ class Parler_For_WordpressAdmin
                     <a href="<?php echo $ssoUrl . urlencode($sourceUrl); ?>">
                         Sign in to Parler
                     </a>
-                <?php } ?>
-                </form>
-                <?php
+                <?php }
+
             } else if ($activeTab == 'general') {
                 ?>
                 <form method="post" action="options.php"><?php

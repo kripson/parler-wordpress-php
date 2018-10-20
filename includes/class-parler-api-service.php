@@ -31,7 +31,7 @@ class Parler_Api_Service
      * @since 1.0.0
      * @param string $secret_key The admin secret key associated with the $api_secret.
      */
-    public function __construct($secret_key)
+    public function __construct($secret_key = null)
     {
         $this->secret_key = $secret_key;
     }
@@ -72,21 +72,66 @@ class Parler_Api_Service
      *
      * @since  1.0.0
      * @param  string $urlPath The Parler API endpoint to perform a POST request.
-     * @param  array $requestParams The params to be added to the body.
+     * @param  array $originalParams The params to be added to the body.
      * @return mixed The response data.
      */
-    public function post($urlPath, $requestParams)
+    public function post($urlPath, $originalParams)
     {
-        $apiUri = $this->getParlerHost() . $urlPath;
-        $parlerResponse = wp_remote_post($apiUri, array(
-            'body' => $requestParams,
-            'headers' => array(
+        // If we already authenticated with a perm token
+        if ($this->secret_key) {
+            $headers = array(
                 'Authorization' => $this->secret_key,
-            ),
+            );
+        } else {
+            $headers = array();
+        }
+
+        $requestParams = array(
+            'body' => $originalParams,
             'method' => 'POST',
-        ));
+            'headers' => $headers
+        );
+
+        $requestParams = array_merge($headers, $requestParams);
+
+//        var_dump($requestParams);
+        $apiUri = $this->getParlerHost() . $urlPath;
+        $parlerResponse = wp_remote_post($apiUri, $requestParams);
 
         return $this->get_response_body($parlerResponse);
+    }
+
+    /**
+     * @param string $tempToken The temp token from sso
+     * @return bool|string
+     */
+    public function getPermToken($tempToken)
+    {
+        $payload = array('token' => $tempToken);
+        // get perm token
+        $response = $this->post('signin/sso/trade', json_encode($payload));
+
+        if (!empty($response->message)) {
+            // @todo Display this error message in a more formal way
+            echo "<br /><b>ERROR: {$response->message}</b><br />Please try again.";
+            return false;
+        }
+
+//        var_dump($response);
+        if (isset($response->userId)) {
+            update_option('parler_user_id', $response->userId);
+        }
+        if (isset($response->username)) {
+            update_option('parler_username', $response->username);
+        }
+        if (isset($response->name)) {
+            update_option('parler_profile_name', $response->name);
+        }
+        if (isset($response->token)) {
+            update_option('parler_api_token', $response->token);
+            return $response->token;
+        }
+        return false;
     }
 
     /**
@@ -95,7 +140,20 @@ class Parler_Api_Service
     public function getPluginKey($domain)
     {
         $payload = array('domain' => $domain);
-        var_dump($this->post('plugin/key', json_encode($payload)));
+        // get perm token
+        $response = $this->post('plugin/key', json_encode($payload));
+
+//        var_dump($response);
+        if (isset($response->token)) {
+            update_option('parler_plugin_token', $response->token);
+        }
+        if (isset($response->domain)) {
+            update_option('parler_plugin_domain', $response->domain);
+        }
+        if (isset($response->hash)) {
+            update_option('parler_plugin_hash', $response->hash);
+            return $response->hash;
+        }
     }
 
     /**
@@ -125,5 +183,10 @@ class Parler_Api_Service
             return Parler_Api_Service::STAGING_PARLER_HOST;
         }
         return Parler_Api_Service::PROD_PARLER_HOST;
+    }
+
+    public function setSecretKey($secret_key)
+    {
+        $this->secret_key = $secret_key;
     }
 }
