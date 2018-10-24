@@ -73,9 +73,10 @@ class Parler_Api_Service
      * @since  1.0.0
      * @param  string $urlPath The Parler API endpoint to perform a POST request.
      * @param  array $originalParams The params to be added to the body.
+     * @param  bool  $getStatusCode Optional if you just want to get back the HTTP status code
      * @return mixed The response data.
      */
-    public function post($urlPath, $originalParams)
+    public function post($urlPath, $originalParams, $getStatusCode = false)
     {
         // If we already authenticated with a perm token
         if ($this->secret_key) {
@@ -98,6 +99,10 @@ class Parler_Api_Service
         $apiUri = $this->getParlerHost() . $urlPath;
         $parlerResponse = wp_remote_post($apiUri, $requestParams);
 
+        if ($getStatusCode) {
+            return $parlerResponse['response']['code'];
+        }
+
         return $this->get_response_body($parlerResponse);
     }
 
@@ -112,8 +117,9 @@ class Parler_Api_Service
         $response = $this->post('signin/sso/trade', json_encode($payload));
 
         if (!empty($response->message)) {
+
             // @todo Display this error message in a more formal way
-            echo "<br /><b>ERROR: {$response->message}</b><br />Please try again.";
+            echo "<br /><b>An error has occured: {$response->message}</b><br /><p>Please contact support or try again later.</p>";
             return false;
         }
 
@@ -129,13 +135,15 @@ class Parler_Api_Service
         }
         if (isset($response->token)) {
             update_option('parler_api_token', $response->token);
+            // var_dump($response->token);
+            // var_dump(get_option('parler_api_token'));
             return $response->token;
         }
         return false;
     }
 
     /**
-     * @param string $domain The domain to verify
+     * @param string $domain The domain to get a key for
      */
     public function getPluginKey($domain)
     {
@@ -157,6 +165,22 @@ class Parler_Api_Service
     }
 
     /**
+     * @param string $domain The domain to verify
+     */
+    public function verifyPluginKey($pluginToken)
+    {
+        $payload = array('key' => $pluginToken);
+        // get perm token
+        $httpStatus = $this->post('plugin/verify', json_encode($payload), true);
+
+        if ($httpStatus == 200) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @since 1.0.0
      * @param WP_Error|array $response The response.
      * @return mixed The response body for the Parler API in a friendly format.
@@ -168,6 +192,7 @@ class Parler_Api_Service
             $response = new StdClass();
             $response->errorMsg = $errMsg;
         } else {
+//            var_dump($response);
             $response = json_decode($response['body']);
         }
 
@@ -179,7 +204,8 @@ class Parler_Api_Service
      */
     private function getParlerHost()
     {
-        if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
+        // @todo A dev may want to change this to point at local
+        if (PARLER_FOR_WORDPRESS_ENV === 'DEV' || PARLER_FOR_WORDPRESS_ENV === 'STAGING') {
             return Parler_Api_Service::STAGING_PARLER_HOST;
         }
         return Parler_Api_Service::PROD_PARLER_HOST;

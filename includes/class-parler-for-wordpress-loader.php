@@ -1,11 +1,15 @@
 <?php
 
 // @todo refactor this into a class and replace the auth link with perm token
-function post_published_notification($ID, $post)
+function parler_post_published_notification($ID, $post)
 {
-//    $PARLER_POST_SERVER = 'https://par.pw/';
-    $PARLER_POST_SERVER = 'https://staging.par.pw/'; // staging
-//    $PARLER_POST_SERVER = 'http://localhost:3000/'; // localhost
+    if (PARLER_FOR_WORDPRESS_ENV === 'DEV') {
+        //    $PARLER_POST_SERVER = 'http://localhost:3000/'; // localhost
+    } else if (PARLER_FOR_WORDPRESS_ENV === 'STAGING') {
+        $PARLER_POST_SERVER = 'https://staging.par.pw/'; // staging
+    } else {
+        $PARLER_POST_SERVER = 'https://par.pw/';
+    }
     $PARLER_POST_PATH = 'v1/post/retroactive';
 
     $title = $post->post_title;
@@ -14,11 +18,12 @@ function post_published_notification($ID, $post)
     $post_date = get_the_date("YmdHis", $ID);
     $url = $PARLER_POST_SERVER.$PARLER_POST_PATH;
 
+    $parlerApiToken = update_option('parler_api_token', null);
+
     $response = wp_remote_post($url,
         array(
             'headers' => array(
-                'Authorization' => '6xpc91LdOa7ryusy583gMEFsuzNzysDdm8aF6yk6PSg05TQxM8LqLVknWxNKzp0i6d1Hj7TxfCF3cvQIM87IAR7ApExEe3mCJE3QvJt5a1d3VTpHzN0NPSxsHzHCBaaa'
-                // This code is for localhost, @todo make this dynamic
+                'Authorization' => $parlerApiToken
             ),
             'title' => $title,
             'excerpt' => $excerpt,
@@ -76,7 +81,7 @@ class Parler_For_WordpressLoader
         $this->actions = array();
         $this->filters = array();
 
-        add_action('publish_post', 'post_published_notification', 10, 2);
+        add_action('publish_post', 'parler_post_published_notification', 10, 2);
 
     }
 
