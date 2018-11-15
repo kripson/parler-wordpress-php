@@ -1,22 +1,28 @@
 {
-  "name": "parler/parler-wordpress-plugin",
-  "description": "WordPress plugin for Parler",
-  "keywords": [
-    "wordpress",
-    "parler",
-    "comments"
-  ],
-  "homepage": "https://parler.com/",
-  "license": "GPL-2.0+",
+  "name": "parler/parler-for-wordpress",
+  "description": "A wordpress plugin",
+  "type": "library",
   "authors": [
     {
       "name": "Josh Copeland",
       "email": "josh@remotedevforce.com"
     }
   ],
-  "type": "wordpress-plugin",
-  "require": {
-    "php": ">=5.4.0",
-    "composer/installers": "v1.2.0"
+  "autoload": {
+    "classmap": [
+      "parler/"
+    ]
+  },
+  "require": {},
+  "require-dev": {
+    "stevegrunwell/wp-enforcer": "^0.5.0"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "wp-enforcer"
+    ],
+    "post-update-cmd": [
+      "wp-enforcer"
+    ]
   }
 }

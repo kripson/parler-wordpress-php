@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -8,24 +7,24 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://home.parler.com/
+ * @link              https://home.parler.com/
  * @since             1.0.0
- * @package           Parler_For_Wordpress
+ * @package           Parler_For_WordPress
  *
- * @wordpress-plugin
+ * @WordPress-plugin
  * Plugin Name:       Parler For WordPress
- * Plugin URI:        http://home.parler.com/
+ * Plugin URI:        https://home.parler.com/
  * Description:       A Social News and Content Engagement System working to increase community activity, grow audience exposure, and drive site traffic.
  * Version:           1.0.0
  * Author:            Parler LLC
- * Author URI:        http://home.parler.com/
- * Text Domain:       parler-for-wordpress
+ * Author URI:        https://home.parler.com/
+ * Text Domain:       parler-for-WordPress
  * Domain Path:       /languages
  */
 
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
-    die;
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
 /**
@@ -33,42 +32,42 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('PARLER_FOR_WORDPRESS', '1.0.0');
-define('PARLER_FOR_WORDPRESS_ENV', 'DEV');
+define( 'PARLER4WP_VERSION', '1.0.0' );
+define( 'PARLER4WP_ENV', 'DEV' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-parler-for-wordpress-activator.php
+ * This action is documented in includes/class-parler-for-WordPress-activator.php
  */
-function activate_plugin_name()
-{
-    require_once plugin_dir_path(__FILE__) . 'includes/class-parler-for-wordpress-activator.php';
+function activate_parler_plugin() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-parler-for-WordPress-activator.php';
 
-    if (version_compare(phpversion(), '5.4', '<')) {
-        deactivate_plugins(plugin_basename(__FILE__));
-        wp_die('Parler requires PHP 5.4 or higher. You are currently running ' . phpversion() . ' - Please upgrade PHP');
-    }
-    Parler_For_WordpressActivator::activate();
+	if ( version_compare( phpversion(), '5.4', '<' ) ) {
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+		wp_die( 'Parler requires PHP 5.4 or higher. Please upgrade your PHP version.' );
+	}
+	Parler_For_WordPress_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-parler-for-wordpress-deactivator.php
+ * This action is documented in includes/class-parler-for-WordPress-deactivator.php
  */
-function deactivate_plugin_name()
-{
-    require_once plugin_dir_path(__FILE__) . 'includes/class-parler-for-wordpress-deactivator.php';
-    Parler_For_WordpressDeactivator::deactivate();
+function deactivate_parler_plugin() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-parler-for-WordPress-deactivator.php';
+	Parler_For_WordPress_Deactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_plugin_name');
-register_deactivation_hook(__FILE__, 'deactivate_plugin_name');
+register_activation_hook( __FILE__, 'activate_parler_plugin' );
+register_deactivation_hook( __FILE__, 'deactivate_parler_plugin' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path(__FILE__) . 'includes/class-parler-for-wordpress.php';
+
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-parler-for-WordPress.php';
 
 /**
  * Begins execution of the plugin.
@@ -79,12 +78,10 @@ require plugin_dir_path(__FILE__) . 'includes/class-parler-for-wordpress.php';
  *
  * @since    1.0.0
  */
-function run_plugin_name()
-{
-
-    $plugin = new Parler_For_Wordpress();
-    $plugin->run();
+function run_parler_plugin() {
+	$plugin = new Parler_For_WordPress();
+	$plugin->run();
 
 }
 
-run_plugin_name();
+run_parler_plugin();

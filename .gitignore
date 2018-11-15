@@ -1,3 +1,4 @@
 .idea/
 vendor/
 __MACOSX/
+logs/debug.log

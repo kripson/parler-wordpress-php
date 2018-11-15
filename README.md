@@ -62,10 +62,12 @@ own site on your local machine, you should have the needed privileges. Follow th
 * Use the <b>Chose File</b> button to select your .zip file. Then click the <b>Install Now</b> button.
 * When the option <b>Activate Now</b> appears. Click it.
 
-Trouble Shooting
+Troubleshooting
 ----------------
 * If you get an error saying your plugin is too large, open the file <b>php/php.ini</b> in your
  Wordpress instalation and change <b>upload_max_filesize</b>
+
+* If the bulk importer is not working, please ensure your wp installation hostname can be reached within it's localhost. The plugin utilizes async calls to your WP installation to background the bulk import jobs.
 
 Notes
 -----
