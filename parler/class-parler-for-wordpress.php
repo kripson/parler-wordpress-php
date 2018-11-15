@@ -95,18 +95,6 @@ class Parler_For_WordPress {
 	private function load_dependencies() {
 
 		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-parler-for-wordpress-loader.php';
-
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-parler-for-wordpress-i18n.php';
-
-		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-parler-for-wordpress-admin.php';
@@ -118,7 +106,6 @@ class Parler_For_WordPress {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-parler-for-wordpress-public.php';
 
 		$this->loader = new Parler_For_WordPress_Loader();
-
 	}
 
 	/**
@@ -131,11 +118,8 @@ class Parler_For_WordPress {
 	 * @access   private
 	 */
 	private function set_locale() {
-
 		$plugin_i18n = new Parler_For_WordPress_I18n();
-
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**

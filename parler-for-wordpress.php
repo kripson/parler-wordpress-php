@@ -27,6 +27,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// Autoload classes in parler/ directory.
+require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -37,11 +40,9 @@ define( 'PARLER4WP_ENV', 'DEV' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-parler-for-WordPress-activator.php
+ * This action is documented in includes/class-parler-for-wordpress-activator.php
  */
 function activate_parler_plugin() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-parler-for-WordPress-activator.php';
-
 	if ( version_compare( phpversion(), '5.4', '<' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		wp_die( 'Parler requires PHP 5.4 or higher. Please upgrade your PHP version.' );
@@ -51,10 +52,9 @@ function activate_parler_plugin() {
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-parler-for-WordPress-deactivator.php
+ * This action is documented in includes/class-parler-for-wordpress-deactivator.php
  */
 function deactivate_parler_plugin() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-parler-for-WordPress-deactivator.php';
 	Parler_For_WordPress_Deactivator::deactivate();
 }
 
@@ -66,8 +66,6 @@ register_deactivation_hook( __FILE__, 'deactivate_parler_plugin' );
  * admin-specific hooks, and public-facing site hooks.
  */
 
-require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
-require plugin_dir_path( __FILE__ ) . 'includes/class-parler-for-WordPress.php';
 
 /**
  * Begins execution of the plugin.

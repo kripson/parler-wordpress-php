@@ -49,17 +49,7 @@ class Parler_For_WordPress_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
-		$this->load_classes();
-
 		$this->load_components();
-	}
-
-	/**
-	 * Loading classes.
-	 */
-	private function load_classes() {
-		require_once plugin_dir_path( __FILE__ ) . '../includes/class-parler-api-service.php';
-		require_once plugin_dir_path( __FILE__ ) . '../includes/class-parler-for-wordpress-widget.php';
 	}
 
 	/**
@@ -70,7 +60,7 @@ class Parler_For_WordPress_Admin {
 		 * Register the widget.
 		 */
 		function register_parler_widget() {
-			register_widget( 'Parler_Widget' );
+			register_widget( 'Parler_For_WordPress_Widget' );
 		}
 		add_action( 'widgets_init', 'register_parler_widget' );
 	}
@@ -256,9 +246,9 @@ class Parler_For_WordPress_Admin {
 			// Lets get a permanent token and a plugin key
 			$parler_api_service = new Parler_Api_Service();
 			// Get perm token
-			$perm_secret_key = $parler_api_service->get_perm_token( $temp_token );
-			if ( $perm_secret_key ) {
-				$parler_api_service->set_secret_key( $perm_secret_key );
+			$secret_key = $parler_api_service->get_permanent_token( $temp_token );
+			if ( $secret_key ) {
+				$parler_api_service->set_secret_key( $secret_key );
 				// Get domain name
 				$domain_name       = $_SERVER['SERVER_NAME']; // Not sure if this will always be set
 				$hash_pass         = $parler_api_service->get_plugin_key( $domain_name );
@@ -269,7 +259,9 @@ class Parler_For_WordPress_Admin {
 					fwrite( $fp, $hash_pass );
 					fclose( $fp );
 					$success = $parler_api_service->verify_plugin_key( get_option( 'parler_plugin_token' ) );
-					if ( $success ) {
+					if ( !empty($success->message) ) {
+						echo '<br />' . esc_html($success->message);
+					} else if ( $success ) {
 						echo '<br />Installation Complete...';
 					} else {
 						echo '<div class="alert alert-warning">Domain verification failed...</div>';

@@ -17,7 +17,8 @@ class Parler_Api_Service {
 
 
 	const STAGING_PARLER_HOST = 'https://staging.par.pw/v1/';
-	const PROD_PARLER_HOST    = 'https://par.pw/v1/';
+
+	const PROD_PARLER_HOST = 'https://par.pw/v1/';
 
 	/**
 	 * An API secret key for Authentication.
@@ -32,55 +33,18 @@ class Parler_Api_Service {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param string $secret_key The admin secret key associated with the $api_secret.
 	 */
 	public function __construct( $secret_key = null ) {
 		$this->secret_key = $secret_key;
 	}
 
-	/**
-	 * Makes a GET request to the Parler API.
-	 *
-	 * @since  1.0.0
-	 * @param  string $url_path The Parler endpoint to perform a GET request to.
-	 * @param  array  $request_params The params to be appended to the query.
-	 * @return mixed The response data.
-	 */
-	public function get( $url_path, $request_params ) {
-		$api_uri = $this->getParlerHost() . $url_path;
-
-		foreach ( $request_params as $key => $values_array ) {
-			if ( ! is_array( $values_array ) ) {
-				$values_array = array( $values_array );
-			}
-
-			foreach ( $values_array as $value ) {
-				$api_uri .= '&' . $key . '=' . rawurlencode( $value );
-			}
-		}
-
-		$parler_response = wp_remote_get(
-			$api_uri,
-			array(
-				'headers' => array(
-					'Authorization' => $this->secret_key,
-				),
-			)
-		);
-
-		return $this->get_response_body( $parler_response );
-	}
 
 	/**
-	 * Makes a POST request to the Parler API.
-	 *
-	 * @since  1.0.0
-	 * @param  string $url_path The Parler API endpoint to perform a POST request.
-	 * @param  array  $original_params The params to be added to the body.
-	 * @param  bool   $return_status_code Optional if you just want to get back the HTTP status code.
-	 * @return mixed The response data.
+	 * Get the default request headers.
 	 */
-	public function post( $url_path, $original_params, $return_status_code = false ) {
+	public function get_default_headers() {
 		if ( $this->secret_key ) {
 			// If we already authenticated with a perm token.
 			$headers = array(
@@ -97,13 +61,69 @@ class Parler_Api_Service {
 			$headers = array();
 		}
 
-		$request_params = array(
-			'body'    => $original_params,
-			'method'  => 'POST',
-			'headers' => $headers,
+		$headers = array_merge(
+			$headers,
+			array(
+				'Content-Type' => 'application/json',
+				'Accept'       => 'application/json',
+			)
 		);
 
-		$api_uri         = $this->getParlerHost() . $url_path;
+		return array( 'headers' => $headers );
+	}
+
+	/**
+	 * Makes a GET request to the Parler API.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  string $url_path The Parler endpoint to perform a GET request to.
+	 * @param  array  $request_params The params to be appended to the query.
+	 *
+	 * @return mixed The response data.
+	 */
+	public function get( $url_path, $request_params ) {
+		$api_uri = $this->get_parler_host() . $url_path;
+
+		foreach ( $request_params as $key => $values_array ) {
+			if ( ! is_array( $values_array ) ) {
+				$values_array = array( $values_array );
+			}
+
+			foreach ( $values_array as $value ) {
+				$api_uri .= '&' . $key . '=' . rawurlencode( $value );
+			}
+		}
+
+		$headers = $this->get_default_headers();
+
+		$parler_response = wp_remote_get( $api_uri, $headers );
+
+		return $this->get_response_body( $parler_response );
+	}
+
+	/**
+	 * Makes a POST request to the Parler API.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  string $url_path The Parler API endpoint to perform a POST request.
+	 * @param  array  $original_params The params to be added to the body.
+	 * @param  bool   $return_status_code Optional if you just want to get back the HTTP status code.
+	 *
+	 * @return mixed The response data.
+	 */
+	public function post( $url_path, $original_params, $return_status_code = false ) {
+
+		$request_params = array_merge(
+			$this->get_default_headers(),
+			array(
+				'body'   => $original_params,
+				'method' => 'POST',
+			)
+		);
+
+		$api_uri         = $this->get_parler_host() . $url_path;
 		$parler_response = wp_remote_post( $api_uri, $request_params );
 
 		if ( $return_status_code ) {
@@ -147,9 +167,10 @@ class Parler_Api_Service {
 	 * Get a permenant token from a temp token.
 	 *
 	 * @param string $temp_token The temp token from sso.
+	 *
 	 * @return bool|string
 	 */
-	public function get_permanent_oken( $temp_token ) {
+	public function get_permanent_token( $temp_token ) {
 		$payload = array( 'token' => $temp_token );
 		// get perm token.
 		$response = $this->post( 'signin/sso/trade', wp_json_encode( $payload ) );
@@ -157,11 +178,12 @@ class Parler_Api_Service {
 		if ( ! empty( $response->message ) ) {
 			// @todo Display this error message in a more formal way.
 			echo '<br /><b>An error has occured:' . esc_html( $response->message ) . '</b><br /><p>Please contact support or try again later.</p>';
+
 			return false;
 		}
 
-		if ( isset( $response->userId ) ) {
-			update_option( 'parler_user_id', $response->userId );
+		if ( isset( $response->id ) ) {
+			update_option( 'parler_user_id', $response->id );
 		}
 		if ( isset( $response->username ) ) {
 			update_option( 'parler_username', $response->username );
@@ -171,8 +193,10 @@ class Parler_Api_Service {
 		}
 		if ( isset( $response->token ) ) {
 			update_option( 'parler_api_token', $response->token );
+
 			return $response->token;
 		}
+
 		return false;
 	}
 
@@ -194,6 +218,7 @@ class Parler_Api_Service {
 		}
 		if ( isset( $response->hash ) ) {
 			update_option( 'parler_plugin_hash', $response->hash );
+
 			return $response->hash;
 		}
 	}
@@ -215,7 +240,9 @@ class Parler_Api_Service {
 	 * Get the response body.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param WP_Error|array $response The response.
+	 *
 	 * @return mixed The response body for the Parler API in a friendly format.
 	 */
 	private function get_response_body( $response ) {
@@ -224,7 +251,7 @@ class Parler_Api_Service {
 			$response           = new StdClass();
 			$response->errorMsg = $error_msg;
 		} else {
-			$response = wp_json_encode( $response['body'] );
+			$response = json_decode( $response['body'] );
 		}
 
 		return $response;
@@ -240,6 +267,7 @@ class Parler_Api_Service {
 		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
 			return self::STAGING_PARLER_HOST;
 		}
+
 		return self::PROD_PARLER_HOST;
 	}
 

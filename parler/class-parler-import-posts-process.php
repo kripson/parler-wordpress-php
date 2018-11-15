@@ -46,8 +46,8 @@ class Parler_Import_Posts_Process extends Parler_Background_Process {
 		// Get service and create a Parler post for this WordPress post.
 		$parler_service = new Parler_Api_Service( get_option( 'parler_api_token' ) );
 
-		// @todo change this to bulk import
-		$post     = get_post( $id );
+		// @todo change this to bulk import API endpoint
+		$post     = get_post( $post_id );
 		$response = $parler_service->create_retroactive_post( $id, $post );
 
 		$this->debug_log( (string) $response );
@@ -64,7 +64,7 @@ class Parler_Import_Posts_Process extends Parler_Background_Process {
 		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
 			// phpcs:ignore
 			file_put_contents(
-				WP_PLUGIN_DIR . '/parler-for-wordpress/logs/parler_debug.log',
+				plugin_dir_path( __FILE__ ) . '/logs/parler_debug.log',
 				'[' . date( DATE_RFC2822 ) . '] ' . $msg . PHP_EOL,
 				FILE_APPEND | LOCK_EX
 			);
