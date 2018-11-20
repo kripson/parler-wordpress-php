@@ -1,17 +1,15 @@
 <?php
 /**
- * Import process for parler comments.
+ * Background import process for parler comments.
  *
- * @link       https://parler.com
  * @since      1.0.0
  *
- * @package    Parler_Api_Service
- * @subpackage Parler_Api_Service/includes
+ * @package    Parler_Import_Posts_Process
  * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 
 /**
- * Class Parler_Api_Service
+ * Class Parler_Import_Posts_Process
  */
 class Parler_Import_Posts_Process extends Parler_Background_Process {
 
@@ -48,7 +46,7 @@ class Parler_Import_Posts_Process extends Parler_Background_Process {
 
 		// @todo change this to bulk import API endpoint
 		$post     = get_post( $post_id );
-		$response = $parler_service->create_retroactive_post( $id, $post );
+		$response = $parler_service->create_retroactive_post( $post_id, $post );
 
 		$this->debug_log( (string) $response );
 
@@ -64,7 +62,7 @@ class Parler_Import_Posts_Process extends Parler_Background_Process {
 		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
 			// phpcs:ignore
 			file_put_contents(
-				plugin_dir_path( __FILE__ ) . '/logs/parler_debug.log',
+				plugin_dir_path( __FILE__ ) . '../logs/parler_debug.log',
 				'[' . date( DATE_RFC2822 ) . '] ' . $msg . PHP_EOL,
 				FILE_APPEND | LOCK_EX
 			);

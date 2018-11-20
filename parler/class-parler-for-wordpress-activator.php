@@ -4,11 +4,9 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @link       https://parler.com
  * @since      1.0.0
  *
- * @package    Parler_For_WordPress
- * @subpackage Parler_For_WordPress/includes
+ * @package    Parler_For_WordPress_Activator
  * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 

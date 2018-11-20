@@ -1,8 +1,8 @@
 <?php
 /**
- * Parler Background Process
+ * Parler Background Process for bulk jobs that need to be ran asynchronously.
  *
- * @package Parler-Background-Processing
+ * @package Parler_Background_Process
  */
 
 /**
@@ -22,6 +22,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 * @access protected
 	 */
 	protected $action = 'background_process';
+
 	/**
 	 * Start time of current process.
 	 *
@@ -31,6 +32,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 * @access protected
 	 */
 	protected $start_time = 0;
+
 	/**
 	 * Cron_hook_identifier
 	 *
@@ -38,6 +40,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 * @access protected
 	 */
 	protected $cron_hook_identifier;
+
 	/**
 	 * Cron_interval_identifier
 	 *
@@ -67,6 +70,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	public function dispatch() {
 		// Schedule the cron healthcheck.
 		$this->schedule_event();
+
 		// Perform remote post.
 		return parent::dispatch();
 	}
@@ -80,6 +84,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 */
 	public function push_to_queue( $data ) {
 		$this->data[] = $data;
+
 		return $this;
 	}
 
@@ -93,6 +98,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 		if ( ! empty( $this->data ) ) {
 			update_site_option( $key, $this->data );
 		}
+
 		return $this;
 	}
 
@@ -108,6 +114,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 		if ( ! empty( $data ) ) {
 			update_site_option( $key, $data );
 		}
+
 		return $this;
 	}
 
@@ -120,6 +127,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 */
 	public function delete( $key ) {
 		delete_site_option( $key );
+
 		return $this;
 	}
 
@@ -136,6 +144,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	protected function generate_key( $length = 64 ) {
 		$unique  = md5( microtime() . wp_rand() );
 		$prepend = $this->identifier . '_batch_';
+
 		return substr( $prepend . $unique, 0, $length );
 	}
 
@@ -188,6 +197,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 				$key
 			)
 		);
+
 		return ( $count > 0 ) ? false : true;
 	}
 
@@ -202,6 +212,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 			// Process already running.
 			return true;
 		}
+
 		return false;
 	}
 
@@ -228,6 +239,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 */
 	protected function unlock_process() {
 		delete_site_transient( $this->identifier . '_process_lock' );
+
 		return $this;
 	}
 
@@ -267,6 +279,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 		$batch       = new stdClass();
 		$batch->key  = $query->$column;
 		$batch->data = maybe_unserialize( $query->$value_column );
+
 		return $batch;
 	}
 
@@ -324,6 +337,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 		if ( $current_memory >= $memory_limit ) {
 			$return = true;
 		}
+
 		return apply_filters( $this->identifier . '_memory_exceeded', $return );
 	}
 
@@ -339,10 +353,11 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 			// Sensible default.
 			$memory_limit = '128M';
 		}
-		if ( ! $memory_limit || -1 === intval( $memory_limit ) ) {
+		if ( ! $memory_limit || - 1 === intval( $memory_limit ) ) {
 			// Unlimited, set to 32GB.
 			$memory_limit = '32000M';
 		}
+
 		return intval( $memory_limit ) * 1024 * 1024;
 	}
 
@@ -360,6 +375,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 		if ( time() >= $finish ) {
 			$return = true;
 		}
+
 		return apply_filters( $this->identifier . '_time_exceeded', $return );
 	}
 
@@ -378,7 +394,9 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 * Schedule cron healthcheck
 	 *
 	 * @access public
+	 *
 	 * @param mixed $schedules Schedules.
+	 *
 	 * @return mixed
 	 */
 	public function schedule_cron_healthcheck( $schedules ) {
@@ -392,6 +410,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 			// translators: Every X Minutes, run the jobs.
 			'display'  => sprintf( __( 'Every %d Minutes' ), $interval ),
 		);
+
 		return $schedules;
 	}
 
@@ -459,5 +478,5 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 *
 	 * @return mixed
 	 */
-	abstract protected function task( $item);
+	abstract protected function task( $item );
 }

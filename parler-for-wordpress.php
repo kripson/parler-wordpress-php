@@ -10,6 +10,7 @@
  * @link              https://home.parler.com/
  * @since             1.0.0
  * @package           Parler_For_WordPress
+ * @author            Joshua Copeland <Josh@RemoteDevForce.com>
  *
  * @WordPress-plugin
  * Plugin Name:       Parler For WordPress
@@ -18,7 +19,7 @@
  * Version:           1.0.0
  * Author:            Parler LLC
  * Author URI:        https://home.parler.com/
- * Text Domain:       parler-for-WordPress
+ * Text Domain:       parler-for-wordpress
  * Domain Path:       /languages
  */
 
@@ -37,6 +38,10 @@ require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
  */
 define( 'PARLER4WP_VERSION', '1.0.0' );
 define( 'PARLER4WP_ENV', 'DEV' );
+
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'config.php' ) ) {
+	require plugin_dir_path( __FILE__ ) . 'config.php';
+}
 
 /**
  * The code that runs during plugin activation.
@@ -61,11 +66,21 @@ function deactivate_parler_plugin() {
 register_activation_hook( __FILE__, 'activate_parler_plugin' );
 register_deactivation_hook( __FILE__, 'deactivate_parler_plugin' );
 
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
 
+/**
+ * Adds the async option to the javascript tags on parler js/css code
+ *
+ * @param string $url the url to see if async tags need to be thrown on.
+ * @return string
+ */
+function parler_async_scripts( $url ) {
+	if ( strpos( $url, '#parlerasync' ) === false ) {
+		return $url;
+	}
+	return str_replace( '#parlerasync', '', $url ) . "' async='async";
+}
+
+add_filter( 'clean_url', 'parler_async_scripts', 11, 1 );
 
 /**
  * Begins execution of the plugin.

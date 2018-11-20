@@ -8,11 +8,9 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @link       https://parler.com
  * @since      1.0.0
  *
  * @package    Parler_For_WordPress
- * @subpackage Parler_For_WordPress/includes
  * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 
@@ -28,7 +26,7 @@ class Parler_For_WordPress {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Parler_For_WordPressLoader $loader Maintains and registers all hooks for the plugin.
+	 * @var      Parler_For_WordPress_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -63,7 +61,7 @@ class Parler_For_WordPress {
 		if ( defined( 'PARLER4WP_VERSION' ) ) {
 			$this->version = PARLER4WP_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = 'Unknown';
 		}
 		$this->plugin_name = 'parler-for-wordpress';
 

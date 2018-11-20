@@ -1,0 +1,6 @@
+<?php
+
+// Delete this file before releasing to prod
+define( 'PARLER4WP_API_HOST', 'https://staging.par.pw/v1/');
+define( 'PARLER4WP_REACT_CSS', 'https://plugin.parler.com/staging/parler-for-wordpress-public.css#parlerasync');
+define( 'PARLER4WP_REACT_JS', 'https://plugin.parler.com/staging/parler-for-wordpress-public.css#parlerasync');

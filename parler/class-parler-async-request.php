@@ -2,7 +2,7 @@
 /**
  * WP Background Async Request
  *
- * @package WP-Background-Processing
+ * @package Parler_Async_Request
  */
 
 /**

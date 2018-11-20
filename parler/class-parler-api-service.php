@@ -2,11 +2,9 @@
 /**
  * API Service for Parler
  *
- * @link       https://parler.com
  * @since      1.0.0
  *
  * @package    Parler_Api_Service
- * @subpackage Parler_Api_Service/includes
  * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 
@@ -14,11 +12,6 @@
  * Class Parler_Api_Service
  */
 class Parler_Api_Service {
-
-
-	const STAGING_PARLER_HOST = 'https://staging.par.pw/v1/';
-
-	const PROD_PARLER_HOST = 'https://par.pw/v1/';
 
 	/**
 	 * An API secret key for Authentication.
@@ -39,7 +32,6 @@ class Parler_Api_Service {
 	public function __construct( $secret_key = null ) {
 		$this->secret_key = $secret_key;
 	}
-
 
 	/**
 	 * Get the default request headers.
@@ -204,6 +196,8 @@ class Parler_Api_Service {
 	 * Get a plugin key for this domain name.
 	 *
 	 * @param string $domain The domain to get a key for.
+	 *
+	 * @return string The response string.
 	 */
 	public function get_plugin_key( $domain ) {
 		$payload = array( 'domain' => $domain );
@@ -221,12 +215,16 @@ class Parler_Api_Service {
 
 			return $response->hash;
 		}
+
+		return $response;
 	}
 
 	/**
 	 * Verify the domain is owned by the user.
 	 *
 	 * @param string $plugin_token The plugin token to verify.
+	 *
+	 * @return string The response string.
 	 */
 	public function verify_plugin_key( $plugin_token ) {
 		$payload = array( 'key' => $plugin_token );
@@ -258,17 +256,17 @@ class Parler_Api_Service {
 	}
 
 	/**
-	 * Get the host of the parler API based on env.
+	 * Get the host of the parler API based on the constant or default to live.
 	 *
 	 * @return string The API url.
 	 */
 	private function get_parler_host() {
-		// @todo A dev may want to change this to point at local
-		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
-			return self::STAGING_PARLER_HOST;
+		// Override the url in the root parler-for-wordpress.php file.
+		if ( defined( 'PARLER4WP_API_HOST' ) ) {
+			return PARLER4WP_API_HOST;
 		}
 
-		return self::PROD_PARLER_HOST;
+		return 'https://par.pw/v1/';
 	}
 
 	/**

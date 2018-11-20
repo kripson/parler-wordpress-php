@@ -2,3 +2,4 @@
 vendor/
 __MACOSX/
 logs/debug.log
+/config.php

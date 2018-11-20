@@ -2,19 +2,14 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @link       https://parler.com
  * @since      1.0.0
  *
- * @package    Parler_For_WordPress
- * @subpackage Parler_For_WordPress/admin
+ * @package    Parler_For_WordPress_Admin
  * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 
 /**
- * Class Parler_For_WordPress_Admin
+ * Defines the admin-facing functionality of the Parler WP Plugin.
  */
 class Parler_For_WordPress_Admin {
 
@@ -62,6 +57,7 @@ class Parler_For_WordPress_Admin {
 		function register_parler_widget() {
 			register_widget( 'Parler_For_WordPress_Widget' );
 		}
+
 		add_action( 'widgets_init', 'register_parler_widget' );
 	}
 
@@ -69,6 +65,7 @@ class Parler_For_WordPress_Admin {
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @param string $hook The hook name.
+	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles( $hook ) {
@@ -77,15 +74,12 @@ class Parler_For_WordPress_Admin {
 			return;
 		}
 
-		if ( PARLER4WP_ENV === 'DEV' ) {
-			wp_enqueue_style( $this->plugin_name, '/wp-content/plugins/parler-for-wordpress/public/css/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
-		} elseif ( PARLER4WP_ENV === 'STAGING' ) {
-			wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/staging/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
+		if ( defined( 'PARLER4WP_REACT_CSS' ) ) {
+			wp_enqueue_style( $this->plugin_name, PARLER4WP_REACT_CSS, array(), $this->version, 'all' );
 		} else {
 			wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
 		}
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -93,6 +87,7 @@ class Parler_For_WordPress_Admin {
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @param string $hook The hook name.
+	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts( $hook ) {
@@ -101,15 +96,13 @@ class Parler_For_WordPress_Admin {
 			return;
 		}
 
-		if ( PARLER4WP_ENV === 'DEV' ) {
-			wp_enqueue_script( $this->plugin_name, '/wp-content/plugins/parler-for-wordpress/public/js/parler-for-wordpress-public.js#parlerasync', array( 'jquery' ), $this->version, false );
-		} elseif ( PARLER4WP_ENV === 'STAGING' ) {
-			wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/staging/parler-for-wordpress-public.js#parlerasync', array( 'jquery' ), $this->version, false );
+		if ( defined( 'PARLER4WP_REACT_JS' ) ) {
+			wp_enqueue_script( $this->plugin_name, PARLER4WP_REACT_JS, array( 'jquery' ), $this->version, false );
 		} else {
 			wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js#parlerasync', array( 'jquery' ), $this->version, false );
 		}
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/parler-for-wordpress-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'js/parler-for-wordpress-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -130,7 +123,10 @@ class Parler_For_WordPress_Admin {
 		remove_menu_page( 'edit-comments.php' );
 
 		// Add options page for Parler in settings.
-		add_menu_page( 'Parler Settings', 'Parler', 'manage_options', 'parler', array( __CLASS__, 'parler_options_page' ), 'dashicons-testimonial', 24 );
+		add_menu_page( 'Parler Settings', 'Parler', 'manage_options', 'parler', array(
+			__CLASS__,
+			'parler_options_page'
+		), 'dashicons-testimonial', 24 );
 
 		// Uncomment to move menu item into options.
 		// add_options_page('Parler Admin Settings', 'Parler', 'manage_options', 'parler', array(__CLASS__, 'parler_options_page'));
@@ -198,8 +194,8 @@ class Parler_For_WordPress_Admin {
 		// }
 		//
 
-		if ( get_option( 'parler_import_all_posts' ) ) {
-			update_option( 'parler_import_all_posts', null );
+		if ( get_option( 'parler_import_all_posts' ) && get_option( 'parler_import_all_posts' ) != 'complete' ) {
+			update_option( 'parler_import_all_posts', 'complete' );
 			// self::redirectJavascriptResponse();
 			echo '<br />Importing all posts...';
 			self::background_import_process();
@@ -253,14 +249,14 @@ class Parler_For_WordPress_Admin {
 				$domain_name       = $_SERVER['SERVER_NAME']; // Not sure if this will always be set
 				$hash_pass         = $parler_api_service->get_plugin_key( $domain_name );
 				$verification_file = '/parler-domain.txt';
-				$fp               = fopen( $_SERVER['DOCUMENT_ROOT'] . $verification_file, 'wb' );
+				$fp                = fopen( $_SERVER['DOCUMENT_ROOT'] . $verification_file, 'wb' );
 
 				if ( $fp ) {
 					fwrite( $fp, $hash_pass );
 					fclose( $fp );
 					$success = $parler_api_service->verify_plugin_key( get_option( 'parler_plugin_token' ) );
-					if ( !empty($success->message) ) {
-						echo '<br />' . esc_html($success->message);
+					if ( ! empty( $success->message ) ) {
+						echo '<br />' . esc_html( $success->message );
 					} else if ( $success ) {
 						echo '<br />Installation Complete...';
 					} else {
@@ -285,119 +281,133 @@ class Parler_For_WordPress_Admin {
 		}
 		// VIEWS
 		?>
-		<div class="wrap">
-			<div style="display: inline-block;">
-				<img style="float: left;" src="https://home.parler.com/wp-content/uploads/2018/06/logo_431.png" width="42" height="42" />
-				<h1 style="float: left;" > &nbsp; Parler Settings</h1>
-			</div>
-			<h2 class="nav-tab-wrapper">
-				<a href="?page=parler&tab=setup"
-				   class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
-
-				   <?php if ( $secret_key ) { ?>
-
-					<a href="?page=parler&tab=general"
-					   class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
-					<a href="?page=parler&tab=import"
-					   class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>">Import</a>
-				<?php } ?>
-			</h2>
-
-			<?php if ( $active_tab == 'setup' ) { ?>
-
-				<h2>Setup Parler</h2>
+        <div class="wrap">
+            <div style="display: inline-block;">
+                <img style="float: left;" src="https://home.parler.com/wp-content/uploads/2018/06/logo_431.png"
+                     width="42" height="42"/>
+                <h1 style="float: left;"> &nbsp; Parler Settings</h1>
+            </div>
+            <h2 class="nav-tab-wrapper">
+                <a href="?page=parler&tab=setup"
+                   class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
 
 				<?php if ( $secret_key ) { ?>
 
-					<p>Integration Completed</p>
-					<div style="max-width: <?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>">
-						<div id="comments"></div>
-					</div>
-					<br/>
-					<hr/>
-					<p>Click the link below only if you need to redo your integration key</p>
-					<a href="?page=parler&integration=clear"
-					   onclick="return confirm('Are you sure you want to remove your API keys?');">Terminate
-						Integration</a>
+                    <a href="?page=parler&tab=general"
+                       class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
+                    <a href="?page=parler&tab=import"
+                       class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>">Import</a>
+				<?php } ?>
+            </h2>
+
+			<?php if ( $active_tab == 'setup' ) { ?>
+
+                <h2>Setup Parler</h2>
+
+				<?php if ( $secret_key ) { ?>
+
+                    <p>Integration Completed</p>
+                    <div style="max-width: <?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>">
+                        <div id="comments"></div>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <p>Click the link below only if you need to redo your integration key</p>
+                    <a href="?page=parler&integration=clear"
+                       onclick="return confirm('Are you sure you want to remove your API keys and terminate all plugin settings?');">Terminate
+                        Integration</a>
 
 					<?php
-} else {
-	// Integration Incomplete
-	$source_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	?>
+				} else {
+					// Integration Incomplete
+					$source_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+					?>
 
-					<p>To activate the Parler Commenting System, simply click on the Sign In Link below.</p>
-					<div class="parler_button "> <a href="<?php echo $sso_url . urlencode( $source_url ); ?>">
-						Sign in to Parler
-					</a></div>
+                    <p>To activate the Parler Commenting System, simply login to Parler by clicking the "Sign In" button below.</p>
+                    <div class="parler_button "><a href="<?php echo $sso_url . urlencode( $source_url ); ?>">
+                            <button type="button" id="parler-signin-button" class="button button-primary"><span
+                                        class="dashicons dashicons-lock"></span> Sign in to Parler
+                            </button>
+                        </a></div>
+                    <br /><br />
+                    <i>If you encounter problems while activating our plugin, please email <a href="mailto:Support@Parler.com">Support@Parler.com</a>.</i>
 
-	<?php
-}
-} elseif ( $active_tab == 'general' ) { // General Tab
-	?>
-
-				<form method="post" action="options.php">
-				<?php
-				settings_fields( 'parler-settings' );
-				do_settings_sections( 'parler-settings' );
+					<?php
+				}
+			} elseif ( $active_tab == 'general' ) { // General Tab
 				?>
-					<table class="form-table">
-						<tr valign="top">
-							<th scope="row"><label for="parler_default_location">Default Comment Location</label><br/>
-								<p style="font-weight: normal;">Place comments in the default WordPress comments area.
-									location.</p></th>
-							<td><input title="Toggle Parler Comments" type="checkbox" name="parler_default_location"
-									   value="1"
-						<?php checked( get_option( 'parler_default_location' ), 1 ); ?>/>
-								<br /><br /><i> Disabled automatically when using Parler widget</i>
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row"><label for="parler_custom_width">Custom Width</label><br/>
-								<p style="font-weight: normal;">Manually adjust the commenting sections maximum
-									width.
-									Leave empty for fluid width.</p></th>
-							<td><input title="Enter a custom width" type="text" name="parler_custom_width"
-									   value="<?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>"
-									   class="parler-text-entry"/>
-							</td>
-						</tr>
-					</table>
+
+                <form method="post" action="options.php">
+					<?php
+					settings_fields( 'parler-settings' );
+					do_settings_sections( 'parler-settings' );
+					?>
+                    <table class="form-table">
+                        <tr valign="top">
+                            <th scope="row"><label for="parler_default_location">Default Comment Location</label><br/>
+                                <p style="font-weight: normal;">Place comments in the default WordPress comments area.
+                                    location.</p></th>
+                            <td><input title="Toggle Parler Comments" type="checkbox" name="parler_default_location"
+                                       value="1"
+									<?php checked( get_option( 'parler_default_location' ), 1 ); ?>/>
+                                <br/><br/><i> Disabled automatically when using Parler widget</i>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row"><label for="parler_custom_width">Custom Width</label><br/>
+                                <p style="font-weight: normal;">Manually adjust the commenting sections maximum
+                                    width.
+                                    Leave empty for fluid width.</p></th>
+                            <td><input title="Enter a custom width" type="text" name="parler_custom_width"
+                                       value="<?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>"
+                                       class="parler-text-entry"/>
+                            </td>
+                        </tr>
+                    </table>
 					<?php submit_button(); ?>
-				</form>
+                    <br /><br />
+                    <i>If you encounter problems while using our plugin, please email <a href="mailto:Support@Parler.com">Support@Parler.com</a>.</i>
+                </form>
 
 				<?php
-} elseif ( $active_tab == 'import' ) {
+			} elseif ( $active_tab == 'import' ) {
 
-	?>
-
-				<form method="post" action="options.php">
-				<?php
-				settings_fields( 'parler-import-settings' );
-				do_settings_sections( 'parler-import-settings' );
 				?>
-					<br />
-					<h3>Import all posts into Parler</h3>
-					<p>Click the button below to sync all posts with our servers.</p>
-					<input type="hidden" name="parler_import_all_posts" value="1" />
-					<?php submit_button( 'Sync all posts and comments' ); ?>
-				</form>
+
+                <form method="post" action="options.php">
+					<?php
+					settings_fields( 'parler-import-settings' );
+					do_settings_sections( 'parler-import-settings' );
+					?>
+                    <br/>
+                    <h3>Import all posts into Parler</h3>
+					<?php
+					if ( get_option( 'parler_import_all_posts' ) == 'complete' ) {
+						echo '<p>You have already imported all posts. Any newly created posts will be synced automatically.</p>';
+					} else { ?>
+                        <p>Click the button below to sync all posts with our servers.</p>
+                        <input type="hidden" name="parler_import_all_posts" value="1"/>
+						<?php
+						submit_button( 'Sync all posts and comments' );
+					}
+					?>
+                </form>
 
 				<?php
 
-} else {
-	// Fail out of options
-	// self::redirectJavascriptResponse(array('error' => 'Unknown Page'));
-}
-?>
-		</div>
+			} else {
+				// Fail out of options
+				// self::redirectJavascriptResponse(array('error' => 'Unknown Page'));
+			}
+			?>
+        </div>
 		<?php
 	}
 
 
 	/**
-     * Create a retroactive post.
-     *
+	 * Create a retroactive post.
+	 *
 	 * @param int $ID The post id.
 	 * @param string $post The Post body.
 	 *
@@ -407,11 +417,13 @@ class Parler_For_WordPress_Admin {
 		$token = get_option( 'parler_api_token', null );
 		if ( ! $token ) {
 			error_log( sprintf( 'Attempted to save post id %d without Parler integration setup yet.', $ID ) );
+
 			return;
 		}
 		// If we do have a token, lets use it and create the post.
 		$parler_api_service = new Parler_Api_Service( $token );
-		$response         = $parler_api_service->create_retroactive_post( $ID, $post );
+		$response           = $parler_api_service->create_retroactive_post( $ID, $post );
+
 		return $response;
 	}
 
@@ -423,7 +435,7 @@ class Parler_For_WordPress_Admin {
 
 		// @todo we might have to paginate these posts for large datasets
 		$args       = array(
-			'posts_per_page' => -1,
+			'posts_per_page' => - 1,
 			'post_type'      => 'post',
 			'order'          => 'ASC',
 		);
@@ -434,7 +446,7 @@ class Parler_For_WordPress_Admin {
 				// increment the post
 				$post_query->the_post();
 				$id = get_the_ID();
-				$total++;
+				$total ++;
 				// echo "POST ID $id ".PHP_EOL;
 				// pass this post to the queue
 				$wp_import_process->push_to_queue( $id );

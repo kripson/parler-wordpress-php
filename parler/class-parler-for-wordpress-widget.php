@@ -2,11 +2,9 @@
 /**
  * The widget-specific functionality of the plugin.
  *
- * @link       https://parler.com
  * @since      1.0.0
  *
- * @package    Parler_For_WordPress
- * @subpackage Parler_For_WordPress/widget
+ * @package    Parler_For_WordPress_Widget
  * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 
@@ -34,10 +32,10 @@ class Parler_For_WordPress_Widget extends WP_Widget {
 	 * @param array $instance The instance configs.
 	 */
 	public function widget( $args, $instance ) {
-		echo esc_html( $args['before_widget'] );
-		echo esc_html( $args['before_title'] . 'Parler' . $args['after_title'] );
-		echo "<div style='padding-top: 0em; max-width: " . esc_attr( $instance['width'] ) . "' id='comments'></div>";
-		echo esc_html( $args['after_widget'] );
+		echo $args['before_widget'];
+		echo $args['before_title'] . 'Parler' . $args['after_title'];
+		echo "<div style='padding-top: 0em; max-width: " .  $instance['width']  . "' id='comments'></div>";
+		echo $args['after_widget'];
 	}
 
 	/**
@@ -48,13 +46,13 @@ class Parler_For_WordPress_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$width = ! empty( $instance['width'] ) ? $instance['width'] : esc_html__( '300px', 'width' );
 		?>
-		<i>Using this widget will disable the default comments section.</i>
-		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"><?php esc_attr_e( 'Width:', 'width' ); ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"
-				name="<?php echo esc_attr( $this->get_field_name( 'width' ) ); ?>" type="text"
-				value="<?php echo esc_attr( $width ); ?>">
-		</p>
+        <i>Using this widget will disable the default comments section.</i>
+        <p>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"><?php esc_attr_e( 'Width:', 'width' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"
+                   name="<?php echo esc_attr( $this->get_field_name( 'width' ) ); ?>" type="text"
+                   value="<?php echo esc_attr( $width ); ?>">
+        </p>
 		<?php
 	}
 

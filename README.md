@@ -7,20 +7,24 @@ need to point it to a PHP install on your machine. Alternatively, see the Compos
 
 Getting Started
 ---------------
-To properly use this code you'll need PHP, composer, and Wordpress. Wordpress, in turn, has other perquisites.
-See 
+To properly use this code you'll need PHP and Wordpress. Wordpress, in turn, has other perquisites.
 
-* [PHP Installation and Configuration](http://php.net/manual/en/install.php)
-* [Download Composer](https://getcomposer.org/download/)
-* [Installing WordPress](https://codex.wordpress.org/Installing_WordPress)
+The easiest way to run wordpress on your machine with this code is to install [Docker](https://docker.io)
 
-If you wish to install React on your system in order to work with the React components used by 
-this project, see:
+Then read the readme in the docker wp dev repo to bring up a wordpress container with this plugin code. 
 
-* [How to install npm](https://blog.npmjs.org/post/85484771375/how-to-install-npm)
-* [React npm package](https://www.npmjs.com/package/react)
+Clone this code along side this repo to make sure of the volume mount without changes needed to the docker-compose.yml
 
-Also, see the README.md file in the <u>parler-wordpress-react</u> project.
+`git clone https://user_name@10.2.2.12:7990/scm/par/dev-docker-wp-plugin.git`
+
+The React Plugin code is now pointed at either staging based off the `config.php` settings.
+If no config is provided then it defaults to live.
+We have now removed the react code from this plugin, see older commits or change `config.php` to point to your local.
+
+Prerequisites
+----------
+
+* Install [Docker](https://docker.io)
 
 Installing 
 ----------
@@ -29,6 +33,15 @@ Install this software from git using
 ````
 git clone https://user_name@10.2.2.12:7990/scm/par/parler-wordpress-php.git
 ````
+
+If developing against the staging environment, move `config.php.dist` to `config.php`.
+
+Deploying
+---------
+
+Change the environment in the main parler-for-wordpress.php file to STAGING or PROD.
+
+Run the `build.sh` file in your terminal.
 
 How To Add React
 ----------------

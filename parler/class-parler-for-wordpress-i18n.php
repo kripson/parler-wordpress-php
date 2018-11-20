@@ -5,11 +5,9 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://parler.com
  * @since      1.0.0
  *
- * @package    Parler_For_WordPress
- * @subpackage Parler_For_WordPress/includes
+ * @package    Parler_For_WordPress_I18n
  * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 
