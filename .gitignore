@@ -4,3 +4,4 @@ __MACOSX/
 logs/debug.log
 /config.php
 /build/*.zip
+.DS_Store
