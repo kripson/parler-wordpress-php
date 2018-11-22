@@ -307,6 +307,10 @@ class Parler_For_WordPress_Admin {
 				<?php if ( $secret_key ) { ?>
 
                     <p>Integration Completed</p>
+                    <p>You can use the Parler Widget or leave it in the default comments section.<br />
+                        Moderate comments at <a href="https://moderation.parler.com/">https://moderation.parler.com/</a><br />
+
+                    </p>
                     <div style="max-width: <?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>">
                         <div id="comments"></div>
                     </div>

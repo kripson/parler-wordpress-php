@@ -46,6 +46,8 @@ class Parler_For_WordPress_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$width = ! empty( $instance['width'] ) ? $instance['width'] : esc_html__( '300px', 'width' );
 		?>
+        <br/>
+        <p>Put a valid width like 100%, 1024px, etc.</p>
         <i>Using this widget will disable the default comments section.</i>
         <p>
             <label for="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"><?php esc_attr_e( 'Width:', 'width' ); ?></label>
