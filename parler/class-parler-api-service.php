@@ -283,8 +283,9 @@ class Parler_Api_Service {
 		// Override the url in the root parler-for-wordpress.php file.
 		if ( defined( 'PARLER4WP_API_HOST' ) ) {
 			return PARLER4WP_API_HOST;
+		} elseif ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+			return 'https://staging.par.pw/v1/';
 		}
-
 		return 'https://par.pw/v1/';
 	}
 

@@ -76,7 +76,9 @@ class Parler_For_WordPress_Admin {
 
 		if ( defined( 'PARLER4WP_REACT_CSS' ) ) {
 			wp_enqueue_style( $this->plugin_name, PARLER4WP_REACT_CSS, array(), $this->version, 'all' );
-		} else {
+		} else if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+            wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/staging/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
+        } else {
 			wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
 		}
 		wp_enqueue_style( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-admin.css', array(), $this->version, 'all' );
@@ -98,7 +100,9 @@ class Parler_For_WordPress_Admin {
 
 		if ( defined( 'PARLER4WP_REACT_JS' ) ) {
 			wp_enqueue_script( $this->plugin_name, PARLER4WP_REACT_JS, array( 'jquery' ), $this->version, false );
-		} else {
+		} else if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+			wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/staging/parler-for-wordpress-public.js#parlerasync', array( 'jquery' ), $this->version, false );
+        } else {
 			wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js#parlerasync', array( 'jquery' ), $this->version, false );
 		}
 
@@ -251,7 +255,9 @@ class Parler_For_WordPress_Admin {
 				$verification_file = '/parler-domain.txt';
 				$fp                = fopen( $_SERVER['DOCUMENT_ROOT'] . $verification_file, 'wb' );
 
-				if ( $fp ) {
+				if ( $hash_pass instanceof \stdClass && !empty($hash_pass->message) ) {
+					echo "<br /><h3>".$hash_pass->message."</h3><br />";
+                } else if ( $fp ) {
 					fwrite( $fp, $hash_pass );
 					fclose( $fp );
 					$success = $parler_api_service->verify_plugin_key( get_option( 'parler_plugin_token' ) );
@@ -273,12 +279,14 @@ class Parler_For_WordPress_Admin {
 		} elseif ( $temp_token && $secret_key ) {
 			echo '<br />Sorry but a permanant token already exists for this site. Please terminate your integration if you want to remove your key and get a new one.';
 		}
-		// Set the parler-display-settings url based on envrionment
-		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
-			$sso_url = 'https://sso.staging.parler.com/?source=';
-		} else {
-			$sso_url = 'https://sso.parler.com/?source=';
-		}
+        // Set the parler-display-settings url based on envrionment
+        if ( defined( 'PARLER4WP_SSO_URI' ) ) {
+            $sso_url = PARLER4WP_SSO_URI;
+        } else if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+            $sso_url = 'https://sso.staging.parler.com/?source=';
+        } else {
+            $sso_url = 'https://sso.parler.com/?source=';
+        }
 		// VIEWS
 		?>
         <div class="wrap">
