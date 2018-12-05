@@ -68,6 +68,7 @@ abstract class Parler_Async_Request {
 	 */
 	public function data( $data ) {
 		$this->data = $data;
+
 		return $this;
 	}
 
@@ -79,6 +80,7 @@ abstract class Parler_Async_Request {
 	public function dispatch() {
 		$url  = add_query_arg( $this->get_query_args(), $this->get_query_url() );
 		$args = $this->get_post_args();
+
 		return wp_remote_post( esc_url_raw( $url ), $args );
 	}
 
@@ -91,6 +93,7 @@ abstract class Parler_Async_Request {
 		if ( property_exists( $this, 'query_args' ) ) {
 			return $this->query_args;
 		}
+
 		return array(
 			'action' => $this->identifier,
 			'nonce'  => wp_create_nonce( $this->identifier ),
@@ -106,6 +109,7 @@ abstract class Parler_Async_Request {
 		if ( property_exists( $this, 'query_url' ) ) {
 			return $this->query_url;
 		}
+
 		return admin_url( 'admin-ajax.php' );
 	}
 
@@ -123,6 +127,7 @@ abstract class Parler_Async_Request {
 		if ( isset( $cookies['XDEBUG_SESSION'] ) ) {
 			unset( $cookies['XDEBUG_SESSION'] );
 		}
+
 		return array(
 			'timeout'   => 30,
 			'body'      => $this->data,
@@ -142,6 +147,22 @@ abstract class Parler_Async_Request {
 		check_ajax_referer( $this->identifier, 'nonce' );
 		$this->handle();
 		wp_die();
+	}
+
+	/**
+	 * Log a message to plugin debug logs.
+	 *
+	 * @param string $msg The message to log if in debug mode.
+	 */
+	protected function debug_log( $msg ) {
+		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+			// phpcs:ignore
+			file_put_contents(
+				plugin_dir_path( __FILE__ ) . '../logs/async_debug.log',
+				'[' . date( DATE_RFC2822 ) . '] ' . $msg . PHP_EOL,
+				FILE_APPEND | LOCK_EX
+			);
+		}
 	}
 
 	/**

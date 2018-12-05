@@ -34,10 +34,11 @@ class Parler_Import_Posts_Process extends Parler_Background_Process {
 	 * @return mixed
 	 */
 	protected function task( $post_id ) {
-		$this->debug_log( "Importing post $post_id" );
+		$this->debug_log( "Importing WP post id [{$post_id}]" );
 
 		if ( ! get_option( 'parler_api_token', null ) ) {
 			$this->debug_log( 'No API Key Found! Bailing.' );
+
 			return false;
 		}
 
@@ -48,25 +49,9 @@ class Parler_Import_Posts_Process extends Parler_Background_Process {
 		$post     = get_post( $post_id );
 		$response = $parler_service->create_retroactive_post( $post_id, $post );
 
-		$this->debug_log( (string) $response );
+		$this->debug_log( 'Background Job Done' );
 
 		return false;
-	}
-
-	/**
-	 * Log a message to plugin debug logs.
-	 *
-	 * @param string $msg The message to log if in debug mode.
-	 */
-	protected function debug_log( $msg ) {
-		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
-			// phpcs:ignore
-			file_put_contents(
-				plugin_dir_path( __FILE__ ) . '../logs/parler_debug.log',
-				'[' . date( DATE_RFC2822 ) . '] ' . $msg . PHP_EOL,
-				FILE_APPEND | LOCK_EX
-			);
-		}
 	}
 
 	/**

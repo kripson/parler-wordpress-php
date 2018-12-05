@@ -106,7 +106,7 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 	 * Update queue
 	 *
 	 * @param string $key Key.
-	 * @param array  $data Data.
+	 * @param array $data Data.
 	 *
 	 * @return $this
 	 */
@@ -187,13 +187,11 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 		$key   = $wpdb->esc_like( $this->identifier . '_batch_' ) . '%';
 		$count = $wpdb->get_var(
 			$wpdb->prepare(
-				'
+				"
 			SELECT COUNT(*)
-			FROM %s
-			WHERE %s LIKE %s
-				',
-				$table,
-				$column,
+			FROM {$table}
+			WHERE {$column} LIKE %s
+		",
 				$key
 			)
 		);
@@ -260,19 +258,16 @@ abstract class Parler_Background_Process extends Parler_Async_Request {
 			$key_column   = 'meta_id';
 			$value_column = 'meta_value';
 		}
-		$key         = $wpdb->esc_like( $this->identifier . '_batch_' ) . '%';
-		$query       = $wpdb->get_row(
+		$key = $wpdb->esc_like( $this->identifier . '_batch_' ) . '%';
+		$query = $wpdb->get_row(
 			$wpdb->prepare(
-				'
+				"
 			SELECT *
-			FROM %s
-			WHERE %s LIKE %s
-			ORDER BY %s ASC
+			FROM {$table}
+			WHERE {$column} LIKE %s
+			ORDER BY {$key_column} ASC
 			LIMIT 1
-				',
-				$table,
-				$column,
-				$key_column,
+		",
 				$key
 			)
 		);

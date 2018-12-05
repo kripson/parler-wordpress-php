@@ -126,7 +126,7 @@ class Parler_Api_Service {
 	}
 
 	/**
-	 * Create a post retroactively
+	 * Create a post retroactively and any comments on the post.
 	 *
 	 * @param int    $id the id of the post.
 	 * @param string $post the post slug.
@@ -138,19 +138,38 @@ class Parler_Api_Service {
 		$permalink = get_permalink( $id );
 		$excerpt   = get_the_excerpt( $post );
 		$post_date = get_the_date( 'YmdHis', $id );
-
-		$response = $this->post(
-			'post/retroactive',
-			wp_json_encode(
-				array(
-					'id'        => $id,
-					'title'     => $title,
-					'excerpt'   => $excerpt,
-					'permalink' => $permalink,
-					'createdAt' => $post_date,
-				)
-			)
+		$post_data = array(
+			'id'        => $id,
+			'title'     => $title,
+			'excerpt'   => $excerpt,
+			'permalink' => $permalink,
+			'createdAt' => $post_date,
 		);
+
+		// Load Post to Parler.
+		$this->debug_log( 'Loading Post to Parler: ' . wp_json_encode( $post_data ) );
+		$response = $this->post( 'f0irTo9n', wp_json_encode( $post_data ) );
+		$this->debug_log( 'Retro Post Response: ' . wp_json_encode( $response ) );
+
+		// Get all WordPress comments for this post.
+		$comments = get_comments( [ 'post_id' => $id ] );
+
+		// @todo Refactor to do bulk comment loading
+		foreach ( $comments as $comment ) {
+			$comment_data = array(
+				'body'         => $comment->comment_content,
+				'createdAt'    => $comment->comment_date,
+				'createdEmail' => $comment->comment_author_email,
+				'createdName'  => $comment->comment_author,
+				'id'           => $comment->comment_ID,
+				'parent'       => $comment->comment_parent,
+				'post'         => $permalink,
+			);
+			$this->debug_log( 'Loading Comment to Parler: ' . wp_json_encode( $comment_data ) );
+			// Load Comments into Parler.
+			$comment_response = $this->post( '0JFJvZ79', wp_json_encode( $comment_data ) );
+			$this->debug_log( 'Retro Comment Response:', wp_json_encode( $comment_response ) );
+		}
 
 		return $response;
 	}
@@ -165,7 +184,7 @@ class Parler_Api_Service {
 	public function get_permanent_token( $temp_token ) {
 		$payload = array( 'token' => $temp_token );
 		// get perm token.
-		$response = $this->post( 'signin/sso/trade', wp_json_encode( $payload ) );
+		$response = $this->post( 'JFFf6vNd', wp_json_encode( $payload ) );
 
 		if ( ! empty( $response->message ) ) {
 			// @todo Display this error message in a more formal way.
@@ -202,7 +221,7 @@ class Parler_Api_Service {
 	public function get_plugin_key( $domain ) {
 		$payload = array( 'domain' => $domain );
 
-		$response = $this->post( 'plugin/key', wp_json_encode( $payload ) );
+		$response = $this->post( '8uTp6xYl', wp_json_encode( $payload ) );
 
 		if ( isset( $response->token ) ) {
 			update_option( 'parler_plugin_token', $response->token );
@@ -229,7 +248,7 @@ class Parler_Api_Service {
 	public function verify_plugin_key( $plugin_token ) {
 		$payload = array( 'key' => $plugin_token );
 
-		$response = $this->post( 'plugin/verify', wp_json_encode( $payload ) );
+		$response = $this->post( 'zNMxvZTZ', wp_json_encode( $payload ) );
 
 		return $response;
 	}
@@ -277,4 +296,21 @@ class Parler_Api_Service {
 	public function set_secret_key( $secret_key ) {
 		$this->secret_key = $secret_key;
 	}
+
+	/**
+	 * Log a message to plugin debug logs.
+	 *
+	 * @param string $msg The message to log if in debug mode.
+	 */
+	protected function debug_log( $msg ) {
+		if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+			// phpcs:ignore
+			file_put_contents(
+				plugin_dir_path( __FILE__ ) . '../logs/service_debug.log',
+				'[' . date( DATE_RFC2822 ) . '] ' . $msg . PHP_EOL,
+				FILE_APPEND | LOCK_EX
+			);
+		}
+	}
+
 }

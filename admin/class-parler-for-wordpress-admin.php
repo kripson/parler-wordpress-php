@@ -300,7 +300,7 @@ class Parler_For_WordPress_Admin {
 				<?php } ?>
             </h2>
 
-			<?php if ( $active_tab == 'setup' ) { ?>
+			<?php if ( $active_tab == 'setup' ) {  // Setup Tab ?>
 
                 <h2>Setup Parler</h2>
 
@@ -353,7 +353,7 @@ class Parler_For_WordPress_Admin {
                                     location.</p></th>
                             <td><input title="Toggle Parler Comments" type="checkbox" name="parler_default_location"
                                        value="1"
-									<?php checked( get_option( 'parler_default_location' ), 1 ); ?>/>
+									<?php checked( get_option( 'parler_default_location', true) ); ?>/>
                                 <br/><br/><i> Disabled automatically when using Parler widget</i>
                             </td>
                         </tr>
@@ -374,7 +374,7 @@ class Parler_For_WordPress_Admin {
                 </form>
 
 				<?php
-			} elseif ( $active_tab == 'import' ) {
+			} elseif ( $active_tab == 'import' ) { // Import Tab
 
 				?>
 

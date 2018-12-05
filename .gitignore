@@ -1,7 +1,7 @@
 .idea/
 vendor/
 __MACOSX/
-logs/debug.log
+logs/*.log
 /config.php
 /build/*.zip
 .DS_Store
