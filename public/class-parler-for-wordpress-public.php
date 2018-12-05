@@ -75,6 +75,8 @@ class Parler_For_WordPress_Public {
 
 		if ( defined( 'PARLER4WP_REACT_CSS' ) ) {
 			wp_enqueue_style( $this->plugin_name, PARLER4WP_REACT_CSS, array(), $this->version, 'all' );
+		} elseif ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+			wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/staging/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
 		} else {
 			wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
 		}
@@ -111,6 +113,8 @@ class Parler_For_WordPress_Public {
 
 		if ( defined( 'PARLER4WP_REACT_JS' ) ) {
 			wp_enqueue_script( $this->plugin_name, PARLER4WP_REACT_JS, array( 'jquery' ), $this->version, false );
+		} elseif ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
+			wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/staging/parler-for-wordpress-public.js#parlerasync', array( 'jquery' ), $this->version, false );
 		} else {
 			wp_enqueue_script( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.js#parlerasync', array( 'jquery' ), $this->version, false );
 		}
