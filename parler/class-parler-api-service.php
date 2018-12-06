@@ -14,39 +14,21 @@
 class Parler_Api_Service {
 
 	/**
-	 * An API secret key for Authentication.
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var    string $secret_key The Parler secret key for auth.
-	 */
-	private $secret_key;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $secret_key The admin secret key associated with the $api_secret.
-	 */
-	public function __construct( $secret_key = null ) {
-		$this->secret_key = $secret_key;
-	}
-
-	/**
 	 * Get the default request headers.
+	 *
+	 * @param bool $plugin_auth A bool to trigger plugin auth vs. api key.
+	 * @return array
 	 */
-	public function get_default_headers() {
-		if ( $this->secret_key ) {
-			// If we already authenticated with a perm token.
+	public function get_default_headers( $plugin_auth = false ) {
+		if ( $plugin_auth && get_option( 'parler_plugin_token', false ) ) {
+			// Pull secret key if we have it in the db.
 			$headers = array(
-				'Authorization' => $this->secret_key,
+				'Authorization' => get_option( 'parler_plugin_token' ),
 			);
 		} elseif ( get_option( 'parler_api_token', false ) ) {
 			// Pull secret key if we have it in the db.
-			$this->secret_key = get_option( 'parler_api_token' );
-			$headers          = array(
-				'Authorization' => $this->secret_key,
+			$headers = array(
+				'Authorization' => get_option( 'parler_api_token' ),
 			);
 		} else {
 			// Assume we have no credentials yet.
@@ -102,13 +84,14 @@ class Parler_Api_Service {
 	 * @param  string $url_path The Parler API endpoint to perform a POST request.
 	 * @param  array  $original_params The params to be added to the body.
 	 * @param  bool   $return_status_code Optional if you just want to get back the HTTP status code.
+	 * @param  bool   $plugin_auth Optional Set to true for authenticating with the plugin key instead of the user key.
 	 *
 	 * @return mixed The response data.
 	 */
-	public function post( $url_path, $original_params, $return_status_code = false ) {
+	public function post( $url_path, $original_params, $return_status_code = false, $plugin_auth = false ) {
 
 		$request_params = array_merge(
-			$this->get_default_headers(),
+			$this->get_default_headers( $plugin_auth ),
 			array(
 				'body'   => $original_params,
 				'method' => 'POST',
@@ -148,7 +131,7 @@ class Parler_Api_Service {
 
 		// Load Post to Parler.
 		$this->debug_log( 'Loading Post to Parler: ' . wp_json_encode( $post_data ) );
-		$response = $this->post( 'f0irTo9n', wp_json_encode( $post_data ) );
+		$response = $this->post( 'f0irTo9n', wp_json_encode( $post_data ), false, true );
 		$this->debug_log( 'Retro Post Response: ' . wp_json_encode( $response ) );
 
 		// Get all WordPress comments for this post.
@@ -167,7 +150,7 @@ class Parler_Api_Service {
 			);
 			$this->debug_log( 'Loading Comment to Parler: ' . wp_json_encode( $comment_data ) );
 			// Load Comments into Parler.
-			$comment_response = $this->post( '0JFJvZ79', wp_json_encode( $comment_data ) );
+			$comment_response = $this->post( '0JFJvZ79', wp_json_encode( $comment_data ), false, true );
 			$this->debug_log( 'Retro Comment Response:', wp_json_encode( $comment_response ) );
 		}
 

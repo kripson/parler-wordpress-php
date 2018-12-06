@@ -199,10 +199,10 @@ class Parler_For_WordPress_Admin {
 		//
 
 		if ( get_option( 'parler_import_all_posts' ) && get_option( 'parler_import_all_posts' ) != 'complete' ) {
-			update_option( 'parler_import_all_posts', 'complete' );
 			// self::redirectJavascriptResponse();
 			echo '<br />Importing all posts...';
 			self::background_import_process();
+			update_option( 'parler_import_all_posts', 'complete' );
 		}
 
 		// If we need to reset integration and clear all settings
@@ -215,8 +215,8 @@ class Parler_For_WordPress_Admin {
 			update_option( 'parler_plugin_domain', null );
 			update_option( 'parler_plugin_hash', null );
 			update_option( 'parler_import_all_posts', null );
-			self::redirect_javascript_response();
 			echo '<br />Terminating Account...';
+			self::redirect_javascript_response();
 		}
 
 		// Check if we need to show messaging
