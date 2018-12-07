@@ -142,8 +142,8 @@ class Parler_Api_Service {
 			$comment_data = array(
 				'body'         => $comment->comment_content,
 				'createdAt'    => $comment->comment_date,
-				'createdEmail' => $comment->comment_author_email,
-				'createdName'  => $comment->comment_author,
+				'creatorEmail' => $comment->comment_author_email,
+				'creatorName'  => $comment->comment_author,
 				'id'           => $comment->comment_ID,
 				'parent'       => $comment->comment_parent,
 				'post'         => $permalink,
