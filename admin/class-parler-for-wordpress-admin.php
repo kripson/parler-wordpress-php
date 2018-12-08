@@ -208,13 +208,15 @@ class Parler_For_WordPress_Admin {
 		// If we need to reset integration and clear all settings
 		if ( isset( $_GET['integration'] ) && $_GET['integration'] === 'clear' ) {
 			update_option( 'parler_api_token', null );
-			update_option( 'parler_user_id', null );
-			update_option( 'parler_username', null );
-			update_option( 'parler_profile_name', null );
-			update_option( 'parler_plugin_token', null );
+			update_option( 'parler_custom_width', null );
+			update_option( 'parler_default_location', null );
+			update_option( 'parler_import_all_posts', null );
 			update_option( 'parler_plugin_domain', null );
 			update_option( 'parler_plugin_hash', null );
-			update_option( 'parler_import_all_posts', null );
+			update_option( 'parler_plugin_token', null );
+			update_option( 'parler_profile_name', null );
+			update_option( 'parler_user_id', null );
+			update_option( 'parler_username', null );
 			echo '<br />Terminating Account...';
 			self::redirect_javascript_response();
 		}

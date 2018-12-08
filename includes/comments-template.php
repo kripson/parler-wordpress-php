@@ -1,8 +1,6 @@
 <?php
-/* Dummy comments template file.
- * This replaces the theme's comment template when comments are disabled everywhere
- */
+/* This replaces the theme's comment template with the Parler div needed */
 
 if (get_option( 'parler_default_location' )) {
-	echo '<div id="comments"></div>';
+	echo '<div id="comments" style="max-width: ' . get_option( 'parler_custom_width' ) . '"></div>';
 }

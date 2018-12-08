@@ -27,3 +27,15 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+// Clean up configs when uninstalling the plugin.
+update_option( 'parler_api_token', null );
+update_option( 'parler_custom_width', null );
+update_option( 'parler_default_location', null );
+update_option( 'parler_import_all_posts', null );
+update_option( 'parler_plugin_domain', null );
+update_option( 'parler_plugin_hash', null );
+update_option( 'parler_plugin_token', null );
+update_option( 'parler_profile_name', null );
+update_option( 'parler_user_id', null );
+update_option( 'parler_username', null );
