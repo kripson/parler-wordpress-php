@@ -13,5 +13,5 @@ composer install --no-ansi --no-dev --no-interaction --no-progress --no-scripts 
 
 # Cleanup and build zip
 rm -r build/ .git/ .gitignore .idea/ config.php config.php.dist README.md release.sh phpcs.xml composer.* > /dev/null 2>&1
-7z a -tzip -xr'!.*' ../parler-for-wordpress.zip ./
+7z a -tzip -xr'!.*' ../parler.zip ./
 echo "Release zipped in /build directory, please run \"composer install && git checkout -- .\" to get back dev files"

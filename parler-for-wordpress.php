@@ -13,13 +13,13 @@
  * @author            Joshua Copeland <Josh@RemoteDevForce.com>
  *
  * @WordPress-plugin
- * Plugin Name:       Parler For WordPress
+ * Plugin Name:       Parler
  * Plugin URI:        https://home.parler.com/
  * Description:       A Social News and Content Engagement System working to increase community activity, grow audience exposure, and drive site traffic.
  * Version:           1.0.0
  * Author:            Parler LLC
  * Author URI:        https://home.parler.com/
- * Text Domain:       parler-for-wordpress
+ * Text Domain:       parler
  * Domain Path:       /languages
  */
 
