@@ -1,5 +1,5 @@
 === Parler For Wordpress ===
-Contributors: parler,ogprogrammer
+Contributors: parler
 Tags: Comments, Commenting, News, Social Media, Parler, Influence Network
 Requires at least: 4.9
 Tested up to: 5.0

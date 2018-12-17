@@ -2,12 +2,6 @@
   "name": "parler/parler-for-wordpress",
   "description": "A wordpress plugin",
   "type": "library",
-  "authors": [
-    {
-      "name": "Josh Copeland",
-      "email": "josh@remotedevforce.com"
-    }
-  ],
   "autoload": {
     "classmap": [
       "parler/"
