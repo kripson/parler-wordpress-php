@@ -14,7 +14,7 @@
  *
  * @WordPress-plugin
  * Plugin Name:       Parler
- * Plugin URI:        https://home.parler.com/
+ * Plugin URI:        https://home.parler.com/installation/
  * Description:       A Social News and Content Engagement System working to increase community activity, grow audience exposure, and drive site traffic.
  * Version:           1.0.0
  * Author:            Parler LLC
