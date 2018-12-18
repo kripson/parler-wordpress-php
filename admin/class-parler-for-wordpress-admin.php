@@ -293,8 +293,7 @@ class Parler_For_WordPress_Admin {
 		?>
         <div class="wrap">
             <div style="display: inline-block;">
-                <img style="float: left;" src="https://home.parler.com/wp-content/uploads/2018/06/logo_431.png"
-                     width="42" height="42"/>
+                <img style="float: left;" width="42" height="42" src="<?php echo plugin_dir_url( __FILE__ ) . 'images/Parler_Logo.svg'; ?>" />
                 <h1 style="float: left;"> &nbsp; Parler Settings</h1>
             </div>
             <h2 class="nav-tab-wrapper">
