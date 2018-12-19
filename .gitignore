@@ -3,5 +3,6 @@ vendor/
 __MACOSX/
 logs/*.log
 /config.php
-/build/*.zip
+/build/*
 .DS_Store
+parler.zip
