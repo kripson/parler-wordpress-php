@@ -7,8 +7,7 @@
  *
  * @since      1.0.0
  *
- * @package    Parler_For_WordPress_I18n
- * @author     Joshua Copeland <Josh@RemoteDevForce.com>
+ * @package    Parler_For_WordPress_I18n*
  */
 
 /**

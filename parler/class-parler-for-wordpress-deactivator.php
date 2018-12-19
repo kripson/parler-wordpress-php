@@ -6,8 +6,7 @@
  *
  * @since      1.0.0
  *
- * @package    Parler_For_WordPress_Deactivator
- * @author     Joshua Copeland <Josh@RemoteDevForce.com>
+ * @package    Parler_For_WordPress_Deactivator*
  */
 
 /**

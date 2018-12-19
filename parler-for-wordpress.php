@@ -10,7 +10,6 @@
  * @link              https://home.parler.com/
  * @since             1.0.0
  * @package           Parler_For_WordPress
- * @author            Joshua Copeland <Josh@RemoteDevForce.com>
  *
  * @WordPress-plugin
  * Plugin Name:       Parler

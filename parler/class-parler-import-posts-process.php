@@ -4,8 +4,7 @@
  *
  * @since      1.0.0
  *
- * @package    Parler_Import_Posts_Process
- * @author     Joshua Copeland <Josh@RemoteDevForce.com>
+ * @package    Parler_Import_Posts_Process*
  */
 
 /**

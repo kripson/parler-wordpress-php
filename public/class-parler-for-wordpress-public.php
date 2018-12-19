@@ -5,8 +5,7 @@
  * @link       https://home.parler.com/
  * @since      1.0.0
  *
- * @package    Parler_For_WordPress_Public
- * @author     Joshua Copeland <Josh@RemoteDevForce.com>
+ * @package    Parler_For_WordPress_Public*
  */
 
 /**

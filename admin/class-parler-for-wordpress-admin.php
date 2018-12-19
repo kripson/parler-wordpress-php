@@ -5,7 +5,6 @@
  * @since      1.0.0
  *
  * @package    Parler_For_WordPress_Admin
- * @author     Joshua Copeland <Josh@RemoteDevForce.com>
  */
 
 /**

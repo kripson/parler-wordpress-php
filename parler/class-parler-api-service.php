@@ -4,8 +4,7 @@
  *
  * @since      1.0.0
  *
- * @package    Parler_Api_Service
- * @author     Joshua Copeland <Josh@RemoteDevForce.com>
+ * @package    Parler_Api_Service*
  */
 
 /**
