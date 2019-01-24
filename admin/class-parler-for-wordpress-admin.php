@@ -225,13 +225,13 @@ class Parler_For_WordPress_Admin {
 				$fp                = fopen( $_SERVER['DOCUMENT_ROOT'] . $verification_file, 'wb' );
 
 				if ( $hash_pass instanceof \stdClass && !empty($hash_pass->message) ) {
-					echo "<br /><h3>".$hash_pass->message."</h3><br />";
+					echo "<br /><!-- Get Plugin Key --><h3>".$hash_pass->message."</h3><br />";
                 } else if ( $fp ) {
 					fwrite( $fp, $hash_pass );
 					fclose( $fp );
 					$success = $parler_api_service->verify_plugin_key( get_option( 'parler_plugin_token' ) );
 					if ( ! empty( $success->message ) ) {
-						echo '<br />' . esc_html( $success->message );
+						echo '<br /><!-- Verify Plugin Key -->' . esc_html( $success->message );
 					} else if ( $success ) {
 						echo '<br />Installation Complete...';
 					} else {
@@ -289,7 +289,9 @@ class Parler_For_WordPress_Admin {
                         Moderate comments at <a href="https://moderation.parler.com/">https://moderation.parler.com/</a><br />
 
                     </p>
-                    <div style="max-width: <?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>">
+                    <div style="max-width: <?php echo get_option( 'parler_custom_width', '80%' ); ?>;
+                        margin: <?php echo get_option( 'parler_custom_margin', '0 10%' ); ?>;
+                        padding: <?php echo get_option( 'parler_custom_padding', '0 60px' ); ?>;">
                         <div id="comments"></div>
                     </div>
                     <br/>

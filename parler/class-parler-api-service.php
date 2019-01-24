@@ -135,6 +135,7 @@ class Parler_Api_Service {
 
 		// Get all WordPress comments for this post.
 		$comments = get_comments( [ 'post_id' => $id ] );
+		$this->debug_log( "[id:$id] Total Comments: " . (string) count( $comments ) );
 
 		// @todo Refactor to do bulk comment loading
 		foreach ( $comments as $comment ) {
@@ -147,10 +148,10 @@ class Parler_Api_Service {
 				'parent'       => $comment->comment_parent,
 				'post'         => $permalink,
 			);
-			$this->debug_log( 'Loading Comment to Parler: ' . wp_json_encode( $comment_data ) );
+			$this->debug_log( "[post_id:{$id}][comment_id:{$comment->comment_ID}] Loading Comment to Parler: " . wp_json_encode( $comment_data ) );
 			// Load Comments into Parler.
 			$comment_response = $this->post( '0JFJvZ79', wp_json_encode( $comment_data ), false, true );
-			$this->debug_log( 'Retro Comment Response:', wp_json_encode( $comment_response ) );
+			$this->debug_log( "[post_id:{$id}][comment_id:{$comment->comment_ID}] Retro Comment Response:" . wp_json_encode( $comment_response ) );
 		}
 
 		return $response;
