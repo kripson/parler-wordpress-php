@@ -23,7 +23,22 @@ class Parler_For_WordPress_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+		if ( ! current_user_can( 'moderate_comments' ) ) {
+			return;
+		}
 
+		update_option( 'parler_api_token', null );
+		update_option( 'parler_custom_width', '80%' );
+		update_option( 'parler_custom_margin', '0 10%' );
+		update_option( 'parler_custom_padding', '0 60px' );
+		update_option( 'parler_default_location', true );
+		update_option( 'parler_import_all_posts', null );
+		update_option( 'parler_plugin_domain', null );
+		update_option( 'parler_plugin_hash', null );
+		update_option( 'parler_plugin_token', null );
+		update_option( 'parler_profile_name', null );
+		update_option( 'parler_user_id', null );
+		update_option( 'parler_username', null );
 	}
 
 }

@@ -141,29 +141,7 @@ class Parler_For_WordPress_Admin {
 	 * @since    1.0.0
 	 */
 	public function parley_register_settings_page() {
-		if ( ! current_user_can( 'moderate_comments' ) ) {
-			return;
-		}
-
-		/* * * Register Settings * * */
-
-		// Parler Integration Settings
-		register_setting( 'parler-api-settings', 'parler_api_token', array( 'default' => null ) );
-		register_setting( 'parler-api-settings', 'parler_user_id', array( 'default' => null ) );
-		register_setting( 'parler-api-settings', 'parler_username', array( 'default' => null ) );
-		register_setting( 'parler-api-settings', 'parler_profile_name', array( 'default' => null ) );
-
-		// Plugin Settings for Parler
-		register_setting( 'parler-plugin-settings', 'parler_plugin_token', array( 'default' => null ) );
-		register_setting( 'parler-plguin-settings', 'parler_plugin_domain', array( 'default' => null ) );
-		register_setting( 'parler-plugin-settings', 'parler_plugin_hash', array( 'default' => null ) );
-
-		// Display Settings
-		register_setting( 'parler-settings', 'parler_default_location', array( 'default' => false ) );
-		register_setting( 'parler-settings', 'parler_custom_width', array( 'default' => '480px' ) );
-
-		// Import all posts
-		register_setting( 'parler-import-settings', 'parler_import_all_posts', array( 'default' => null ) );
+		Parler_For_WordPress_Activator::activate();
 	}
 
 	/**
@@ -198,7 +176,6 @@ class Parler_For_WordPress_Admin {
 		//
 
 		if ( get_option( 'parler_import_all_posts' ) && get_option( 'parler_import_all_posts' ) != 'complete' ) {
-			// self::redirectJavascriptResponse();
 			echo '<br />Importing all posts...';
 			self::background_import_process();
 			update_option( 'parler_import_all_posts', 'complete' );
@@ -206,16 +183,7 @@ class Parler_For_WordPress_Admin {
 
 		// If we need to reset integration and clear all settings
 		if ( isset( $_GET['integration'] ) && $_GET['integration'] === 'clear' ) {
-			update_option( 'parler_api_token', null );
-			update_option( 'parler_custom_width', null );
-			update_option( 'parler_default_location', null );
-			update_option( 'parler_import_all_posts', null );
-			update_option( 'parler_plugin_domain', null );
-			update_option( 'parler_plugin_hash', null );
-			update_option( 'parler_plugin_token', null );
-			update_option( 'parler_profile_name', null );
-			update_option( 'parler_user_id', null );
-			update_option( 'parler_username', null );
+			Parler_For_WordPress_Deactivator::deactivate();
 			echo '<br />Terminating Account...';
 			self::redirect_javascript_response();
 		}
@@ -271,7 +239,7 @@ class Parler_For_WordPress_Admin {
 						$secret_key = $hash_pass;
 					}
 				} else {
-					echo "<br /><h3>An error occured when trying to save the verification file to <b>$verification_file</b></h3><br />";
+					echo "<br /><h3>An error occurred when trying to save the verification file to <b>$verification_file</b></h3><br />";
 					echo "<h4>Please save the following access key into <b>$verification_file</b></h4><br />";
 					echo "<div><p>File Contents: </p></div><b>$hash_pass</b>";
 					echo "<br /><p><a href='?page=parler&verify=plugin'>Click here</a> once the file is saved and can be <a href='$verification_file'>viewed</a></p>";
@@ -280,7 +248,8 @@ class Parler_For_WordPress_Admin {
 		} elseif ( $temp_token && $secret_key ) {
 			echo '<br />Sorry but a permanant token already exists for this site. Please terminate your integration if you want to remove your key and get a new one.';
 		}
-        // Set the parler-display-settings url based on envrionment
+
+        // Set the parler-display-settings url based on environment
         if ( defined( 'PARLER4WP_SSO_URI' ) ) {
             $sso_url = PARLER4WP_SSO_URI;
         } else if ( PARLER4WP_ENV === 'DEV' || PARLER4WP_ENV === 'STAGING' ) {
@@ -288,6 +257,7 @@ class Parler_For_WordPress_Admin {
         } else {
             $sso_url = 'https://sso.parler.com/?source=';
         }
+
 		// VIEWS
 		?>
         <div class="wrap">
@@ -356,23 +326,49 @@ class Parler_For_WordPress_Admin {
 					?>
                     <table class="form-table">
                         <tr valign="top">
-                            <th scope="row"><label for="parler_default_location">Default Comment Location</label><br/>
-                                <p style="font-weight: normal;">Place comments in the default WordPress comments area.
-                                    location.</p></th>
-                            <td><input title="Toggle Parler Comments" type="checkbox" name="parler_default_location"
-                                       value="1"
+                            <th scope="row">
+                                <label title="Place comments in the default WordPress comments area location."
+                                       for="parler_default_location">Default Comment Location</label><br/>
+                                <p style="font-weight: normal;"></p></th>
+                            <td><input title="Toggle Parler Comments" type="checkbox" name="parler_default_location" value="1"
 									<?php checked( get_option( 'parler_default_location', true) ); ?>/>
-                                <br/><br/><i> Disabled automatically when using Parler widget</i>
+                                <p><i> Disabled automatically when using Parler widget</i></p>
+                            </td>
+                        </tr>
+                        <tr title="Only for main default location comments, these do not effect the widget." valign="top">
+                            <th scope="row">
+                                <b>CSS Styles</b>
+                                <hr/>
+                            </th>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row">
+                                <label title="Manually adjust the commenting sections maximum width."
+                                       for="parler_custom_width">Custom Width</label>
+                            </th>
+                            <td><input title="Enter a custom width" type="text" name="parler_custom_width"
+                                       value="<?php echo esc_attr( get_option( 'parler_custom_width', '80%' ) ); ?>"
+                                       class="parler-text-entry"/>
+                                <p><i>CSS Value for max-width. Ex: "80%" or "520px"</i></p>
                             </td>
                         </tr>
                         <tr valign="top">
-                            <th scope="row"><label for="parler_custom_width">Custom Width</label><br/>
-                                <p style="font-weight: normal;">Manually adjust the commenting sections maximum
-                                    width.
-                                    Leave empty for fluid width.</p></th>
-                            <td><input title="Enter a custom width" type="text" name="parler_custom_width"
-                                       value="<?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>"
+                            <th scope="row">
+                                <label title="Manually adjust the commenting sections margin."
+                                       for="parler_custom_margin">Custom Margin</label></th>
+                            <td><input title="Enter a custom margin" type="text" name="parler_custom_margin"
+                                       value="<?php echo esc_attr( get_option( 'parler_custom_margin', '0 10%' ) ); ?>"
                                        class="parler-text-entry"/>
+                                <p><i>CSS Value for margin. Ex: "0 10%"</i></p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row"><label title="Manually adjust the commenting sections padding."
+                                                   for="parler_custom_padding">Custom Padding</label></th>
+                            <td><input title="Enter a custom padding" type="text" name="parler_custom_padding"
+                                       value="<?php echo esc_attr( get_option( 'parler_custom_padding', '0 60px' ) ); ?>"
+                                       class="parler-text-entry"/>
+                                <p><i>CSS Value for padding. Ex: "0 60px"</i></p>
                             </td>
                         </tr>
                     </table>
@@ -450,6 +446,7 @@ class Parler_For_WordPress_Admin {
 			'posts_per_page' => - 1,
 			'post_type'      => 'post',
 			'order'          => 'ASC',
+            'post_status'    => 'publish' // Admin AJAX calls ask for all posts, lets just get published stuff.
 		);
 		$post_query = new WP_Query( $args );
 		$total      = 0;

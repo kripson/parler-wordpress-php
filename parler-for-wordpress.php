@@ -30,13 +30,9 @@ if ( ! defined( 'WPINC' ) ) {
 // Autoload classes in parler/ directory.
 require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
-/**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
- */
-define( 'PARLER4WP_VERSION', '1.0.0' );
-define( 'PARLER4WP_ENV', 'PROD' );
+// Plugin Version and Target Parler Environment.
+define( 'PARLER4WP_VERSION', '1.1.0' );
+define( 'PARLER4WP_ENV', 'STAGING' );
 
 if ( file_exists( plugin_dir_path( __FILE__ ) . 'config.php' ) ) {
 	require plugin_dir_path( __FILE__ ) . 'config.php';
