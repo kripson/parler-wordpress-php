@@ -342,6 +342,10 @@ class Parler_For_WordPress_Admin {
                                 <b>CSS Styles</b>
                                 <hr/>
                             </th>
+                            <td>
+                                <i>Older themes may "crunch" the plugin up. <br />
+                                    Removing the margin/padding and making the width 100% will fix this.</i>
+                            </td>
                         </tr>
                         <tr valign="top">
                             <th scope="row">
