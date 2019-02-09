@@ -203,41 +203,49 @@ class Parler_For_WordPress_Admin {
 		}
 
 		// See if we already have the secret stored
-		$secret_key = get_option( 'parler_api_token' );
+		$plugin_key = get_option( 'parler_plugin_token' );
 		// Setup active tab option
 		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
-		if ( ! $secret_key ) {
+		if ( ! $plugin_key ) {
 			$active_tab = 'setup';
 		}
 
-		$temp_token = isset( $_GET['temp_token'] ) ? $_GET['temp_token'] : null;
-		if ( $temp_token && ! $secret_key ) {
+		$temp_token = isset($_GET['temp_token']) ? $_GET['temp_token'] : null;
+		if ($temp_token && !$plugin_key) {
 			// Lets get a permanent token and a plugin key
 			$parler_api_service = new Parler_Api_Service();
 			// Get perm token
-			$secret_key = $parler_api_service->get_permanent_token( $temp_token );
-			if ( $secret_key ) {
-				$parler_api_service->set_secret_key( $secret_key );
+			$secret_key = $parler_api_service->get_permanent_token($temp_token);
+			if ($secret_key) {
+				$parler_api_service->set_secret_key($secret_key);
 				// Get domain name
-				$domain_name       = $_SERVER['SERVER_NAME']; // Not sure if this will always be set
-				$hash_pass         = $parler_api_service->get_plugin_key( $domain_name );
+				$domain_name = $_SERVER['SERVER_NAME']; // Not sure if this will always be set
+				$hash_pass = $parler_api_service->get_plugin_key($domain_name);
 				$verification_file = '/parler-domain.txt';
-				$fp                = fopen( $_SERVER['DOCUMENT_ROOT'] . $verification_file, 'wb' );
+				$fp = fopen($_SERVER['DOCUMENT_ROOT'] . $verification_file, 'wb');
 
-				if ( $hash_pass instanceof \stdClass && !empty($hash_pass->message) ) {
-					echo "<br /><!-- Get Plugin Key --><h3>".$hash_pass->message."</h3><br />";
-                } else if ( $fp ) {
-					fwrite( $fp, $hash_pass );
-					fclose( $fp );
-					$success = $parler_api_service->verify_plugin_key( get_option( 'parler_plugin_token' ) );
-					if ( ! empty( $success->message ) ) {
-						echo '<br /><!-- Verify Plugin Key -->' . esc_html( $success->message );
-					} else if ( $success ) {
-						echo '<br />Installation Complete...';
+				if ($hash_pass instanceof \stdClass && !empty($hash_pass->message)) {
+					echo "<br /><!-- Get Plugin Key --><h3>" . $hash_pass->message . "</h3><br />";
+				} else if ($fp) {
+					fwrite($fp, $hash_pass);
+					fclose($fp);
+					$verificationResponse = $parler_api_service->verify_plugin_key(get_option('parler_plugin_token'));
+					echo '<br/>';
+					if (!empty($verificationResponse->message)) {
+						$cssAlert = 'warning';
+						if ($parler_api_service->get_last_response_code() == 200) {
+							$cssAlert = 'success';
+						}
+						echo sprintf('<div class="alert alert-%s">%s</div>', esc_html($cssAlert), esc_html($verificationResponse->message));
+					} else if ($parler_api_service->get_last_response_code() == 400) {
+						echo '<div class="alert alert-warning">An error has occured during domain validation.</div>';
+					} else if ($parler_api_service->get_last_response_code() == 200) {
+						echo '<div class="alert alert-success">Installation Complete!</div>';
 					} else {
-						echo '<div class="alert alert-warning">Domain verification failed...</div>';
-						$secret_key = $hash_pass;
+						echo '<div class="alert alert-warning">Domain verification has failed.</div>';
 					}
+					// Refresh token in-case this was previously verified as token was returned with message
+					$plugin_key = get_option('parler_plugin_token');
 				} else {
 					echo "<br /><h3>An error occurred when trying to save the verification file to <b>$verification_file</b></h3><br />";
 					echo "<h4>Please save the following access key into <b>$verification_file</b></h4><br />";
@@ -245,8 +253,8 @@ class Parler_For_WordPress_Admin {
 					echo "<br /><p><a href='?page=parler&verify=plugin'>Click here</a> once the file is saved and can be <a href='$verification_file'>viewed</a></p>";
 				}
 			}
-		} elseif ( $temp_token && $secret_key ) {
-			echo '<br />Sorry but a permanant token already exists for this site. Please terminate your integration if you want to remove your key and get a new one.';
+		} elseif ($temp_token && $plugin_key) {
+			echo '<br />An API Plugin Token already exists for this site. If you wish to refresh your install you may click the terminate integration link at the bottom of the setup tab.';
 		}
 
         // Set the parler-display-settings url based on environment
@@ -269,7 +277,7 @@ class Parler_For_WordPress_Admin {
                 <a href="?page=parler&tab=setup"
                    class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
 
-				<?php if ( $secret_key ) { ?>
+				<?php if ( $plugin_key ) { ?>
 
                     <a href="?page=parler&tab=general"
                        class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
@@ -282,17 +290,30 @@ class Parler_For_WordPress_Admin {
 
                 <h2>Setup Parler</h2>
 
-				<?php if ( $secret_key ) { ?>
+				<?php if ( $plugin_key ) { ?>
 
                     <p>Integration Completed</p>
                     <p>You can use the Parler Widget or leave it in the default comments section.<br />
                         Moderate comments at <a href="https://moderation.parler.com/">https://moderation.parler.com/</a><br />
 
                     </p>
-                    <div style="max-width: <?php echo get_option( 'parler_custom_width', '80%' ); ?>;
-                        margin: <?php echo get_option( 'parler_custom_margin', '0 10%' ); ?>;
-                        padding: <?php echo get_option( 'parler_custom_padding', '0 60px' ); ?>;">
-                        <div id="comments"></div>
+                    <?php
+                    // Check first if we have overrides before echoing anything out
+                    $pp_width = get_option('parler_custom_width');
+                    $pp_margin = get_option('parler_custom_margin');
+                    $pp_padding = get_option('parler_custom_padding');
+                    echo '<div id="comments" style=" ';
+                    if ($pp_width) {
+                        echo 'max-width: ' . $pp_width . '; ';
+                    }
+                    if ($pp_margin) {
+                        echo 'margin: ' . $pp_margin . '; ';
+                    }
+                    if ($pp_padding) {
+                        echo 'padding: ' . $pp_padding . ';';
+                    }
+                    echo '"></div>';
+                    ?>
                     </div>
                     <br/>
                     <hr/>
@@ -322,10 +343,7 @@ class Parler_For_WordPress_Admin {
 				?>
 
                 <form method="post" action="options.php">
-					<?php
-					settings_fields( 'parler-settings' );
-					do_settings_sections( 'parler-settings' );
-					?>
+					<?php settings_fields( 'parler-settings' ); ?>
                     <table class="form-table">
                         <tr valign="top">
                             <th scope="row">
@@ -343,8 +361,8 @@ class Parler_For_WordPress_Admin {
                                 <hr/>
                             </th>
                             <td>
-                                <i>Older themes may "crunch" the plugin up. <br />
-                                    Removing the margin/padding and making the width 100% will fix this.</i>
+                                <i>Some themes may cause issues with the way Parler renders.
+                                    Use the settings below to override the CSS if needed.</i>
                             </td>
                         </tr>
                         <tr valign="top">
@@ -353,7 +371,7 @@ class Parler_For_WordPress_Admin {
                                        for="parler_custom_width">Custom Width</label>
                             </th>
                             <td><input title="Enter a custom width" type="text" name="parler_custom_width"
-                                       value="<?php echo esc_attr( get_option( 'parler_custom_width', '80%' ) ); ?>"
+                                       value="<?php echo esc_attr( get_option( 'parler_custom_width') ); ?>"
                                        class="parler-text-entry"/>
                                 <p><i>CSS Value for max-width. Ex: "80%" or "520px"</i></p>
                             </td>
@@ -363,7 +381,7 @@ class Parler_For_WordPress_Admin {
                                 <label title="Manually adjust the commenting sections margin."
                                        for="parler_custom_margin">Custom Margin</label></th>
                             <td><input title="Enter a custom margin" type="text" name="parler_custom_margin"
-                                       value="<?php echo esc_attr( get_option( 'parler_custom_margin', '0 10%' ) ); ?>"
+                                       value="<?php echo esc_attr( get_option( 'parler_custom_margin') ); ?>"
                                        class="parler-text-entry"/>
                                 <p><i>CSS Value for margin. Ex: "0 10%"</i></p>
                             </td>
@@ -372,7 +390,7 @@ class Parler_For_WordPress_Admin {
                             <th scope="row"><label title="Manually adjust the commenting sections padding."
                                                    for="parler_custom_padding">Custom Padding</label></th>
                             <td><input title="Enter a custom padding" type="text" name="parler_custom_padding"
-                                       value="<?php echo esc_attr( get_option( 'parler_custom_padding', '0 60px' ) ); ?>"
+                                       value="<?php echo esc_attr( get_option( 'parler_custom_padding') ); ?>"
                                        class="parler-text-entry"/>
                                 <p><i>CSS Value for padding. Ex: "0 60px"</i></p>
                             </td>

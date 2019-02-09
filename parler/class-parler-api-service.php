@@ -13,6 +13,15 @@
 class Parler_Api_Service {
 
 	/**
+	 * The last response if one was received.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      array $last_response
+	 */
+	private $last_response;
+
+	/**
 	 * Get the default request headers.
 	 *
 	 * @param bool $plugin_auth A bool to trigger plugin auth vs. api key.
@@ -70,7 +79,8 @@ class Parler_Api_Service {
 
 		$headers = $this->get_default_headers();
 
-		$parler_response = wp_remote_get( $api_uri, $headers );
+		$parler_response     = wp_remote_get( $api_uri, $headers );
+		$this->last_response = $parler_response;
 
 		return $this->get_response_body( $parler_response );
 	}
@@ -97,8 +107,9 @@ class Parler_Api_Service {
 			)
 		);
 
-		$api_uri         = $this->get_parler_host() . $url_path;
-		$parler_response = wp_remote_post( $api_uri, $request_params );
+		$api_uri             = $this->get_parler_host() . $url_path;
+		$parler_response     = wp_remote_post( $api_uri, $request_params );
+		$this->last_response = $parler_response;
 
 		if ( $return_status_code ) {
 			return $parler_response['response']['code'];
@@ -279,6 +290,18 @@ class Parler_Api_Service {
 	 */
 	public function set_secret_key( $secret_key ) {
 		$this->secret_key = $secret_key;
+	}
+
+	/**
+	 * Get the last http response code if there was one. Null if none.
+	 *
+	 * @return int|null
+	 */
+	public function get_last_response_code() {
+		if ( isset( $this->last_response['response'] ) && ! empty( $this->last_response['response']['code'] ) ) {
+			return (int) $this->last_response['response']['code'];
+		}
+		return null;
 	}
 
 	/**

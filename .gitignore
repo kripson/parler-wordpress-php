@@ -1,8 +1,8 @@
-.idea/
-vendor/
-__MACOSX/
-logs/*.log
+/.idea/
+/vendor/
+/logs/*.log
 /config.php
 /build/*
+__MACOSX/
 .DS_Store
-parler.zip
+*.zip

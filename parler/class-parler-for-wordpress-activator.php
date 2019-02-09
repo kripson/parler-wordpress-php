@@ -42,9 +42,9 @@ class Parler_For_WordPress_Activator {
 
 		// Display Settings.
 		register_setting( 'parler-settings', 'parler_default_location', array( 'default' => true ) );
-		register_setting( 'parler-settings', 'parler_custom_width', array( 'default' => '80%' ) );
-		register_setting( 'parler-settings', 'parler_custom_margin', array( 'default' => '0 10%' ) );
-		register_setting( 'parler-settings', 'parler_custom_padding', array( 'default' => '0 60px' ) );
+		register_setting( 'parler-settings', 'parler_custom_width', array( 'default' => null ) );
+		register_setting( 'parler-settings', 'parler_custom_margin', array( 'default' => null ) );
+		register_setting( 'parler-settings', 'parler_custom_padding', array( 'default' => null ) );
 
 		// Import all posts.
 		register_setting( 'parler-import-settings', 'parler_import_all_posts', array( 'default' => null ) );

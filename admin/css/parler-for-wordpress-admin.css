@@ -7,6 +7,12 @@
     max-width: 250px;
 }
 
+.alert-success {
+    color: #008501;
+    background-color: #b5ffaa;
+    border-color: #95ff90;
+}
+
 .alert-warning {
     color: #856404;
     background-color: #fff3cd;
