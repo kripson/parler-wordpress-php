@@ -57,7 +57,10 @@ class Parler_For_WordPress_Admin {
 			register_widget( 'Parler_For_WordPress_Widget' );
 		}
 
-		add_action( 'widgets_init', 'register_parler_widget' );
+		// Only enable widget if we are enabled
+		if ( get_option( 'parler_commentsys_enabled' ) ) {
+		    add_action( 'widgets_init', 'register_parler_widget' );
+        }
 	}
 
 	/**
@@ -203,11 +206,12 @@ class Parler_For_WordPress_Admin {
 		}
 
 		// See if we already have the secret stored
+        $parler_comment_system_enabled = get_option( 'parler_commentsys_enabled' );
 		$plugin_key = get_option( 'parler_plugin_token' );
 		// Setup active tab option
-		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
+		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'settings';
 		if ( ! $plugin_key ) {
-			$active_tab = 'setup';
+			$active_tab = 'settings';
 		}
 
 		$temp_token = isset($_GET['temp_token']) ? $_GET['temp_token'] : null;
@@ -253,8 +257,16 @@ class Parler_For_WordPress_Admin {
 					echo "<br /><p><a href='?page=parler&verify=plugin'>Click here</a> once the file is saved and can be <a href='$verification_file'>viewed</a></p>";
 				}
 			}
-		} elseif ($temp_token && $plugin_key) {
-			echo '<br />An API Plugin Token already exists for this site. If you wish to refresh your install you may click the terminate integration link at the bottom of the setup tab.';
+		} elseif ($temp_token && $plugin_key && !isset($_GET['settings-updated'])) {
+			echo '<br />An API Plugin Token already exists for this site. If you wish to refresh your install you may click the terminate integration link at the bottom of the settings tab.';
+		} elseif (!empty($_GET['settings-updated'])) {
+			echo '<div class="notice notice-success is-dismissible">Parler Comment System ';
+			if ( $parler_comment_system_enabled ) {
+			    echo 'Enabled!';
+            } else {
+			    echo 'Disabled.';
+            }
+			echo '</div>';
 		}
 
         // Set the parler-display-settings url based on environment
@@ -274,29 +286,48 @@ class Parler_For_WordPress_Admin {
                 <h1 style="float: left;"> &nbsp; Parler Settings</h1>
             </div>
             <h2 class="nav-tab-wrapper">
-                <a href="?page=parler&tab=setup"
-                   class="nav-tab <?php echo $active_tab == 'setup' ? 'nav-tab-active' : ''; ?>">Setup</a>
+                <a href="?page=parler&tab=settings"
+                   class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
 
 				<?php if ( $plugin_key ) { ?>
 
-                    <a href="?page=parler&tab=general"
-                       class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
+                    <?php if ( $parler_comment_system_enabled ) { ?>
+                        <a href="?page=parler&tab=commenting"
+                           class="nav-tab <?php echo $active_tab == 'commenting' ? 'nav-tab-active' : ''; ?>">Commenting</a>
+                    <?php } ?>
+
                     <a href="?page=parler&tab=import"
                        class="nav-tab <?php echo $active_tab == 'import' ? 'nav-tab-active' : ''; ?>">Import</a>
 				<?php } ?>
             </h2>
 
-			<?php if ( $active_tab == 'setup' ) {  // Setup Tab ?>
-
-                <h2>Setup Parler</h2>
+			<?php if ( $active_tab == 'settings' ) {  // Settings Tab ?>
 
 				<?php if ( $plugin_key ) { ?>
-
-                    <p>Integration Completed</p>
-                    <p>You can use the Parler Widget or leave it in the default comments section.<br />
-                        Moderate comments at <a href="https://moderation.parler.com/">https://moderation.parler.com/</a><br />
-
-                    </p>
+                    <h2>Parler Settings</h2>
+                    <p><b>Integration Completed</b></p>
+                    <p>We sync your published posts/comments by default with Parler.</p>
+                    <p>You may replace the WordPress comments system with the Parler Comments Component/Widget by checking the box below.</p>
+                    <form method="post" action="options.php">
+                        <?php settings_fields( 'parler-setup' ); ?>
+                        <table class="form-table">
+                            <tr valign="top">
+                                <th scope="row">
+                                    <label title="Enable Parler Comments Component"
+                                           for="parler_commentsys_enabled">Parler Comments System Enabled</label><br/>
+                                </th>
+                                <td>
+                                    <input title="Toggle Parler Comments System" type="checkbox"
+                                           name="parler_commentsys_enabled" value="1"
+                                           onChange="
+                                               window.history.replaceState({}, document.title, _parlerWpRemoveParams('temp_token'));
+                                               this.form.submit();
+                                           "
+                                    <?php checked( get_option( 'parler_commentsys_enabled' ) ); ?>/>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                     <?php
                     // Check first if we have overrides before echoing anything out
                     $pp_width = get_option('parler_custom_width');
@@ -327,8 +358,9 @@ class Parler_For_WordPress_Admin {
 					// Integration Incomplete
 					$source_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 					?>
+                <h2>Setup Parler</h2>
 
-                    <p>To activate the Parler Commenting System, simply login to Parler by clicking the "Sign In" button below.</p>
+                <p>To activate the Parler Commenting System, simply login to Parler by clicking the "Sign In" button below.</p>
                     <div class="parler_button "><a href="<?php echo $sso_url . urlencode( $source_url ); ?>">
                             <button type="button" id="parler-signin-button" class="button button-primary"><span
                                         class="dashicons dashicons-lock"></span> Sign in to Parler
@@ -339,9 +371,8 @@ class Parler_For_WordPress_Admin {
 
 					<?php
 				}
-			} elseif ( $active_tab == 'general' ) { // General Tab
+			} elseif ( $active_tab == 'commenting' && get_option( 'parler_commentsys_enabled') ) { // General Tab
 				?>
-
                 <form method="post" action="options.php">
 					<?php settings_fields( 'parler-settings' ); ?>
                     <table class="form-table">
@@ -351,50 +382,74 @@ class Parler_For_WordPress_Admin {
                                        for="parler_default_location">Default Comment Location</label><br/>
                                 <p style="font-weight: normal;"></p></th>
                             <td><input title="Toggle Parler Comments" type="checkbox" name="parler_default_location" value="1"
-									<?php checked( get_option( 'parler_default_location', true) ); ?>/>
+									<?php checked( get_option( 'parler_default_location' ) ); ?>/>
                                 <p><i> Disabled automatically when using Parler widget</i></p>
                             </td>
                         </tr>
                         <tr title="Only for main default location comments, these do not effect the widget." valign="top">
                             <th scope="row">
-                                <b>CSS Styles</b>
-                                <hr/>
+                                <label title="Advanced Settings"
+                                       for="parler_advanced_settings_toggler">Advanced Settings</label>
                             </th>
                             <td>
-                                <i>Some themes may cause issues with the way Parler renders.
-                                    Use the settings below to override the CSS if needed.</i>
+                                <i>Check to enable:</i>
+                                <input title="Toggle Advanced Settings" type="checkbox"
+                                       name="parler_advanced_settings_toggler"
+                                       onchange="jQuery('#parler-commenting-container').toggle();"
+                                       value="1"
+                                       <?php checked( get_option( 'parler_advanced_settings_toggler' ) ); ?>/>
                             </td>
                         </tr>
-                        <tr valign="top">
-                            <th scope="row">
-                                <label title="Manually adjust the commenting sections maximum width."
-                                       for="parler_custom_width">Custom Width</label>
-                            </th>
-                            <td><input title="Enter a custom width" type="text" name="parler_custom_width"
-                                       value="<?php echo esc_attr( get_option( 'parler_custom_width') ); ?>"
-                                       class="parler-text-entry"/>
-                                <p><i>CSS Value for max-width. Ex: "80%" or "520px"</i></p>
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                            <th scope="row">
-                                <label title="Manually adjust the commenting sections margin."
-                                       for="parler_custom_margin">Custom Margin</label></th>
-                            <td><input title="Enter a custom margin" type="text" name="parler_custom_margin"
-                                       value="<?php echo esc_attr( get_option( 'parler_custom_margin') ); ?>"
-                                       class="parler-text-entry"/>
-                                <p><i>CSS Value for margin. Ex: "0 10%"</i></p>
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                            <th scope="row"><label title="Manually adjust the commenting sections padding."
-                                                   for="parler_custom_padding">Custom Padding</label></th>
-                            <td><input title="Enter a custom padding" type="text" name="parler_custom_padding"
-                                       value="<?php echo esc_attr( get_option( 'parler_custom_padding') ); ?>"
-                                       class="parler-text-entry"/>
-                                <p><i>CSS Value for padding. Ex: "0 60px"</i></p>
-                            </td>
-                        </tr>
+                        <table class="form-table" id="parler-commenting-container"
+                            <?php
+                            if ( ! get_option( 'parler_advanced_settings_toggler' ) ) {
+                                echo 'style="display: none;"';
+                            }
+                            ?>
+                        >
+                            <hr/>
+                            <tr title="Only for main default location comments, these do not effect the widget." valign="top">
+                                <th scope="row">
+                                    <h3>CSS Styles</h3>
+                                    <hr/>
+                                </th>
+                                <td>
+                                    <i>Some themes may cause issues with the way Parler renders.
+                                        Use the settings below to override the CSS if needed.
+                                        This only effects the default location (under a post), not the widget.</i>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">
+                                    <label title="Manually adjust the commenting sections maximum width."
+                                           for="parler_custom_width">Custom Width</label>
+                                </th>
+                                <td><input title="Enter a custom width" type="text" name="parler_custom_width"
+                                           value="<?php echo esc_attr( get_option( 'parler_custom_width' ) ); ?>"
+                                           class="parler-text-entry"/>
+                                    <p><i>CSS Value for max-width. Ex: "80%" or "520px"</i></p>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">
+                                    <label title="Manually adjust the commenting sections margin."
+                                           for="parler_custom_margin">Custom Margin</label></th>
+                                <td><input title="Enter a custom margin" type="text" name="parler_custom_margin"
+                                           value="<?php echo esc_attr( get_option( 'parler_custom_margin') ); ?>"
+                                           class="parler-text-entry"/>
+                                    <p><i>CSS Value for margin. Ex: "0 10%"</i></p>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row"><label title="Manually adjust the commenting sections padding."
+                                                       for="parler_custom_padding">Custom Padding</label></th>
+                                <td><input title="Enter a custom padding" type="text" name="parler_custom_padding"
+                                           value="<?php echo esc_attr( get_option( 'parler_custom_padding') ); ?>"
+                                           class="parler-text-entry"/>
+                                    <p><i>CSS Value for padding. Ex: "0 60px"</i></p>
+                                </td>
+                            </tr>
+                        </table>
                     </table>
 					<?php submit_button(); ?>
                     <br /><br />
@@ -457,6 +512,30 @@ class Parler_For_WordPress_Admin {
 		$response           = $parler_api_service->create_retroactive_post( $ID, $post );
 
 		return $response;
+	}
+
+	/**
+	 * Create a retroactive comment.
+	 *
+	 * @param int $ID The comment id.
+	 * @param int $approved If the comment is approved.
+	 *
+	 * @return string|void
+	 */
+	public function parler_comment_published_notification( $ID, $approved ) {
+		$token = get_option( 'parler_api_token', null );
+		if ( ! $token ) {
+			error_log( sprintf( 'Attempted to save comment id %d without Parler integration setup yet.', $ID ) );
+			return;
+		}
+		// If we do have a token, lets use it and create the post.
+		$parler_api_service = new Parler_Api_Service( $token );
+
+		if ( 1 === $approved ){
+			//function logic goes here
+			return $parler_api_service->create_retroactive_comment( $ID );
+		}
+		return;
 	}
 
 	/**

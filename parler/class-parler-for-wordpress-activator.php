@@ -40,8 +40,12 @@ class Parler_For_WordPress_Activator {
 		register_setting( 'parler-plugin-settings', 'parler_plugin_domain', array( 'default' => null ) );
 		register_setting( 'parler-plugin-settings', 'parler_plugin_hash', array( 'default' => null ) );
 
+		// Parler Setup.
+		register_setting( 'parler-setup', 'parler_commentsys_enabled', array( 'default' => false ) );
+
 		// Display Settings.
 		register_setting( 'parler-settings', 'parler_default_location', array( 'default' => true ) );
+		register_setting( 'parler-settings', 'parler_advanced_settings_toggler', array( 'default' => false ) );
 		register_setting( 'parler-settings', 'parler_custom_width', array( 'default' => null ) );
 		register_setting( 'parler-settings', 'parler_custom_margin', array( 'default' => null ) );
 		register_setting( 'parler-settings', 'parler_custom_padding', array( 'default' => null ) );

@@ -15,7 +15,7 @@ Then read the readme in the docker wp dev repo to bring up a wordpress container
 
 Clone this code along side this repo to make sure of the volume mount without changes needed to the docker-compose.yml
 
-`git clone https://user_name@10.2.2.12:7990/scm/par/dev-docker-wp-plugin.git`
+`git clone git@gitlab.parler.com:frontend/dev-docker-wp-plugin.git`
 
 The React Plugin code is now pointed at either staging based off the `config.php` settings.
 If no config is provided then it defaults to live.
@@ -31,10 +31,12 @@ Installing
 Install this software from git using 
 
 ````
-git clone https://user_name@10.2.2.12:7990/scm/par/parler-wordpress-php.git
+git clone git@gitlab.parler.com:frontend/parler-wordpress-php.git
 ````
 
 If developing against the staging environment, move `config.php.dist` to `config.php`.
+
+THere are some env vars you can override there to point at diff assets.
 
 Deploying
 ---------
@@ -46,7 +48,7 @@ Run the `build.sh` file in your terminal.
 How To Add React
 ----------------
 The parler-wordpress-php project uses the code from the parler-wordpress-react project. 
-To access the code from parler-worrdpress-react, follow these steps:
+To access the code from parler-wordpress-react, follow these steps:
 
 * Checkout the latest code for the <u>parler-wordpress-react</u> project
 * Execute <b>npm run build</b> against the <u>parler-wordpress-react</u> project
@@ -78,7 +80,7 @@ own site on your local machine, you should have the needed privileges. Follow th
 Troubleshooting
 ----------------
 * If you get an error saying your plugin is too large, open the file <b>php/php.ini</b> in your
- Wordpress instalation and change <b>upload_max_filesize</b>
+ Wordpress installation and change <b>upload_max_filesize</b>
 
 * If the bulk importer is not working, please ensure your wp installation hostname can be reached within it's localhost. The plugin utilizes async calls to your WP installation to background the bulk import jobs.
 

@@ -135,6 +135,7 @@ class Parler_For_WordPress {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'parley_add_admin_menu' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'parley_add_admin_menu' );
 		$this->loader->add_action( 'publish_post', $plugin_admin, 'parler_post_published_notification', 10, 2 );
+		$this->loader->add_action( 'comment_post', $plugin_admin, 'parler_comment_published_notification', 10, 2 );
 	}
 
 	/**
