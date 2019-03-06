@@ -27,11 +27,13 @@ class Parler_For_WordPress_Deactivator {
 			return;
 		}
 
+		update_option( 'parler_commentsys_enabled', true );
 		update_option( 'parler_api_token', null );
 		update_option( 'parler_custom_width', null );
 		update_option( 'parler_custom_margin', null );
 		update_option( 'parler_custom_padding', null );
 		update_option( 'parler_default_location', true );
+		update_option( 'parler_advanced_settings_toggler', true );
 		update_option( 'parler_import_all_posts', null );
 		update_option( 'parler_plugin_domain', null );
 		update_option( 'parler_plugin_hash', null );

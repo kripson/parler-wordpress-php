@@ -24,6 +24,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 // Clean up configs when uninstalling the plugin.
 update_option( 'parler_api_token', null );
 update_option( 'parler_custom_width', null );
+update_option( 'parler_advanced_settings_toggler', null );
+update_option( 'parler_commentsys_enabled', null );
 update_option( 'parler_default_location', null );
 update_option( 'parler_import_all_posts', null );
 update_option( 'parler_plugin_domain', null );

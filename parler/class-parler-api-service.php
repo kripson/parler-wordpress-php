@@ -169,6 +169,31 @@ class Parler_Api_Service {
 	}
 
 	/**
+	 * Create a post retroactively and any comments on the post.
+	 *
+	 * @param int $id the id of the comment.
+	 *
+	 * @return string $response
+	 */
+	public function create_retroactive_comment( $id ) {
+		$comment      = get_comment( $id );
+		$comment_data = array(
+			'body'         => $comment->comment_content,
+			'createdAt'    => $comment->comment_date,
+			'creatorEmail' => $comment->comment_author_email,
+			'creatorName'  => $comment->comment_author,
+			'id'           => $comment->comment_ID,
+			'parent'       => $comment->comment_parent,
+			'post'         => get_permalink( $comment->comment_post_ID ),
+		);
+		$this->debug_log( "[post_id:{$id}][comment_id:{$comment->comment_ID}] Loading Comment to Parler: " . wp_json_encode( $comment_data ) );
+		// Load Comments into Parler.
+		$comment_response = $this->post( '0JFJvZ79', wp_json_encode( $comment_data ), false, true );
+		$this->debug_log( "[post_id:{$id}][comment_id:{$comment->comment_ID}] Retro Comment Response:" . wp_json_encode( $comment_response ) );
+		return $comment_response;
+	}
+
+	/**
 	 * Get a permenant token from a temp token.
 	 *
 	 * @param string $temp_token The temp token from sso.

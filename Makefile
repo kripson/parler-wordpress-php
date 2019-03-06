@@ -1,6 +1,6 @@
 # the compiler to use.
 BuildDir=./build/
-VERSION=staging-1.2.4
+VERSION=staging-1.3.0
 
 all: build
 
