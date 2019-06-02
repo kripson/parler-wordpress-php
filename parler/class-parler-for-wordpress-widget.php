@@ -34,8 +34,9 @@ class Parler_For_WordPress_Widget extends WP_Widget {
 		echo $args['before_widget'];
 		echo $args['before_title'] . 'Parler' . $args['after_title'];
 		// @todo make widget css more dynamic/editable
-		echo "<div style='padding-top: 0em; max-width: " .  $instance['width']  . "' id='comments'></div>";
+		echo "<div style='padding-top: 0em; max-width: " .  $instance['width']  . "' id='comments' class='parler-widget'/></div>";
 		echo $args['after_widget'];
+		add_action('wp_enqueue_scripts', array(&$this, 'widget_css'));
 	}
 
 	/**
