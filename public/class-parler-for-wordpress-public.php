@@ -80,6 +80,11 @@ class Parler_For_WordPress_Public {
 			wp_enqueue_style( $this->plugin_name, 'https://plugin.parler.com/production/parler-for-wordpress-public.css#parlerasync', array(), $this->version, 'all' );
 		}
 
+		// Checks if widget is active on the front end.
+		if ( is_active_widget( false, false, 'parler_widget', true ) ) {
+			wp_enqueue_style( $this->plugin_name . '-widget', plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-widget.css', array(), $this->version, 'all' );
+		}
+
 		if ( get_option( 'parler_commentsys_enabled', false ) ) {
 			/**
 			 * Remove comments section code
