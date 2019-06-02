@@ -215,7 +215,9 @@ class Parler_For_WordPress_Admin {
 		}
 
 		$temp_token = isset($_GET['temp_token']) ? $_GET['temp_token'] : null;
-		if ($temp_token && !$plugin_key) {
+		
+			// Checks if plugin is active and enabled and if tokens are stored.
+			if ($parler_comment_system_enabled && $temp_token && !$plugin_key) {
 			// Lets get a permanent token and a plugin key
 			$parler_api_service = new Parler_Api_Service();
 			// Get perm token
