@@ -15,7 +15,7 @@
  * Plugin Name:       Parler
  * Plugin URI:        https://home.parler.com/installation/
  * Description:       A Social News and Content Engagement System working to increase community activity, grow audience exposure, and drive site traffic.
- * Version:           1.3.0
+ * Version:           1.3.1
  * Author:            Parler LLC
  * Author URI:        https://home.parler.com/
  * Text Domain:       parler
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
 // Plugin Version and Target Parler Environment.
-define( 'PARLER4WP_VERSION', '1.3.0' );
+define( 'PARLER4WP_VERSION', '1.3.1' );
 define( 'PARLER4WP_ENV', 'STAGING' );
 
 if ( file_exists( plugin_dir_path( __FILE__ ) . 'config.php' ) ) {
