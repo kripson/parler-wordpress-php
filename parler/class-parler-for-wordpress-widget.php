@@ -34,9 +34,8 @@ class Parler_For_WordPress_Widget extends WP_Widget {
 		echo $args['before_widget'];
 		echo $args['before_title'] . 'Parler' . $args['after_title'];
 		// @todo make widget css more dynamic/editable
-		echo "<div style='padding-top: 0em; max-width: " .  $instance['width']  . "' id='comments' class='parler-widget'/></div>";
+		echo "<div style='padding-top: 0em; max-width: " .  $instance['width']  . "' id='comments'></div>";
 		echo $args['after_widget'];
-		add_action('wp_enqueue_scripts', array(&$this, 'widget_css'));
 	}
 
 	/**
@@ -46,6 +45,8 @@ class Parler_For_WordPress_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$width = ! empty( $instance['width'] ) ? $instance['width'] : esc_html__( '100%', 'width' );
+		//Note - Button width functionality was commented out due to overwrite by the public.css file
+		// $button_width = ! empty( $instance['button_width'] ) ? $instance['button_width'] : esc_html__( '100%', 'width' );
 		?>
         <br/>
         <p>Put a valid width like 90%, 500px, etc.</p>
@@ -54,7 +55,11 @@ class Parler_For_WordPress_Widget extends WP_Widget {
             <label for="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"><?php esc_attr_e( 'Width:', 'width' ); ?></label>
             <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"
                    name="<?php echo esc_attr( $this->get_field_name( 'width' ) ); ?>" type="text"
-                   value="<?php echo esc_attr( $width ); ?>">
+				   value="<?php echo esc_attr( $width ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'button_width' ) ); ?>"><?php esc_attr_e( 'Comment Button Width:', 'button_width' ); ?></label>
+            <!-- <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'button_width' ) ); ?>"
+                   name="<?php echo esc_attr( $this->get_field_name( 'button_width' ) ); ?>" type="text"
+                   value="<?php echo esc_attr( $button_width ); ?>"> -->
         </p>
 		<?php
 	}
@@ -72,6 +77,7 @@ class Parler_For_WordPress_Widget extends WP_Widget {
 		update_option( 'parler_default_location', false );
 		$instance          = array();
 		$instance['width'] = ( ! empty( $new_instance['width'] ) ) ? sanitize_text_field( $new_instance['width'] ) : '100%';
+		// $instance['button_width'] = ( ! empty( $new_instance['button_width'] ) ) ? sanitize_text_field( $new_instance['button_width'] ) : '100%';
 
 		return $instance;
 	}

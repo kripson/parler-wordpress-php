@@ -451,6 +451,37 @@ class Parler_For_WordPress_Admin {
                                     <p><i>CSS Value for padding. Ex: "0 60px"</i></p>
                                 </td>
                             </tr>
+							<!-- <tr valign="top">
+                            <th scope="row"><label title="Pick what post types to add Parler tags to"
+                                                   for="parler_supported_posts">Parler Supported Tags</label></th>
+							<td>
+								<p><i>Select what post types to add Parler tags to:</i></p>
+								<?php
+								$args = array(
+									'public'   => true,
+								);
+								$output = 'names';
+								$operator = 'and';
+								$post_types = get_post_types( $args, $output, $operator ); 
+
+								foreach ( $post_types  as $post_type ) {
+									$supported_post_type = "parler_supported_" . $post_type;
+								?>	
+									<table>
+										<tr>
+											<td class="p-0">
+												<input type="checkbox" id="<?php echo $supported_post_type; ?>" 
+														name="<?php echo $supported_post_type; ?>" value="1"
+														<?php checked( get_option( $supported_post_type, true) ); ?>>
+												<label for="<?php echo $supported_post_type; ?>"><?php echo ucwords($post_type); ?></label>
+											</td>
+										</tr>
+									</table>
+								<?php
+								}
+								?>
+							</td>
+                        </tr> -->
                         </table>
                     </table>
 					<?php submit_button(); ?>

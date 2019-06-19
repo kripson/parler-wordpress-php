@@ -40,18 +40,28 @@ class Parler_For_WordPress_Activator {
 		register_setting( 'parler-plugin-settings', 'parler_plugin_domain', array( 'default' => null ) );
 		register_setting( 'parler-plugin-settings', 'parler_plugin_hash', array( 'default' => null ) );
 
-		// Parler Setup.
-		register_setting( 'parler-setup', 'parler_commentsys_enabled', array( 'default' => false ) );
-
 		// Display Settings.
 		register_setting( 'parler-settings', 'parler_default_location', array( 'default' => true ) );
-		register_setting( 'parler-settings', 'parler_advanced_settings_toggler', array( 'default' => false ) );
 		register_setting( 'parler-settings', 'parler_custom_width', array( 'default' => null ) );
 		register_setting( 'parler-settings', 'parler_custom_margin', array( 'default' => null ) );
 		register_setting( 'parler-settings', 'parler_custom_padding', array( 'default' => null ) );
 
+		// Registers Parler taxonomy checkbox options for all public functions.
+		// $args = array(
+		// 	'public'   => true,
+		// );
+		// $output = 'names';
+		// $operator = 'and';
+		// $post_types = get_post_types( $args, $output, $operator ); 
+
+		// foreach ( $post_types  as $post_type ) {
+		// 	$supported_post_type = "parler_supported_" . $post_type;
+		// 	register_setting( 'parler-settings', $supported_post_type, array( 'default' => null ) );
+		// }
+
 		// Import all posts.
 		register_setting( 'parler-import-settings', 'parler_import_all_posts', array( 'default' => null ) );
+
 	}
 
 }

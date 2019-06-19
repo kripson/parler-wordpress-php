@@ -85,6 +85,15 @@ class Parler_For_WordPress_Public {
 			wp_enqueue_style( $this->plugin_name . '-widget', plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-widget.css', array(), $this->version, 'all' );
 		}
 
+		/**
+		 * Checks if widget is active on the front end.
+		 * Note - This is functional and fixed a lot of issues related to the widget elements but a change was
+		 * recently made to the public.css file that overwrites most of these fixes. 
+		 */
+		// if ( is_active_widget( false, false, 'parler_widget', true ) ) {
+		// 	wp_enqueue_style( $this->plugin_name . '-widget', plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-widget.css', array(), $this->version, 'all' );
+		// }
+
 		if ( get_option( 'parler_commentsys_enabled', false ) ) {
 			/**
 			 * Remove comments section code
