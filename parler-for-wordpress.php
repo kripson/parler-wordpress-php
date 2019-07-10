@@ -93,6 +93,20 @@ function run_parler_plugin() {
 }
 
 run_parler_plugin();
+/*add_action('admin_menu', function (){
+    $LogoImage = new \Parler\LogoImage();
+    $iconDiv = $LogoImage->returnSvgUrl();
+    add_menu_page(
+        'Parler Settings',
+        'Parler',
+        'manage_options',
+        'parler',
+        array( new \Parler\SettingsPage,'getInternalPageHeader'),    
+        $iconDiv,    
+        24,
+        ); 
+});
+*/
 
 add_action('init', array(new \Parler\SyncNoSyncTaxoSelector, "createParlerTerms"));
 

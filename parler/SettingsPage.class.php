@@ -11,10 +11,24 @@ class SettingsPage{
     }
     
     public function handleFormSubmission(){
+        $x = $_POST; var_dump($x);die();
         die("asdfasdfasdfasdfasdasdfasdasdfasdfkjahsgdflkjahsdlf;kjhasdlkjhalskjdalksjdhlkajwhflkjwahelkf");
     }
     
     
+    public function getInternalPageHeader(){
+        $url = get_site_url() . '/wp-content/plugins/parler-wordpress-php/admin/images/Parler_Logo.svg';
+$output = <<<output
+        <div class="wrap">
+            <div style="display: inline-block;">
+                <img style="float: left;" width="42" height="42" src="$url" />
+                <h1 style="float: left;"> &nbsp; Parler Settings!!</h1>
+            </div>
+output;
+
+        $output = $output . $this->getHTML_EnableCertainCPTs();
+        echo $output;
+    }
     
     public function getHTML_EnableCertainCPTs(){
         
@@ -24,7 +38,7 @@ class SettingsPage{
         $saveChanges = __("Save Changes", "parler");
    
 $output = <<<output
-<from method = "post" />
+<form method = "post">
     <table class="form-table">
         <tr valign="top">
             <th scope="row">

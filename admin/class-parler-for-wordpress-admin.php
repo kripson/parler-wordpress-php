@@ -327,6 +327,8 @@ class Parler_For_WordPress_Admin {
                     <p>You may replace the WordPress comments system with the Parler Comments Component/Widget by checking the box below.</p>
     
 						<?php echo $EnableCertainCPTsDivHTML;?>
+                        </table>
+                    </form>
 
                     <?php
                     // Check first if we have overrides before echoing anything out
