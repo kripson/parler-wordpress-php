@@ -127,12 +127,24 @@ class Parler_For_WordPress_Admin {
 
 		// Remove comments from menu since Parler stores it for you.
 		remove_menu_page( 'edit-comments.php' );
-
+        
+		$LogoImage = new \Parler\LogoImage();
+		$iconDiv = $LogoImage->returnSvgUrl();
+		
+		//This is the WordPress top level admin menu
 		// Add options page for Parler in settings.
-		add_menu_page( 'Parler Settings', 'Parler', 'manage_options', 'parler', array(
-			__CLASS__,
-			'parler_options_page'
-		), 'dashicons-testimonial', 24 );
+		add_menu_page(
+		    'Parler Settings', 
+		    'Parler', 
+		    'manage_options', 
+		    'parler', 
+		    array(
+			     __CLASS__,
+			     'parler_options_page'
+		         ),
+		    $iconDiv, 
+		    24, 
+		); 
 
 		// Uncomment to move menu item into options.
 		// add_options_page('Parler Admin Settings', 'Parler', 'manage_options', 'parler', array(__CLASS__, 'parler_options_page'));
@@ -305,31 +317,17 @@ class Parler_For_WordPress_Admin {
 
 			<?php if ( $active_tab == 'settings' ) {  // Settings Tab ?>
 
-				<?php if ( $plugin_key ) { ?>
+				<?php if ( $plugin_key ) { 
+				$SettingsPage = new \Parler\SettingsPage();
+				$EnableCertainCPTsDivHTML = $SettingsPage->getHTML_EnableCertainCPTs();
+				    ?>
                     <h2>Parler Settings</h2>
                     <p><b>Integration Completed</b></p>
                     <p>We sync your published posts/comments by default with Parler.</p>
                     <p>You may replace the WordPress comments system with the Parler Comments Component/Widget by checking the box below.</p>
-                    <form method="post" action="options.php">
-                        <?php settings_fields( 'parler-setup' ); ?>
-                        <table class="form-table">
-                            <tr valign="top">
-                                <th scope="row">
-                                    <label title="Enable Parler Comments Component"
-                                           for="parler_commentsys_enabled">Parler Comments System Enabled</label><br/>
-                                </th>
-                                <td>
-                                    <input title="Toggle Parler Comments System" type="checkbox"
-                                           name="parler_commentsys_enabled" value="1"
-                                           onChange="
-                                               window.history.replaceState({}, document.title, _parlerWpRemoveParams('temp_token'));
-                                               this.form.submit();
-                                           "
-                                    <?php checked( get_option( 'parler_commentsys_enabled' ) ); ?>/>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+    
+						<?php echo $EnableCertainCPTsDivHTML;?>
+
                     <?php
                     // Check first if we have overrides before echoing anything out
                     $pp_width = get_option('parler_custom_width');

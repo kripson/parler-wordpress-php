@@ -93,3 +93,52 @@ function run_parler_plugin() {
 }
 
 run_parler_plugin();
+
+add_action('init', array(new \Parler\SyncNoSyncTaxoSelector, "createParlerTerms"));
+
+/*
+add_action('init','asdf');
+
+
+function asdf(){
+    if (!taxonomy_exists('shiba_theme')) {
+        register_taxonomy( 'shiba_theme', 'post',
+            array(   'hierarchical' => FALSE, 'label' => __('Theme'),
+                'public' => TRUE, 'show_ui' => TRUE,
+                'query_var' => 'theme',
+                'rewrite' => array('slug' => 'theme')
+            ) );    }
+}
+
+// Add to admin_init function
+add_filter("manage_edit-shiba_theme_columns", 'theme_columns');
+
+function theme_columns($theme_columns) {
+    $new_columns = array(
+        'cb' => '<input type="checkbox" />',
+        'name' => __('Name'),
+        'description' => __('Description'),
+        'slug' => __('Slug'),
+        'posts' => __('Posts'),
+        'header_icon' => 'Sync To Parler',
+    );
+    return $new_columns;
+}
+
+// Add to admin_init function
+add_filter("manage_shiba_theme_custom_column", 'manage_theme_columns', 10, 3);
+
+function manage_theme_columns($out, $column_name, $theme_id) {
+    $theme = get_term($theme_id, 'shiba_theme');
+    switch ($column_name) {
+        case 'header_icon':
+            $out = "Term ID: $theme_id";
+            break;
+            
+        default:
+            break;
+    }
+    return $out;
+}
+
+*/
