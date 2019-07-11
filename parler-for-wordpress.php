@@ -43,6 +43,9 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'config.php' ) ) {
  * This action is documented in includes/class-parler-for-wordpress-activator.php
  */
 function activate_parler_plugin() {
+    $activeCPTs = array();
+    array_push($activeCPTs, "post");
+    update_option('parler-enabled-post-types', $activeCPTs);
 	if ( version_compare( phpversion(), '5.4', '<' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		wp_die( 'Parler requires PHP 5.4 or higher. Please upgrade your PHP version.' );

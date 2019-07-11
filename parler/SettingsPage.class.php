@@ -11,8 +11,12 @@ class SettingsPage{
     }
     
     public function handleFormSubmission(){
-        $x = $_POST; var_dump($x);die();
-        die("asdfasdfasdfasdfasdasdfasdasdfasdfkjahsgdflkjahsdlf;kjhasdlkjhalskjdalksjdhlkajwhflkjwahelkf");
+        if(isset($_POST['cpts-enabled'])){
+            $CPTs = $_POST['cpts-enabled'];
+            update_option('parler-enabled-post-types', $CPTs);
+        }else{
+            delete_option('parler-enabled-post-types');
+        }
     }
     
     
@@ -57,9 +61,13 @@ output;
     
     public function getRowSelectorHTML(){
         $CPTs = $this->getArrayOfCPTs();
+        $activeCPTs = get_option('parler-enabled-post-types', array());
         $output = "";
         foreach($CPTs as $CPT){
-            $output = $output . "<tr><td>$CPT</td><td><input type = 'checkbox' name = '$CPT-checkbox' value = '1' checked /></td></tr>";
+            if(in_array ( $CPT, $activeCPTs )){
+                $checked = "checked";
+            }else{$checked = "";}
+            $output = $output . "<tr><td>$CPT</td><td><input type = 'checkbox' name = 'cpts-enabled[]' value = '$CPT' $checked /></td></tr>";
         }
         return $output;
     }

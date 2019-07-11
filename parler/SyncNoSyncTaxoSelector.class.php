@@ -81,8 +81,8 @@ class SyncNoSyncTaxoSelector{
             unset($x["link_category"]);
         }
         if (($key = array_search("post_format", $x)) !== false) {
-            unset($x["post_format"]);
         }
+            unset($x["post_format"]);
         
         //uncomment this line to see taonomies:
         //var_dump($x);die();
@@ -92,28 +92,43 @@ class SyncNoSyncTaxoSelector{
  
     public function createParlerTerms(){
         if (!taxonomy_exists('parler')) {
-            register_taxonomy( 'parler', 'post',
-                array(
-                    'hierarchical' => TRUE, 
-                    'label' => __('Parler'),
-                    'public' => TRUE, 'show_ui' => TRUE,
-                    'query_var' => 'paler',
-                    'rewrite' => array('slug' => 'parler'),
-                    'show_in_rest' => TRUE,
-                )
-            );
-            wp_insert_term('Publish to Parler', 'parler',
-                array(
-                    'slug'          => 'publish',
-                    'description'   => 'Publish a post to the Parler platform.',
-                )
-            );
-            wp_insert_term('Enable Parler Comments', 'parler',
-                array(
-                    'slug'          => 'comments',
-                    'description'   => 'Enable Parler comments.',
-                )
-            );
+            //die("95");
+            $activeCPTs = get_option('parler-enabled-post-types');
+            //$activeCPTs = array("daily");
+
+            if($activeCPTs){
+                //die('98');
+                //foreach($activeCPTs as $CPT){
+                    
+                    //var_dump($activeCPTs);die();
+                    register_taxonomy(
+                        'parler', 
+                        $activeCPTs,
+                        array(
+                            'hierarchical' => TRUE,
+                            'label' => __('Parler'),
+                            'public' => TRUE, 'show_ui' => TRUE,
+                            'query_var' => 'paler',
+                            'rewrite' => array('slug' => 'parler'),
+                            'show_in_rest' => TRUE,
+                        )
+                    );
+                    
+                //}
+                
+                wp_insert_term('Publish to Parler', 'parler',
+                    array(
+                        'slug'          => 'publish',
+                        'description'   => 'Publish a post to the Parler platform.',
+                    )
+                );
+                wp_insert_term('Enable Parler Comments', 'parler',
+                    array(
+                        'slug'          => 'comments',
+                        'description'   => 'Enable Parler comments.',
+                    )
+                );
+            }
         }
     }
         
