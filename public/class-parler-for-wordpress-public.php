@@ -93,18 +93,19 @@ class Parler_For_WordPress_Public {
 		// if ( is_active_widget( false, false, 'parler_widget', true ) ) {
 		// 	wp_enqueue_style( $this->plugin_name . '-widget', plugin_dir_url( __FILE__ ) . 'css/parler-for-wordpress-widget.css', array(), $this->version, 'all' );
 		// }
-
+        //JIM REMOVING:
+        /*
+        
 		if ( get_option( 'parler_commentsys_enabled', false ) ) {
-			/**
-			 * Remove comments section code
-			 */
 			// Kill the comments template.
 			add_filter( 'comments_template', array( $this, 'comments_template' ), 20 );
 			// Remove comment-reply script for themes that include it indiscriminately.
 			wp_deregister_script( 'comment-reply' );
 			// feed_links_extra inserts a comments RSS link.
 			remove_action( 'wp_head', 'feed_links_extra', 3 );
-		}
+		
+	   }
+	   */
 	}
 
 	/**

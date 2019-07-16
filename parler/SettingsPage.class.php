@@ -2,39 +2,61 @@
 
 namespace Parler;
 
-class SettingsPage{
+class SettingsPage {  
     
-    public function __construct(){
-        if(isset($_POST['parler-settings-page-submit-button'])){
-            $this->handleFormSubmission();
+    public function __construct() {
+        if(isset($_POST['parler-settings-page-submit-button'])) {
+            //add_action('init', array($this, 'clearParlerTerms'));
+            add_action('init', array($this, 'handleFormSubmission'));
         }
     }
     
-    public function handleFormSubmission(){
-        if(isset($_POST['cpts-enabled'])){
+    
+    public function renderAdminSettingsPage(){
+        add_options_page('Parler Settings', 'Parler', 'manage_options', 'pareler', array($this, 'getHTML'));
+    }
+    
+    public function getHTML(){
+        echo ($this->getInternalPageHeader());
+        echo ($this->getHTML_EnableCertainCPTs());
+    }
+    
+    public function handleFormSubmission() {
+        if(isset($_POST['cpts-enabled'])) {
             $CPTs = $_POST['cpts-enabled'];
             update_option('parler-enabled-post-types', $CPTs);
         }else{
             delete_option('parler-enabled-post-types');
         }
+        /*
+        $TaxoFeature = new TaxonomyFeature;
+        $arrayOfAllTerms = $this->getArrayOfCPTs();
+        foreach($arrayOfAllTerms as $CPT){
+            $TaxoFeature->removeParlerTagsFromEntireSite($CPT);
+        }
+        
+        foreach($CPTs as $CPT){
+            $TaxoFeature->setTagsForParticularCPT($CPT);          
+        }
+        */
     }
     
     
-    public function getInternalPageHeader(){
+    public function getInternalPageHeader() {
         $url = get_site_url() . '/wp-content/plugins/parler-wordpress-php/admin/images/Parler_Logo.svg';
 $output = <<<output
         <div class="wrap">
             <div style="display: inline-block;">
                 <img style="float: left;" width="42" height="42" src="$url" />
-                <h1 style="float: left;"> &nbsp; Parler Settings!!</h1>
+                <h1 style="float: left;"> &nbsp; Parler Settings</h1>
             </div>
 output;
 
-        $output = $output . $this->getHTML_EnableCertainCPTs();
-        echo $output;
+        //$output = $output . $this->getHTML_EnableCertainCPTs();
+        return $output;
     }
     
-    public function getHTML_EnableCertainCPTs(){
+    public function getHTML_EnableCertainCPTs() {
         
         //Strings the WordPress way for automatic l18n
         $enableParlerFor = __("Enable Parler for post types: ", "parler");
@@ -59,12 +81,12 @@ output;
         
     }
     
-    public function getRowSelectorHTML(){
+    public function getRowSelectorHTML() {
         $CPTs = $this->getArrayOfCPTs();
         $activeCPTs = get_option('parler-enabled-post-types', array());
         $output = "";
-        foreach($CPTs as $CPT){
-            if(in_array ( $CPT, $activeCPTs )){
+        foreach($CPTs as $CPT) {
+            if(in_array ( $CPT, $activeCPTs )) {
                 $checked = "checked";
             }else{$checked = "";}
             $output = $output . "<tr><td>$CPT</td><td><input type = 'checkbox' name = 'cpts-enabled[]' value = '$CPT' $checked /></td></tr>";
@@ -72,7 +94,7 @@ output;
         return $output;
     }
     
-    public function getArrayOfCPTs(){
+    public function getArrayOfCPTs() {
         
         $CPTs = array();
         
@@ -87,7 +109,7 @@ output;
                 $post_type != "oembed_cache" and
                 $post_type != "user_request" and 
                 $post_type != "wp_block"
-             ){
+             ) {
                 array_push ($CPTs, $post_type);
             }
             
@@ -96,3 +118,4 @@ output;
     }
    
 }
+

@@ -2,9 +2,9 @@
 
 namespace Parler;
 
-class LogoImage{
+class LogoImage {
     
-    public function returnParlerIconImgTag(){
+    public function returnParlerIconImgTag() {
         $URL = get_site_url() . "/wp-content/plugins/parler-wordpress-php/admin/images/parler-logo.png";
         $HTML = "
         
@@ -17,12 +17,12 @@ class LogoImage{
         return $HTML;
     }
     
-    public function returnSvgUrl(){
+    public function returnSvgUrl() {
         $URL = get_site_url() . "/wp-content/plugins/parler-wordpress-php/admin/images/Parler_Logo16x16px.svg";
         return $URL; 
     }
     
-    public function returnParlerIconImgTagDiv(){
+    public function returnParlerIconImgTagDiv() {
         $URL = get_site_url() . "/wp-content/plugins/parler-wordpress-php/admin/images/parler-logo.png";
         $HTML = "
         

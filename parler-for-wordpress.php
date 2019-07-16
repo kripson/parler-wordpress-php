@@ -24,7 +24,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	die('Something is wrong.');
 }
 
 // Autoload classes in parler/ directory.
@@ -43,9 +43,14 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'config.php' ) ) {
  * This action is documented in includes/class-parler-for-wordpress-activator.php
  */
 function activate_parler_plugin() {
-    $activeCPTs = array();
-    array_push($activeCPTs, "post");
-    update_option('parler-enabled-post-types', $activeCPTs);
+    if (!( get_option( 'parler-enabled-post-types' ))){
+        $activeCPTs = array();
+        array_push($activeCPTs, "post");
+        update_option('parler-enabled-post-types', $activeCPTs);
+    }
+    
+    
+    
 	if ( version_compare( phpversion(), '5.4', '<' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		wp_die( 'Parler requires PHP 5.4 or higher. Please upgrade your PHP version.' );
@@ -94,68 +99,14 @@ function run_parler_plugin() {
 	$plugin->run();
 
 }
-
 run_parler_plugin();
-/*add_action('admin_menu', function (){
-    $LogoImage = new \Parler\LogoImage();
-    $iconDiv = $LogoImage->returnSvgUrl();
-    add_menu_page(
-        'Parler Settings',
-        'Parler',
-        'manage_options',
-        'parler',
-        array( new \Parler\SettingsPage,'getInternalPageHeader'),    
-        $iconDiv,    
-        24,
-        ); 
-});
-*/
+add_action('init', array(new \Parler\TaxonomyFeature, "createParlerTerms"));
+add_action('admin_menu', array(new \Parler\SettingsPage, "renderAdminSettingsPage"));
+$CommentsFeature = new \Parler\CommentsFeature;
+$CommentsFeature->disableCommentField();
+$SyncFeature = new \Parler\SyncFeature;
+$SyncFeature->registerAPIroutes();
 
-add_action('init', array(new \Parler\SyncNoSyncTaxoSelector, "createParlerTerms"));
+$OneTimeUpdate = new \Parler\OneTimeUpdate;
 
-/*
-add_action('init','asdf');
-
-
-function asdf(){
-    if (!taxonomy_exists('shiba_theme')) {
-        register_taxonomy( 'shiba_theme', 'post',
-            array(   'hierarchical' => FALSE, 'label' => __('Theme'),
-                'public' => TRUE, 'show_ui' => TRUE,
-                'query_var' => 'theme',
-                'rewrite' => array('slug' => 'theme')
-            ) );    }
-}
-
-// Add to admin_init function
-add_filter("manage_edit-shiba_theme_columns", 'theme_columns');
-
-function theme_columns($theme_columns) {
-    $new_columns = array(
-        'cb' => '<input type="checkbox" />',
-        'name' => __('Name'),
-        'description' => __('Description'),
-        'slug' => __('Slug'),
-        'posts' => __('Posts'),
-        'header_icon' => 'Sync To Parler',
-    );
-    return $new_columns;
-}
-
-// Add to admin_init function
-add_filter("manage_shiba_theme_custom_column", 'manage_theme_columns', 10, 3);
-
-function manage_theme_columns($out, $column_name, $theme_id) {
-    $theme = get_term($theme_id, 'shiba_theme');
-    switch ($column_name) {
-        case 'header_icon':
-            $out = "Term ID: $theme_id";
-            break;
-            
-        default:
-            break;
-    }
-    return $out;
-}
-
-*/
+//add_action('init', array(new \Parler\TaxonomyFeature, "setTagsForParticularCPT"));
