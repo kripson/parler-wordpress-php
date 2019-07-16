@@ -6,7 +6,7 @@ class CommentsFeature{
     
    
     
-    public function disableCommentField() {
+    public function injectParlerIntoCommentTemplate() {
         
         add_filter( 'comments_template', array( $this, 'comments_template' ), 20 );
         // Remove comment-reply script for themes that include it indiscriminately.

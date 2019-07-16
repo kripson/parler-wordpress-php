@@ -4,7 +4,17 @@ namespace Parler;
 
 class TaxonomyFeature{
     
+    public function enableParlerTerms(){
+        add_action('init', array($this, "createParlerTerms"));
+    }
+    
+    public function preClickParlerTaxosInEditors(){
+        
+    }
+    
     public function removeParlerTagsFromEntireSite($CPT){
+        
+
         
         $args = array(
             //'post_status'   => 'publish',

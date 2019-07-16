@@ -100,13 +100,17 @@ function run_parler_plugin() {
 
 }
 run_parler_plugin();
-add_action('init', array(new \Parler\TaxonomyFeature, "createParlerTerms"));
-add_action('admin_menu', array(new \Parler\SettingsPage, "renderAdminSettingsPage"));
+
+$TaxonomyFeature = new \Parler\TaxonomyFeature;
+$TaxonomyFeature->enableParlerTerms();
+
 $CommentsFeature = new \Parler\CommentsFeature;
-$CommentsFeature->disableCommentField();
+$CommentsFeature->injectParlerIntoCommentTemplate();
+
 $SyncFeature = new \Parler\SyncFeature;
 $SyncFeature->registerAPIroutes();
 
 $OneTimeUpdate = new \Parler\OneTimeUpdate;
+$OneTimeUpdate->enqueOneTimeUpdate();
 
-//add_action('init', array(new \Parler\TaxonomyFeature, "setTagsForParticularCPT"));
+add_action('admin_menu', array(new \Parler\SettingsPage, "renderAdminSettingsPage"));

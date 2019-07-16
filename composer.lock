@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d7ca4b8bab533bdfb270eb6a5216983",
+    "content-hash": "f21104ebe6eaeb5eda555b1e6cc05a0e",
     "packages": [],
     "packages-dev": [
         {
@@ -1810,7 +1810,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.8.28",
+            "version": "v5.8.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1854,7 +1854,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.8.28",
+            "version": "v5.8.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -2357,6 +2357,59 @@
                 "time"
             ],
             "time": "2019-07-14T17:06:46+00:00"
+        },
+        {
+            "name": "overtrue/phplint",
+            "version": "1.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/phplint.git",
+                "reference": "dab041512195a6bf52401a66b65dc5b19e4d09ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/phplint/zipball/dab041512195a6bf52401a66b65dc5b19e4d09ea",
+                "reference": "dab041512195a6bf52401a66b65dc5b19e4d09ea",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.5.9",
+                "symfony/console": "^3.2|^4.0",
+                "symfony/finder": "^3.0|^4.0",
+                "symfony/process": "^3.0|^4.0",
+                "symfony/yaml": "^3.0|^4.0"
+            },
+            "require-dev": {
+                "jakub-onderka/php-console-highlighter": "^0.3.2"
+            },
+            "bin": [
+                "bin/phplint"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\PHPLint\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "anzhengchao@gmail.com"
+                }
+            ],
+            "description": "a php syntax check tool.",
+            "keywords": [
+                "check",
+                "lint",
+                "phplint",
+                "syntax"
+            ],
+            "time": "2019-01-04T12:59:53+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -5812,16 +5865,16 @@
         },
         {
             "name": "wp-cli/export-command",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/export-command.git",
-                "reference": "941acde17ec056e7aaeb041ecaed7869f2e64801"
+                "reference": "a31b1777a199a8437127ad3db1b6b92e9cb5cd9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/export-command/zipball/941acde17ec056e7aaeb041ecaed7869f2e64801",
-                "reference": "941acde17ec056e7aaeb041ecaed7869f2e64801",
+                "url": "https://api.github.com/repos/wp-cli/export-command/zipball/a31b1777a199a8437127ad3db1b6b92e9cb5cd9b",
+                "reference": "a31b1777a199a8437127ad3db1b6b92e9cb5cd9b",
                 "shasum": ""
             },
             "require": {
@@ -5866,7 +5919,7 @@
             ],
             "description": "Exports WordPress content to a WXR file.",
             "homepage": "https://github.com/wp-cli/export-command",
-            "time": "2019-04-24T19:55:58+00:00"
+            "time": "2019-07-16T16:39:17+00:00"
         },
         {
             "name": "wp-cli/extension-command",

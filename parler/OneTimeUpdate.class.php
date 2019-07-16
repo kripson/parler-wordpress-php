@@ -2,13 +2,16 @@
 
 namespace Parler;
 
+
+//this feature will be removed on future versions. The point here is to not lose our current Integration Partners.
+
 class OneTimeUpdate{
     
     public function __construct(){
-        //delete_option('parler-one-time-update');
+
         
-        $this->enqueOneTimeUpdate();
-        //add_action('init', array($this, 'removeOption'));
+ 
+
     }
     
    
