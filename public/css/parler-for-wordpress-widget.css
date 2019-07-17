@@ -1,0 +1,61 @@
+
+.parler-widget #comments .parler_postCommentEditorSubmitButton {
+    max-width: 80px !important;
+    font-size: 14px !important;
+    padding-top: 8px !important;
+    margin-left: 5px;
+}
+
+.parler-widget #comments .parler_commentEditorCharacterCount {
+    font-size: 0.9em;
+}
+
+.parler-widget #comments .parler_emojiButton {
+    width: 25px;
+    height: 25px; 
+}
+
+.parler-widget #comments .parler_giphyLogo {
+    margin-left: 8px !important;
+    width: 25px;
+    height: 25px; 
+}
+
+.parler-widget #comments .parler_commentEditorTextControl {
+    padding-top: 5px;
+}
+
+.parler-widget #comments .parler_logo {
+    width: 35px;
+    height: 35px;
+}
+
+.parler-widget #comments .parler_iosLogo {
+    max-height: 30px;
+}
+
+.parler-widget #comments .parler_commentCountRemainder {
+    padding-bottom: 0px;
+}
+
+.parler-widget #comments .parler_commentEditorInnerPanel {
+    width: 230px;
+}
+
+.parler-widget #comments .parler_commentEditorForm {
+    height: 100px;
+}
+
+.parler-widget #comments .parler_commentEditorText {
+    height: 100px;
+}
+
+.parler-widget #comments .parler_banterLink {
+    padding-left: 8px;
+}
+
+@media only screen and (max-width: 900px) {
+    .parler-widget #comments .parler_commentEditorInnerPanel {
+        width: 100%;
+    }
+}
