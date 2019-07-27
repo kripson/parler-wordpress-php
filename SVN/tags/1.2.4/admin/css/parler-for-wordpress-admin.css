@@ -1,0 +1,28 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.parler-text-entry {
+    max-width: 250px;
+}
+
+.alert-success {
+    color: #008501;
+    background-color: #b5ffaa;
+    border-color: #95ff90;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}

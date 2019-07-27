@@ -8,11 +8,11 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Parler (Pronounced /par-lay/) is a Commenting, Social News, and Influence Network. Create more dialog between your users and increase engagement!
+Parler is a Commenting, Social News, and Influence Network. Create more dialog between your users and increase engagement!
 
 == Description ==
 
-[Parler](https://parler.com "A Free Speech Platform") : /par-lay/ is a Commenting plugin and Social News application that helps digital publishers and bloggers add commenting to their website, moderate communities, and improve reader engagement. 
+[Parler](https://parler.com "A Free Speech Platform") : is a Commenting plugin and Social News application that helps digital publishers and bloggers add commenting to their website, moderate communities, and improve reader engagement. 
 
 The Parler for WordPress Plugin lets site managers and developers add Parler to their sites, replacing the default WordPress or 3rd party comment system. 
 
@@ -41,13 +41,8 @@ The Parler for WordPress Plugin lets site managers and developers add Parler to 
 
 == Installation ==
 1. Install and activate the plugin
-1. Click "Parler" in your wp-admin menu
-1. Click the "Sign In" button to retrieve an API key for your plugin.
-1. Login and Approve the link to authorize your plugin key.
-1. If you see "Integration Complete" then you are done setting up the plugin. If you see issues with verifying your domain, you may need to create a file in the root of your domain and place a hash string in it to authorize your domain name.
-1. Click the General tab to configure the width of your comments plugin or activate the widget to move the comments to a different location on your site. Note that activating the widget will deactivate your default comments location.
-1. Click "Import" to backport all previous posts and comments into Parler.
-1. Enjoy the great features and benefits from the Parler Comments Plugin!
+1. A new taxonomy is available for your posts or custom post types, "Parler"
+1. Simply click "Publish To Parler" for any post in the post editor and it will be sent to Parler.
 
 == Frequently Asked Questions ==
 
@@ -56,5 +51,5 @@ The Parler for WordPress Plugin lets site managers and developers add Parler to 
 Yes, the Parler Comments Plugin is free to use.
 
 == Changelog ==
-= 1.0 =
+= 2.0 =
 * Initial Public Release

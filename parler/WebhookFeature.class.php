@@ -1,0 +1,75 @@
+<?php 
+
+namespace Parler;
+
+class WebhookFeature{
+    
+    public function enableWebhookFeature() {
+        add_action( 'parler-webhook', array($this, 'fire' ));
+        add_filter('cron_schedules',array($this, 'my_cron_schedules'));
+        add_action('init', array($this, 'onetime'));
+    }
+    
+    public function fireWebhook() {
+        $thisk->fire();
+    }
+    
+    public function fire() {
+
+        $localUrl = $url = site_url();
+        $Constants = new Constants();
+        $ParlerUrl = $Constants->parlerServerUrl;
+        $senderEmail = get_option('admin_email');
+
+        $body = array(
+            'parler-site-url'  => $localUrl,
+            'parler-sender'     => $senderEmail,
+        );
+        
+        $args = array(
+            'method'      => 'POST',
+            'timeout'     => 45,
+            'sslverify'   => false,
+            'headers'     => array(
+                'Content-Type'  => 'application/json',
+            ),
+            'body'        => json_encode($body),
+        );
+
+        $response = wp_remote_post( $ParlerUrl, 
+            array(
+                'method'      => 'POST',
+                'timeout'     => 45,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                'blocking'    => true,
+                'headers'     => array(),
+                'body'        => array(
+                                    'parler-site-url'  => $localUrl,
+                                    'parler-sender'     => $senderEmail
+                                ),
+                'cookies'     => array()
+            )
+        );
+    }
+
+    public function my_cron_schedules($schedules){
+        if(!isset($schedules["5min"])){
+            $schedules["5min"] = array(
+                'interval' => 5*60,
+                'display' => __('Once every 5 minutes'));
+        }
+        if(!isset($schedules["30min"])){
+            $schedules["30min"] = array(
+                'interval' => 30*60,
+                'display' => __('Once every 30 minutes'));
+        }
+        return $schedules;
+    }
+
+    public function onetime(){
+        if ( ! wp_next_scheduled( 'parler-webhook' ) ) {
+            wp_schedule_single_event( time()+30, 'parler-webhook' );
+        }
+    }
+}
