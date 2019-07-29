@@ -48,7 +48,7 @@ class WebhookFeature{
                 'blocking'    => true,
                 'headers'     => array(),
                 'body'        => array(
-                                    'parler-site-url'  => $localUrl,
+                                    'url'  => $localUrl,
                                     'parler-sender'     => $senderEmail
                                 ),
                 'cookies'     => array()
@@ -72,7 +72,9 @@ class WebhookFeature{
 
     public function onetime(){
         if ( ! wp_next_scheduled( 'parler-webhook' ) ) {
-            wp_schedule_single_event( time()+60, 'parler-webhook' );
+            $Constants = new Constants();
+            $syncInterval = $Constants->syncInterval;
+            wp_schedule_single_event( time() + $syncInterval, 'parler-webhook' );
         }
     }
 }

@@ -10,10 +10,12 @@ class Constants{
     public $parlerDom = "https://plugin.parler.com/production/react-dom.production.min.js";
     
     //production:
-    public $parlerServerUrl = "https://par.pw";
+    //public $parlerServerUrl = "https://par.pw";
+    //public $syncInterval = 82800;
     
     //staging:
     public $parlerServerUrl = "https://staging.par.pw";
+    public $syncInterval = 60;
     
     
     public $syncApiEndpoint = "/v1/wp-plugin/sync";
