@@ -16,8 +16,8 @@ class SettingsPage {
         }
         
         remove_menu_page( 'edit-comments.php' );
-        $LogoImage = new \Parler\LogoImage();
-        $iconDiv = $LogoImage->returnSvgUrl();
+        //$LogoImage = new \Parler\LogoImage();
+        //$iconDiv = $LogoImage->returnSvgUrl();
         add_menu_page(
             'Parler Settings',
             'Parler',
@@ -126,4 +126,4 @@ output;
     }
    
 }
-
+?>
