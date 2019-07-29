@@ -16,16 +16,16 @@ class SettingsPage {
         }
         
         remove_menu_page( 'edit-comments.php' );
-        //$LogoImage = new \Parler\LogoImage();
-        //$iconDiv = $LogoImage->returnSvgUrl();
+        $LogoImage = new \Parler\LogoImage();
+        $iconDiv = $LogoImage->returnSvgUrl();
         add_menu_page(
             'Parler Settings',
             'Parler',
             'manage_options',
             'parler',
             array($this, 'getHTML'),
-            'dashicons-testimonial',
-            //$iconDiv,
+            //'dashicons-testimonial',
+            $iconDiv,
             24
             ); 
     }		
