@@ -24,11 +24,12 @@ class SettingsPage {
             'manage_options',
             'parler',
             array($this, 'getHTML'),
-            $iconDiv,
+            'dashicons-testimonial',
+            //$iconDiv,
             24
             ); 
-     }
-    
+    }		
+        
     public function renderAdminSettingsPage(){
         add_options_page('Parler Settings', 'Parler', 'manage_options', 'parler', array($this, 'getHTML'));
         $this->addNewSettings();
@@ -93,7 +94,9 @@ output;
         foreach($CPTs as $CPT) {
             if(in_array ( $CPT, $activeCPTs )) {
                 $checked = "checked";
-            }else{$checked = "";}
+            }else{
+                $checked = "";
+            }
             $output = $output . "<tr><td>$CPT</td><td><input type = 'checkbox' name = 'cpts-enabled[]' value = '$CPT' $checked /></td></tr>";
         }
         return $output;
