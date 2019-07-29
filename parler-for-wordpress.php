@@ -3,7 +3,7 @@
  * Plugin Name:       Parler
  * Plugin URI:        https://home.parler.com/installation/
  * Description:       A Social News and Content Engagement System working to increase community activity, grow audience exposure, and drive site traffic.
- * Version:           2.0.3
+ * Version:           2.0.4
  * Author:            Parler LLC
  * Author URI:        https://home.parler.com/
  * Text Domain:       parler
@@ -20,7 +20,7 @@ function activate_parler_plugin() {
     }
 }
 
-register_activation_hook( __FILE__, 'activate_parler_plugin' );
+//register_activation_hook( __FILE__, 'activate_parler_plugin' );
 
 add_action('init', array(new \Parler\TaxonomyFeature, "createParlerTerms"));
 
