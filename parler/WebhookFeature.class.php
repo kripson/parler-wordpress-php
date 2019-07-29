@@ -18,7 +18,10 @@ class WebhookFeature{
 
         $localUrl = $url = site_url();
         $Constants = new Constants();
-        $ParlerUrl = $Constants->parlerServerUrl;
+        $ParlerServer = $Constants->parlerServerUrl;
+        $syncApiEndpoint = $Constants->syncApiEndpoint;
+        $ParlerUrl = $ParlerServer . $syncApiEndpoint;
+        
         $senderEmail = get_option('admin_email');
 
         $body = array(
@@ -69,7 +72,7 @@ class WebhookFeature{
 
     public function onetime(){
         if ( ! wp_next_scheduled( 'parler-webhook' ) ) {
-            wp_schedule_single_event( time()+30, 'parler-webhook' );
+            wp_schedule_single_event( time()+60, 'parler-webhook' );
         }
     }
 }
