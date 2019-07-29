@@ -51,6 +51,7 @@ class SettingsPage {
     
     public function getInternalPageHeader() {
         $url = get_site_url() . '/wp-content/plugins/parler-wordpress-php/admin/images/Parler_Logo.svg';
+
 $output = <<<output
         <div class="wrap">
             <div style="display: inline-block;">
@@ -82,7 +83,8 @@ $output = <<<output
 </table>
 <input type="submit" name="parler-settings-page-submit-button" id="parler-settings-page-submit-button" class="button button-primary" value="$saveChanges">
 </form>
-output;  
+output;
+
         return $output;
         
     }
@@ -126,4 +128,3 @@ output;
     }
    
 }
-?>
