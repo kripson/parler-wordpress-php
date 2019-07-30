@@ -51,9 +51,6 @@ class OneTimeUpdate{
            $taxonomyFeature->setTagsForParticularCPT('post');
            
            //add_action('init', array(new \Parler\Webhook, 'fire'));
-           $Webhook = new Webhook;
-           $Webhook->fire();
-
         }
     }
     

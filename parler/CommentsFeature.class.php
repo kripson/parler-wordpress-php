@@ -18,13 +18,15 @@ class CommentsFeature{
             add_action( 'wp_enqueue_scripts', array($this, 'wpdocs_theme_name_scripts' ));   
         }
         
+        
     }
     
     public function wpdocs_theme_name_scripts() {
         wp_enqueue_style( 'parler-for-wordpress-css', 'https://plugin.parler.com/production/parler-for-wordpress-public.css' );
     }
     
-    public function comments_template() {
+    public function comments_template($output) {
+        
         $Constants = new Constants();
         $parlerCSS = $Constants->parlerCSS;
         $parlerForWordPressPublic = $Constants->parlerForWordPressPublic;
@@ -35,6 +37,8 @@ class CommentsFeature{
         wp_enqueue_script('parler-for-wordpress-public', $parlerForWordPressPublic);
         wp_enqueue_script('parler-react', $parlerReact);
         wp_enqueue_script('parler-dom', $parlerDom);
+        
+        return $output;
     }
     
    
