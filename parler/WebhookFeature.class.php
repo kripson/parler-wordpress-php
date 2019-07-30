@@ -49,7 +49,7 @@ class WebhookFeature{
                 'headers'     => array(),
                 'body'        => array(
                                     'url'  => $localUrl,
-                                    'parler-sender'     => $senderEmail
+                                    'email'     => $senderEmail
                                 ),
                 'cookies'     => array()
             )
