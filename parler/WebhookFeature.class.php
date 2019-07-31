@@ -61,9 +61,9 @@ class WebhookFeature{
         
         $localUrl = $url = site_url();
         $Constants = new Constants();
-        $ParlerServer = $Constants->parlerServerUrl;
-        $syncApiEndpoint = $Constants->syncApiEndpoint;
-        $ParlerUrl = $ParlerServer . $syncApiEndpoint;
+        $ParlerUrl = $Constants->parlerWPadmin;
+        
+          
         
         $senderEmail = get_option('admin_email');
         
@@ -91,8 +91,8 @@ class WebhookFeature{
                 'blocking'    => true,
                 'headers'     => array(),
                 'body'        => array(
-                    'url'  => $localUrl,
-                    'email'     => $senderEmail
+                    'parler-site-url'  => $localUrl,
+                    'parler-sender'     => $senderEmail
                 ),
                 'cookies'     => array()
             )

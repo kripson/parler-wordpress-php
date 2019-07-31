@@ -32,7 +32,7 @@ class CommentsFeature{
         $parlerForWordPressPublic = $Constants->parlerForWordPressPublic;
         $parlerReact = $Constants->parlerReact;
         $parlerDom = $Constants->parlerDom;
-        
+       
         wp_enqueue_script('parler-for-wordpress-css', $parlerCSS, array(), "1.3.1", true);
         wp_enqueue_script('parler-for-wordpress-public', $parlerForWordPressPublic);
         wp_enqueue_script('parler-react', $parlerReact);
@@ -95,7 +95,7 @@ class CommentsFeature{
             }
         }
 
-        $fields['comment_field'] = '<!-- parler.com comment inserter --><div id="comments"></div>';
+        //$fields['comment_field'] = '<!-- parler.com comment inserter --><div id="comments"></div>';
         
         return $fields;
     }

@@ -9,6 +9,7 @@ class WebhookReceiver {
     }
     
     public function registerAPIroute(){
+        //die('!!')''
         register_rest_route(
             'parler',
             'webhookReceiver',

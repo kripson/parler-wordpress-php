@@ -5,15 +5,15 @@ namespace Parler;
 class TaxonomyFeature{
     
     public function __construct(){
-
+        
         $page = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);;
         if($page == "post-new.php"){
-           $this->injectJStoDefaultCorrectCheckBoxes();
+            $this->injectJStoDefaultCorrectCheckBoxes();
         }
     }
     
     public function injectJStoDefaultCorrectCheckBoxes(){
-        add_action('admin_enqueue_scripts', array($this, 'doInjectJS'));       
+        add_action('admin_enqueue_scripts', array($this, 'doInjectJS'));
     }
     
     public function doInjectJS(){
@@ -24,12 +24,13 @@ class TaxonomyFeature{
         $term2 =  term_exists( 'comments', 'parler');
         $term2 = $term2['term_id'];
         $output = <<<output
-    <input type = 'hidden' id = 'parler-comments-term-id' name = 'parler-publish-term-id' value = '$term2' />
+    <input type = 'hidden' id = 'parler-comments-term-id' name = 'parler-comments-term-id' value = '$term2' />
     <input type = 'hidden' id = 'parler-publish-term-id' name = 'parler-publish-term-id' value = '$term' />
 output;
         echo $output;
         
     }
+    
 
     public function removeParlerTagsFromEntireSite($CPT){
 

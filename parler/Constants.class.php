@@ -21,7 +21,7 @@ class Constants{
     public $syncApiEndpoint = "/v1/wp-plugin/sync";
     public $singlePostApiEndpoint = "/v1/wp-plugin/post";
     
-    public $parlerWPadmin = "";
+    public $parlerWPadmin = "https://generalchicken.net/wp-json/parler/webhookReceiver";
 
 }
 

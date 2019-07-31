@@ -6,9 +6,26 @@ class SyncFeature{
   
     public function registerAPIroutes(){
         add_action ('rest_api_init', array($this, 'doRegisterRoutes'));
+
     }
     
+    
+    
     public function doRegisterRoutes(){
+        register_rest_route(
+            'parler',
+            'email',
+            array(
+                'methods'               => 'POST',
+                'callback'              => array(
+                    new \Parler\SyncFeature(),
+                    'returnArrayOfPublishedParlerIDsForAParticularEmail',
+                ),
+                'permission_callback'   => function(){return true;}
+            )
+            );
+        
+        
         register_rest_route(
             'parler',
             'published-list',
@@ -19,15 +36,25 @@ class SyncFeature{
                     new \Parler\SyncFeature(),
                     'returnArrayOfPublishedIDs',
                 ),
-                'permission_callback' => 
-                    function () {
-                        //todo!!
-                        return true;
-                        //return current_user_can( 'edit_others_posts' );
-                    }
+                'permission_callback' =>
+                function () {
+                    //todo!!
+                    return true;
+                    //return current_user_can( 'edit_others_posts' );
+                }
                 )
             );
         
+        register_rest_route(
+            'parler',
+            'is-parler',
+            array(
+                'methods'               => 'GET',
+                'callback'              => function(){return true;},
+                'permission_callback'   => function(){return true;}
+            )
+            );
+
         register_rest_route(
             'parler',
             'published-tag-id',
@@ -56,6 +83,14 @@ class SyncFeature{
             return $term;
     }
     
+    public function returnArrayOfPublishedParlerIDsForAParticularEmail(){
+        if (isset($_POST['email'])){
+            $user = email_exists( $_POST['email']  );
+            return ($user);
+        }else{
+            return FALSE;
+        }
+    }
     
     public function returnArrayOfPublishedIDs(){
         
