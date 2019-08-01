@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased] Unreleased
 
+## [2.2.17] 2019-07-31;
+### Fixed
+- eager instantiation of WordPress factories causing warnings (#281)
+
 ## [2.2.16] 2019-07-23;
 ### Added
 - expose a `tad\WPBrowser\Module\WPLoader\FactoryStore` instance on the `$tester` property when loading the `WPLoader` module with `loadOnly: false`.
@@ -917,8 +921,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Reference to ModuleConfigException class in WPLoader class.
 
-[unreleased]: https://github.com/lucatume/wp-browser/compare/2.2.16...HEAD
-[2.2.16]: https://github.com/lucatume/wp-browser/compare/2.2.15...2.2.16
+[unreleased]: https://github.com/lucatume/wp-browser/compare/2.2.17...HEAD
+[2.2.16]: https://github.com/lucatume/wp-browser/compare/2.2.16...2.2.17
 [2.2.15]: https://github.com/lucatume/wp-browser/compare/2.2.14...2.2.15
 [2.2.14]: https://github.com/lucatume/wp-browser/compare/2.2.13...2.2.14
 [2.2.13]: https://github.com/lucatume/wp-browser/compare/2.2.12...2.2.13

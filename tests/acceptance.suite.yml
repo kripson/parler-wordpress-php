@@ -1,39 +1,17 @@
-class_name: AcceptanceTester
+
+# Codeception Test Suite Configuration
+
+actor: AcceptanceTester
 modules:
-    enabled:
-        - \Helper\Acceptance
-        #- WPDb
-        # - WPBrowser
-        - WPWebDriver
-
-    config:
-        WPDb:
-            dsn: 'mysql:host=localhost;dbname=wordpress'
-            user: wordpress_user
-            password: password
-            #dump: tests/_data/dump.sql
-            populate: false
-            cleanup: false
-            url: 'http://localhost:8888'
-            tablePrefix: wp_
-        WPWebDriver:
-        #WPBrowser:
-            url: 'http://localhost:8888'
-            window_size: maximize
-            adminUsername: 'admin'
-            adminPassword: 'password'
-            adminPath: /wp-admin
-            port: 4444
-            #browser: phantomjs #./phantomjs --webdriver=4444
-            browser: chrome #java -jar selenium.jar
-              capabilities:
-                chromeOptions:
-                binary: "//Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-
-                 
-#to run phantomjs:
-# cd /var/www/html/wp-content/plugins/WPbdd
-# ./phantomjs --webdriver=4444
-
-#chromeOptions={w3c=false, binary=}}]
-#cd Applications/MAMP/htdocs/wp-content/plugins/WPbdd
+   enabled:
+      - WebDriver:
+         url: 'http://localhost:8888' # Site URL
+         browser: chrome
+         port: '9515'
+         window_size: false
+         capabilities:
+          chromeOptions:
+            #args: ["--headless", "--disable-gpu"]
+            #binary: "chrome"
+            binary: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome" # Path to Chrome binary
+            #binary: "//Applications/MAMP/htdocs/wp-content/plugins/parler-wordpress-php/chromedriver"

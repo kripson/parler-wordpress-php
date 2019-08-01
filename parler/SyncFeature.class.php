@@ -14,9 +14,9 @@ class SyncFeature{
     public function doRegisterRoutes(){
         register_rest_route(
             'parler',
-            'email',
+            'fetch-by-email',
             array(
-                'methods'               => 'POST',
+                'methods'               => 'GET',
                 'callback'              => array(
                     new \Parler\SyncFeature(),
                     'returnArrayOfPublishedParlerIDsForAParticularEmail',
@@ -84,14 +84,63 @@ class SyncFeature{
     }
     
     public function returnArrayOfPublishedParlerIDsForAParticularEmail(){
-        if (isset($_POST['email'])){
-            $user = email_exists( $_POST['email']  );
-            return ($user);
+        if (isset($_GET['email'])){
+            $email = $_GET['email'];
         }else{
-            return FALSE;
+            $email = null;
         }
+        
+        
+        $ID = $this->returnID($email);
+        if($ID == false){return false;}
+        if(user_can( $ID, 'publish_posts')){
+            return $this->returnArrayOfPublishedIDs();
+        }
+        
+        return $this->returnArrayOfPublishedIDsByAuthor($ID);
+
+        
     }
     
+    public function returnID($email){
+        $user = email_exists($email);
+      return $user;
+    }
+    
+    public function returnArrayOfPublishedIDsByAuthor($authorID){
+        wp_reset_query();
+        $args = array(
+            'posts_per_page'   => -1,
+            'author'      => $authorID,
+            //'post_type' => 'page',
+            'tax_query' => array(
+                array(
+                    
+                    'taxonomy' => 'parler',
+                    'field' => 'slug',
+                    'terms' => 'publish',
+                ),
+            ),
+        );
+        
+        
+        $IDs = array();
+        $query = new \WP_Query( $args );
+        if ( $query->have_posts() ) {
+            
+            // Start looping over the query results.
+            while ( $query->have_posts() ) {
+                
+                $query->the_post();
+                $ID = get_the_ID();
+                array_push($IDs, $ID);
+                
+            }
+            
+        }
+        
+        return $IDs;
+    }
     public function returnArrayOfPublishedIDs(){
         
         wp_reset_query();
@@ -100,7 +149,7 @@ class SyncFeature{
             //'post_type' => 'page',
             'tax_query' => array(
                 array(
-
+                    
                     'taxonomy' => 'parler',
                     'field' => 'slug',
                     'terms' => 'publish',
@@ -108,7 +157,7 @@ class SyncFeature{
             ),
         );
         
-       
+        
         $IDs = array();
         $query = new \WP_Query( $args );
         if ( $query->have_posts() ) {
