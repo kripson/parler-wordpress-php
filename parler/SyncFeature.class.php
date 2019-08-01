@@ -95,9 +95,12 @@ class SyncFeature{
     public function returnArrayOfPublishedIDs(){
         
         wp_reset_query();
-        $args = array('post_type' => 'post',
+        $args = array(
+            'posts_per_page'   => -1,
+            //'post_type' => 'page',
             'tax_query' => array(
                 array(
+
                     'taxonomy' => 'parler',
                     'field' => 'slug',
                     'terms' => 'publish',

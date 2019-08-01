@@ -44,6 +44,7 @@ class SettingsPage {
         if(isset($_POST['cpts-enabled'])) {
             $CPTs = $_POST['cpts-enabled'];
             update_option('parler-enabled-post-types', $CPTs);
+            delete_option( 'parler-one-time-update' );
         }else{
             delete_option('parler-enabled-post-types');
         }
