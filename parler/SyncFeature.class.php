@@ -9,8 +9,6 @@ class SyncFeature{
 
     }
     
-    
-    
     public function doRegisterRoutes(){
         register_rest_route(
             'parler',

@@ -11,6 +11,7 @@
 namespace ParlerSupport;
 
 require_once (plugin_dir_path(__FILE__). 'src/ParlerSupport/autoloader.php');
+require_once (plugin_dir_path(__FILE__). 'src/ParlerSupport/SupportTicketCPT.php');
 
 $SupportForm = new SupportForm;
 $SupportForm->enableForm();

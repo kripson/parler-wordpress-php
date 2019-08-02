@@ -11,17 +11,38 @@ class SupportForm{
         }else{
             add_shortcode('parler-support-form', array($this, "returnFormHTML"));
         }
+        
     }
     
     public function returnFormHTML(){
-        $yourStingsMustBei18n = __('Your Strings must be i18n!', 'parler'); //https://codex.wordpress.org/I18n_for_WordPress_Developers
+        // Create a post with "[parler-support-form]" in the post content.
+        // It will expand into the output below, including translations.   
+        // That's an expaning PHP string in a PHP heredoc, in a jQuery script! :)
         
+        //All human readable strings MUST be properly i18n. You can replace this code but it
+        // must use the 'parler' translations. You must run string through __($string) and
+        // _e($string) functions. This is how I pass strings to jQuery in WordPress:
+        
+        $yourStingsMustBei18n = __('Your Strings must be i18n!', 'parler'); //https://codex.wordpress.org/I18n_for_WordPress_Developers
+        $jQueryIsReady =        __("jQuery 1.12.4-wp is ready!", 'parler'); 
+
         $output =
 <<<output
-        
-<form method = "post" >
-$yourStingsMustBei18n
-<input type = "submit" name = "parler-support-submit-button" id = "parler-support-submit-button" />
+
+<script>
+
+    jQuery( document ).ready(function() {
+        alert('$jQueryIsReady');
+    });      
+
+</script>
+
+<form method = "post" > //make a post with "[parler-support-form]" to see this form
+
+    $yourStingsMustBei18n
+
+    <input type = "submit" name = "parler-support-submit-button" id = "parler-support-submit-button" />
+
 </form>
 
 output;
@@ -34,12 +55,10 @@ return $output;
 
         $thankYou = __('Thank you!', 'parler'); //https://codex.wordpress.org/I18n_for_WordPress_Developers
         $output =
-<<<output
-        
-<form method = "post">
+        <<<output
+<form method = "post" >
 $thankYou
 </form>
-
 output;
 
 return $output;

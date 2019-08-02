@@ -4,9 +4,41 @@ use function GuzzleHttp\json_decode;
 
 $I = new ApiTester($scenario);
 
+$remoteSitePostIds = array (
+    589,
+    571,
+    572,
+    513,
+    523,
+    532,
+    511,
+    498,
+    483,
+    425,
+    395,
+    401,
+    399,
+    373,
+    370,
+    366,
+    350,
+    339,
+    376
+);
+echo ("
 
-$I->sendGET("https://www.politicalentertainmentnetwork.com/wp-json/wp/v2/posts/395");
-$user_id = $I->grabResponse();
-$x = json_decode($user_id);
-$y = $x->link;
-$I->expect("I saw the URl is $y");
+");
+$links = array();
+foreach($remoteSitePostIds as $postID){
+    $ApiUrl = "https://www.politicalentertainmentnetwork.com/wp-json/wp/v2/posts/" . $postID;
+    $I->sendGET($ApiUrl);
+    $response = $I->grabResponse();
+    $response = json_decode($response);
+    $link = $response->link;
+    array_push($links, $link);
+    echo("\"$link\", ");
+}
+echo(" 
+
+");
+

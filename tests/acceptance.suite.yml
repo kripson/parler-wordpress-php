@@ -1,6 +1,3 @@
-
-# Codeception Test Suite Configuration
-
 actor: AcceptanceTester
 modules:
    enabled:
@@ -15,3 +12,4 @@ modules:
             #binary: "chrome"
             binary: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome" # Path to Chrome binary
             #binary: "//Applications/MAMP/htdocs/wp-content/plugins/parler-wordpress-php/chromedriver"
+    
