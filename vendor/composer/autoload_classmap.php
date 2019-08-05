@@ -382,6 +382,7 @@ return array(
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'Parler\\CommentsFeature' => $baseDir . '/parler/CommentsFeature.class.php',
     'Parler\\Constants' => $baseDir . '/parler/Constants.class.php',
+    'Parler\\GraphFeature' => $baseDir . '/parler/GraphFeature.class.php',
     'Parler\\LogoImage' => $baseDir . '/parler/LogoImage.class.php',
     'Parler\\OneTimeUpdate' => $baseDir . '/parler/OneTimeUpdate.class.php',
     'Parler\\SettingsPage' => $baseDir . '/parler/SettingsPage.class.php',

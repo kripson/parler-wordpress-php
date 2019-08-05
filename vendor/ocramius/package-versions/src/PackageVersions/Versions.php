@@ -43,8 +43,8 @@ final class Versions
   'codeception/codeception' => '3.0.3@feb566a9dc26993611602011ae3834d8e3c1dd7f',
   'codeception/phpunit-wrapper' => '7.7.1@ab04a956264291505ea84998f43cf91639b4575d',
   'codeception/stub' => '2.1.0@853657f988942f7afb69becf3fd0059f192c705a',
-  'composer/ca-bundle' => '1.2.1@33810d865dd06a674130fceb729b2f279dc79e8c',
-  'composer/composer' => '1.8.6@19b5f66a0e233eb944f134df34091fe1c5dfcc11',
+  'composer/ca-bundle' => '1.2.3@f26a67e397be0e5c00d7c52ec7b5010098e15ce5',
+  'composer/composer' => '1.9.0@314aa57fdcfc942065996f59fb73a8b3f74f3fa5',
   'composer/semver' => '1.5.0@46d9139568ccb8d9e7cdd4539cab7347568a5e2e',
   'composer/spdx-licenses' => '1.5.2@7ac1e6aec371357df067f8a688c3d6974df68fa5',
   'composer/xdebug-handler' => '1.3.3@46867cbf8ca9fb8d60c506895449eb799db1184f',
@@ -70,7 +70,7 @@ final class Versions
   'illuminate/contracts' => 'v5.8.30@00fc6afee788fa07c311b0650ad276585f8aef96',
   'illuminate/support' => 'v5.8.30@1d82de27c37ee6e8493dac0521cbda5b9456626c',
   'justinrainbow/json-schema' => '5.2.8@dcb6e1006bb5fd1e392b4daa68932880f37550d4',
-  'lucatume/wp-browser' => '2.2.17@e002e9b448ddb94a065346432d86deb3066dfc5d',
+  'lucatume/wp-browser' => '2.2.18@4f93cea909cfba2caf826828219f674fd3778e05',
   'mck89/peast' => 'v1.9.2@7c9e487a0bb2410b3b7f27e8274cd04248b68197',
   'mikemclin/laravel-wp-password' => '2.0.1@84ff1113ff6866cdb0350c176dc3c843383e4819',
   'mustache/mustache' => 'v2.12.0@fe8fe72e9d580591854de404cc59a1b83ca4d19e',
@@ -157,7 +157,7 @@ final class Versions
   'wp-cli/wp-cli-bundle' => 'v2.2.0@ddf9a236ef0d85fcc5336f8c87cebe0dd62ee81f',
   'wp-cli/wp-config-transformer' => 'v1.2.5@46c6c3622196c55ea9b94e735e8c408425de8944',
   'xamin/handlebars.php' => 'v0.10.4@b85cee07eae96db0e1eec224ca90f5ce1e4d857a',
-  '__root__' => 'dev-dev@7b9a6ef253acbce10aba095c3422619e73959cf1',
+  '__root__' => 'dev-dev@3b7f8d636e2a0604262f40b1da15497655a3dd30',
 );
 
     private function __construct()

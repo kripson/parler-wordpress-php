@@ -36,3 +36,6 @@ add_action('admin_menu', array(new \Parler\SettingsPage, "renderAdminSettingsPag
 
 $WebhookFeature = new \Parler\WebhookFeature;
 $WebhookFeature->enableWebhookFeature();
+
+$GraphFeature = new \Parler\GraphFeature;
+$GraphFeature->outputDataToHtmlHeader();

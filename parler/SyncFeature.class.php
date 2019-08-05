@@ -17,7 +17,7 @@ class SyncFeature{
                 'methods'               => 'GET',
                 'callback'              => array(
                     new \Parler\SyncFeature(),
-                    'returnArrayOfPublishedParlerIDsForAParticularEmail',
+                    'returnArrayOfPublishedParlerIDsAuthorizedForAParticularEmail',
                 ),
                 'permission_callback'   => function(){return true;}
             )
@@ -81,7 +81,10 @@ class SyncFeature{
             return $term;
     }
     
-    public function returnArrayOfPublishedParlerIDsForAParticularEmail(){
+    public function returnArrayOfPublishedParlerIDsAuthorizedForAParticularEmail(){
+        
+        
+        
         if (isset($_GET['email'])){
             $email = $_GET['email'];
         }else{
@@ -89,7 +92,7 @@ class SyncFeature{
         }
         
         
-        $ID = $this->returnID($email);
+        $ID = $this->returnUserID($email);
         if($ID == false){return false;}
         if(user_can( $ID, 'publish_posts')){
             return $this->returnArrayOfPublishedIDs();
@@ -100,7 +103,7 @@ class SyncFeature{
         
     }
     
-    public function returnID($email){
+    public function returnUserID($email){
         $user = email_exists($email);
       return $user;
     }

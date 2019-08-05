@@ -1000,6 +1000,7 @@ class ComposerStaticInite9ca7bdc3ed6ba0448bd0455a02e5ea1
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'Parler\\CommentsFeature' => __DIR__ . '/../..' . '/parler/CommentsFeature.class.php',
         'Parler\\Constants' => __DIR__ . '/../..' . '/parler/Constants.class.php',
+        'Parler\\GraphFeature' => __DIR__ . '/../..' . '/parler/GraphFeature.class.php',
         'Parler\\LogoImage' => __DIR__ . '/../..' . '/parler/LogoImage.class.php',
         'Parler\\OneTimeUpdate' => __DIR__ . '/../..' . '/parler/OneTimeUpdate.class.php',
         'Parler\\SettingsPage' => __DIR__ . '/../..' . '/parler/SettingsPage.class.php',

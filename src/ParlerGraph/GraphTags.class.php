@@ -6,7 +6,7 @@ class GraphTags{
     
     public function enableGraphTags(){
         
-        add_action('rest_api_init', array($this, 'registerEndpoint'));
+        //add_action('rest_api_init', array($this, 'registerEndpoint'));
         
     }
     
@@ -15,12 +15,12 @@ class GraphTags{
         //die('hello world!');
         register_rest_route(
             'parler',
-            'graph-tags',
+            'graph-tagxx',
             array(
                 'methods'               => 'GET',
                 'callback'              => array(
                     new \ParlerGraph\GraphTags(),
-                    'returnSomething',
+                    'incoming',
                 ),
                 'permission_callback'   => function(){return true;}
                 )
@@ -29,11 +29,21 @@ class GraphTags{
         
     }
     
-    public function returnSomething(){
-        
-        return ("Hello World!");
-        
+    public function incoming(){
+        if (isset($_POST['postID'])){
+            if (isset($_POST['stringToInsert'])){
+                $postID = $_POST['postID'];
+                $stingToInsert = $_POST['stringToInsert'];
+                $this->insertGraphTag($postID, $stingToInsert);
+            }
+
+        }
     }
     
+    public function insertGraphTag($postID, $stingToInsert){
+        
+        
+        
+    }
     
 }
