@@ -9,7 +9,7 @@
  * Text Domain:       parler
  * Domain Path:       /languages
  */
-
+//hello
 require plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
 function activate_parler_plugin() {
