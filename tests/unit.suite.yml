@@ -10,7 +10,7 @@ modules:
             wpRootFolder: /var/www/html/
             dbName: wordpress_unit_test
             dbHost: localhost
-            dbUser: wordpress_user
+            dbUser: wordpressuser
             dbPassword: password
             tablePrefix: wp_
             domain: http://ec2-34-204-96-180.compute-1.amazonaws.com
