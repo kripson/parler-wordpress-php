@@ -6,13 +6,14 @@ modules:
         - Asserts
     config:
         WPLoader:
-            wpRootFolder: //Applications/MAMP/htdocs
+            # wpRootFolder: //Applications/MAMP/htdocs
+            wpRootFolder: /var/www/html/
             dbName: wordpress_unit_test
-            dbHost: localhost:8888
+            dbHost: localhost
             dbUser: wordpress_user
             dbPassword: password
             tablePrefix: wp_
-            domain: http://locahost:8888
+            domain: http://ec2-34-204-96-180.compute-1.amazonaws.com
             adminEmail: jiminac@aol.com
             title: WP Tests
             plugins: []
