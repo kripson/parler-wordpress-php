@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://kit.fontawesome.com/48aa48d378.js"></script>
+	<link rel="stylesheet" href="css/reset.css">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:700|Roboto:500&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/style.css">
+
+<!-- <link rel="stylesheet" href="css/bootstrap.css">
+-->
+<title>Hello, world!</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<nav class="navbar navbar-light">
+			<a class="navbar-brand" href="#">
+				<img src="img/tiny-logo.png" width="43" height="43" class="d-inline-block align-top" alt="">
+			</a>
+			<h1 class="title">customer feedback <span style="color:#be1e2c">tickets</span></h1>
+			<div class="btn-right">
+				<button class="btn btn-bordered">Login</button>
+				<button class="btn btn-primary">Talk to Us</button>
+			</div>
+		</nav>
+
+
+		<!-- Ticket Type Boxes -->
+		<div class="row" style="margin: 18px 0;">
+			<span class="row-title">Please select the question type</span>
+			<div class="box-container">
+				<div class="col-2" id="delete">
+					<div><i class="fa fa-user-times"></i></div>
+					<p>Delete Account</p>
+				</div>
+
+				<div class="col-2" id="locked">
+					<div><i class="fa fa-user-lock"></i></div>
+					<p>Locked Account</p>
+				</div>
+				<div class="col-2" id="bug">
+					<div><i class="fa fa-bug"></i></div>
+					<p>Bug Report</p>
+				</div>
+				<div class="col-2" id="partner">
+					<div><i class="fa fa-handshake"></i></div>
+					<p>Partner Integration</p>
+				</div>
+				<div class="col-2" id="media">
+					<div><i class="fa fa-video"></i></div>
+					<p>Media Inqury</p>
+				</div>
+				<div class="col-2" id="verification">
+					<div><i class="fa fa-shield-alt"></i></div>
+					<p>Public Figure Verification</p>
+				</div>
+				
+			</div>
+		</div>
+		<!-- end Ticket Type Boxes -->
+
+		<div class="form-controls-row">
+			<!-- delete form -->
+			<div class="hidden" id="form-delete">
+				<ul class="flex-outer">
+					<li>
+						<label for="user-name">Username</label>
+						<input type="text" id="user-name" name="user-name" placeholder="Enter your username here">
+					</li>
+					<li>
+						<label for="email">Account Email</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email here">
+					</li>
+					<li>
+						<label for="message">Message</label>
+						<textarea rows="6" id="message" placeholder="Enter your message here"></textarea>
+					</li>
+					<li>
+						<label style="visibility: hidden;">Submit</label>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</li>
+				</ul>
+			</div>
+			<!-- delete bug form -->
+
+
+			<!-- delete form -->
+			<div class="hidden" id="form-locked">
+				<ul class="flex-outer">
+					<li>
+						<label for="user-name">Username</label>
+						<input type="text" id="user-name" name="user-name" placeholder="Enter your username here">
+					</li>
+					<li>
+						<label for="email">Account Email</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email here">
+					</li>
+					<li>
+						<label for="message">Message</label>
+						<textarea rows="6" id="message" placeholder="Enter your message here"></textarea>
+					</li>
+					<li>
+						<label style="visibility: hidden;">Submit</label>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</li>
+				</ul>
+			</div>
+			<!-- delete bug form -->
+
+
+			<!-- bug form -->
+			<div class="hidden" id="form-bug">
+				<ul class="flex-outer">
+					<li>
+						<label for="first-name">Username</label>
+						<input type="text" id="user-name" name="user-name" placeholder="Enter your username here">
+					</li>
+					<li>
+						<label for="email">Account Email</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email here">
+					</li>
+					<li>
+						<label for="phone">Device Type</label>
+						<select id="inputState" class="form-control">
+							<option selected>IOS</option>
+							<option>Android</option>
+							<option>Web</option>
+							<option>Plugin</option>
+						</select>
+					</li>
+					<li>
+						<label>Screenshot</label>
+						<div class="custom-file-upload">
+							<span class="btn btn-primary" id="browse-btn">Upload File</span>
+							<input type="file" id="screenshot" name="screenshot" />
+						</div>
+					</li>
+					<li>
+						<label for="message">Message</label>
+						<textarea rows="6" id="message" placeholder="Enter your message here"></textarea>
+					</li>
+					<li>
+						<label style="visibility: hidden;">Submit</label>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</li>
+				</ul>
+			</div>
+			<!-- end bug form -->
+
+
+			<!-- partner form -->
+			<div class="hidden" id="form-partner">
+				<ul class="flex-outer">
+					<li>
+						<label for="company-name">Company Name</label>
+						<input type="text" id="company-name" name="company-name" placeholder="Enter your company name here">
+					</li>
+					<li>
+						<label for="website">Website URL</label>
+						<input type="text" id="website" name="website" placeholder="Enter your website here">
+					</li>
+					<li>
+						<label for="role">Your Role</label>
+						<input type="text" id="role" name="role" placeholder="Enter your role here">
+					</li>
+					<li>
+						<label for="fist-name">First Name</label>
+						<input type="text" id="first-name" name="first-name" placeholder="Enter your first name here">
+					</li>
+					<li>
+						<label for="laste-name">Last Name</label>
+						<input type="text" id="last-name" name="last-name" placeholder="Enter your last name here">
+					</li>
+					<li>
+						<label for="email">Email</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email here">
+					</li>
+					<li>
+						<label for="phone-number">Phone number</label>
+						<input type="text" id="phone-number" name="phone-number" placeholder="Enter your Phone number here">
+					</li>
+					<li>
+						<p style="line-height: 20px;padding-right: 20px;">Dose the website have commenting currently?</p>
+						<ul class="flex-inner">
+							<li>
+								<input type="radio" id="yes" name="yes">
+								<label for="yes">Yes</label>
+							</li>
+							<li>
+								<input type="radio" id="no" name="no">
+								<label for="no">No</label>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<label style="visibility: hidden;">Submit</label>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</li>
+				</ul>
+			</div>
+			<!-- end partner form -->
+
+
+			<!-- media form -->
+			<div class="hidden" id="form-media">
+				<ul class="flex-outer">
+					<li>
+						<label for="first-name">First Name</label>
+						<input type="text" id="first-name" name="first-name" placeholder="Enter your company name here">
+					</li>
+					<li>
+						<label for="last-name">Last Name</label>
+						<input type="text" id="last-name" name="last-name" placeholder="Enter your last name here">
+					</li>
+					<li>
+						<label for="role">Your Role</label>
+						<input type="text" id="role" name="role" placeholder="Enter your role here">
+					</li>
+					<li>
+						<label for="fist-name">First Name</label>
+						<input type="text" id="first-name" name="first-name" placeholder="Enter your first name here">
+					</li>
+					<li>
+						<label for="phone-number">Phone number</label>
+						<input type="text" id="phone-number" name="phone-number" placeholder="Enter your Phone number here">
+					</li>
+					<li>
+						<label for="email">Email</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email here">
+					</li>
+					<li>
+						<label for="media">Media Outlet</label>
+						<input type="text" id="media" name="media" placeholder="Enter your media outlet here">
+					</li>
+					<li>
+						<label for="role">Role</label>
+						<select id="role" class="form-control">
+							<option selected>Reporter</option>
+							<option>Editor</option>
+							<option>News Director</option>
+							<option>Researcher</option>
+							<option>Producer</option>
+						</select>
+					</li>
+					<li>
+						<label for="type-outlet">Type of Outlet</label>
+						<select id="type-outlet" class="form-control">
+							<option selected>Online</option>
+							<option>Print</option>
+							<option>Radio</option>
+							<option>Television</option>
+							<option>Nonmedia</option>
+							<option>Other</option>
+						</select>
+					</li>
+					<li>
+						<label for="description">Description</label>
+						<textarea rows="6" id="description" placeholder="Enter your description here"></textarea>
+					</li>
+					<li>
+						<label for="deadline">Deadline date or Time</label>
+						<input type="text" id="deadline" name="deadline" placeholder="Enter deadline date or time here">
+					</li>
+					<li>
+						<label for="date">Date Story Runs or Air</label>
+						<input type="date" id="date" name="date" placeholder="Enter story date here">
+					</li>
+					<li>
+						<label style="visibility: hidden;">Submit</label>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</li>
+				</ul>
+			</div>
+			<!-- end media form -->
+
+			<!-- verification form -->
+			<div class="hidden" id="form-verification">
+				<ul class="flex-outer">
+					<li>
+						<label for="account-handle">Account Handle</label>
+						<input type="text" id="account-handle" name="account-handle" placeholder="Enter your account handle here">
+					</li>
+					<li>
+						<label for="email">Account Email</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email here">
+					</li>
+					<li>
+						<label for="fist-name">First Name</label>
+						<input type="text" id="first-name" name="first-name" placeholder="Enter your first name here">
+					</li>
+					<li>
+						<label for="last-name">Last Name</label>
+						<input type="text" id="last-name" name="last-name" placeholder="Enter your last name here">
+					</li>
+					<li>
+						<label for="role">Type of Account</label>
+						<select id="type-account" class="form-control">
+							<option selected>Elected official</option>
+							<option>Media Personality</option>
+							<option>Influencer</option>
+							<option>Journalist</option>
+							<option>Company/Brand</option>
+							<option>Other</option>
+						</select>
+					</li>
+					<li>
+						<label for="link1">Supporting social media account link 1</label>
+						<input type="text" id="link1" name="link1" placeholder="Enter your social media account link 1 here">
+					</li>
+					<li>
+						<label for="link1">Supporting social media account link 2</label>
+						<input type="text" id="link2" name="link2" placeholder="Enter your social media account link 2 here">
+					</li>
+					<li>
+						<label style="visibility: hidden;">Submit</label>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</li>
+				</ul>
+			</div>
+			<!-- end verification form -->
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	
+
+	<script type="text/javascript">
+		$(".col-2").click(function(){          
+			var box = $(this);
+			box.addClass("hovered");
+			box.siblings().removeClass("hovered");
+			var theForm = $("#form-" + box.attr('id'));
+			theForm.slideDown("slow").removeClass("hidden");
+			theForm.siblings().slideUp("slow",function() { $(this).addClass("hidden"); });
+		});
+
+		/* Upload Event */
+		const uploadButton = $('#browse-btn');
+		const realInput = $('#screenshot');
+
+		uploadButton.click(function(e){
+			e.preventDefault();
+			realInput.click();
+		});
+	</script>
+</body>
+</html>

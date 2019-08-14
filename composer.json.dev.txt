@@ -1,0 +1,15 @@
+{
+    "require-dev": {
+        "lucatume/wp-browser": "*",
+        "overtrue/phplint": "^1.1"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {},
+        "classmap" : [
+			"parler/"
+		]
+     }
+}

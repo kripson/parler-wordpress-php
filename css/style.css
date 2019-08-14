@@ -1,0 +1,209 @@
+.hidden {
+	display:none;
+}
+h1 {
+	font-size: 30px;
+	display:inline-block;
+  	
+}
+
+textarea, input {
+	font-family: 'Lato', sans-serif;
+	padding: 12px 20px;
+	font-size: 16px
+}
+
+body {
+	font-family: 'Lato', sans-serif;
+}
+
+/* Containers */
+.container-fluid {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+
+.navbar {
+	position: relative;
+	border-bottom: 1px solid #eee;
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding:30px 0;
+    margin-right: 30px;
+    margin-left: 22px
+}
+
+.navbar-brand + .title {
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+.navbar .btn-right {
+    position: absolute;
+    right: 15px;
+    top: 29px;
+}
+
+.navbar .btn-right  .btn-primary {
+	margin-left: 28px
+}
+
+.btn {
+    display: inline-block;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 12px 24px;
+    font-size: 15px;
+    border-radius: 3px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #000;
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn-bordered {
+    color: #000;
+    border: 1px solid #000;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+/* Form heading */
+.row-title {
+	margin-left: 22px
+}
+
+.box-container {
+	display: flex;
+	margin-top: 18px;
+}
+
+.box-container .col-2 {
+	height: 160px;
+	flex-grow: 1;
+	border: 1px solid #eee;
+	cursor: pointer
+}
+
+.col-2 div {
+	margin-top: 49px;
+	margin-bottom: 20px
+}
+
+.col-2 div, .col-2 p {
+	text-align: center
+}
+
+.fa {
+	font-size: 30px
+}
+
+.box-container .col-2:hover, .box-container .hovered {
+ background-color: #be1e2c;
+}
+
+.box-container .col-2:hover div, .box-container .col-2:hover p, 
+.box-container .hovered div, .box-container .hovered p {
+ color: #fff;
+}
+
+
+/* form controls */
+
+.form-controls-row {
+	margin-left: 95px;
+    margin-right: 300px;
+    margin-top: 56px
+}
+
+.flex-outer li,
+.flex-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+
+.flex-outer > li > label,
+.flex-outer li p {
+  flex: 1 0 120px;
+  max-width: 220px;
+}
+ 
+.flex-outer > li > label + *,
+.flex-inner {
+  flex: 1 0 220px;
+}
+
+.flex-inner li {
+  width: 100px;
+}
+
+.flex-outer > li {
+  margin-bottom: 20px;
+}
+
+.flex-outer > li > label{
+padding-top: 12px ;
+    padding-bottom: 12px ;
+    padding-right: 20px;
+}
+
+
+.flex-outer > li > input, .custom-file-upload > input, .flex-outer > li > select {
+	padding: 11px 20px;
+    color: #495057;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.flex-outer > li > textarea, .flex-outer > li > input, .custom-file-upload > input, .flex-outer > li > select {
+	border: 1px solid #be1e2c;
+	border-radius: 3px;
+}
+
+/* Upload button style */
+
+.custom-file-upload {
+    display: flex;
+}
+
+.custom-file-upload > input {
+    flex: 1 0 220px;
+    padding-left: 73px;
+}
+
+.custom-file-upload > .btn-primary{
+position: absolute;
+}
+
+.custom-file-upload .btn-primary, button[type="submit"] {
+   padding: 15px 48px;
+   background-color: #2e2e2e;
+   font-family: 'Lato', sans-serif;
+   font-size: 16px;
+   border-radius: 0;
+   border: 1px solid #000;
+}
+
+.flex-outer > li > label + button[type="submit"] {
+	background-color: #be1e2c;
+	border-width: 0;
+	flex: 0 0 280px;
+  margin-top: 56px
+}
