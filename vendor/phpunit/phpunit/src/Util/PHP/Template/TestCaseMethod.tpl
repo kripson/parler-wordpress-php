@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 
@@ -52,7 +52,7 @@ function __phpunit_run_isolated_test()
     \assert($test instanceof TestCase);
 
     $test->setDependencyInput(unserialize('{dependencyInput}'));
-    $test->setInIsolation(TRUE);
+    $test->setInIsolation(true);
 
     ob_end_clean();
     $test->run($result);

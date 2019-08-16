@@ -18,10 +18,13 @@ class Constants{
     public $syncInterval = 30;
     
     
-    public $syncApiEndpoint = "/v1/wp-plugin/sync";
-    public $singlePostApiEndpoint = "/v1/wp-plugin/post";
+    //public $syncApiEndpoint = "/v1/wp-plugin/sync";
+    //public $singlePostApiEndpoint = "/v1/wp-plugin/post";
     
-    public $parlerWPadmin = "https://home.parler.com/wp-json/parler/webhookReceiver";
+    //public $parlerWPadmin = "https://home.parler.com/wp-json/parler/webhookReceiver";
+    public $syncApiEndpoint = "/wp-json/parler/webhookReceiver";
+    public $parlerServerUrl = "http://ec2-3-85-85-70.compute-1.amazonaws.com";
+    
+    
 
 }
-

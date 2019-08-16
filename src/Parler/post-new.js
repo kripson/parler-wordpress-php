@@ -1,23 +1,26 @@
+/*global jQuery*/
+
 jQuery( document ).ready(function() {
-	//alert('post-new.js!');
-	
-	
+    //alert('jQuery');
+	jQuery('#parler-tabs').hide();
+	jQuery('#parler-add-toggle').hide();
+	jQuery("#parler-all").css("border","none");
 	setTimeout(
-			  function() 
-			  {
-				    //alert( "ready!" );
-				  
-					var term1 = jQuery('#parler-comments-term-id').val();
-					term1 = "#editor-post-taxonomies-hierarchical-term-" + term1;
-					
-					var term2 = jQuery('#parler-publish-term-id').val();
-					term2 = "#editor-post-taxonomies-hierarchical-term-" + term2;
-					
-						
-					jQuery( term1 ).prop( "checked", true );
-					jQuery( term2 ).prop( "checked", true );
-			  
-			  
-			  }, 2000);
+  function() 
+  {
+	jQuery(findElementByText("Parler").filter).hide();
+	alert('hid');
+  }, 3000);
+
 	
 });
+
+function findElementByText(text) {
+	alert('yo');
+    var jSpot = jQuery("b:contains(" + text + ")")
+                .filter(function() { return $(this).children().length === 0;})
+                .parent();  // because you asked the parent of that element
+
+    return jSpot;
+}
+//components-panel__body-title

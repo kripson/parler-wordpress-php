@@ -1,16 +1,30 @@
-actor: AcceptanceTester
+class_name: AcceptanceTester
 modules:
-  enabled:
-    - WPWebDriver
-    - Asserts
-    - \Helper\Acceptance
-  config:
-    WPWebDriver:
-      # REPLACE WITH YOUR URL:
-      url: 'http://ec2-54-211-251-233.compute-1.amazonaws.com'
-
-      adminUsername: 'admin'
-      adminPassword: 'password'
-      adminPath: '/wp-admin'
-      port: 4444
-      browser: phantomjs
+    enabled:
+        - \Helper\Acceptance
+        - WPDb
+        - WPWebDriver
+    config:
+        WPDb:
+            dsn: 'mysql:host=localhost;dbname=wordpress'
+            user: wordpressuser
+            password: password
+            dump: tests/_data/dump.sql
+            populate: false
+            cleanup: false
+            url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
+            tablePrefix: wp_
+        WPWebDriver:
+            url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
+            #window_size: maximize
+            adminUsername: 'admin'
+            adminPassword: 'password'
+            adminPath: /wp-admin
+            port: 4444
+            #browser: phantomjs #./phantomjs --webdriver=4444
+            browser: chrome #java -jar selenium.jar
+             capabilities:
+              chromeOptions:
+                args: ["--headless", "--disable-gpu"]
+                binary: "/usr/bin/google-chrome" # Path to Chrome binary
+            #binary: "//Applications/MAMP/htdocs/wp-content/plugins/parler-wordpress-php/chromedriver"

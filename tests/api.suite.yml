@@ -1,31 +1,46 @@
-actor: ApiTester
+class_name: ApiTester
 modules:
     enabled:
         - \Helper\Acceptance
-        #- WPDb
+        - WPDb
         - WPBrowser
         - Asserts
         #- WPWebDriver
         - \Helper\Api
+        - WPLoader
         - REST:
            depends: WPBrowser
-           url: 'http://localhost:8888'
+           url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
         - WPCLI:
-           path: /Applications/MAMP/htdocs/wp-content/plugins/parler-wordpress-php/bin
+           path: /var/www/html/wp-content/plugins/parler-wordpress-php/bin
            throw: true
     config:
+        WPLoader:
+            multisite: false
+            loadOnly: true
+            wpRootFolder: "/var/www/html"
+            dbName: wordpress
+            dbHost: localhost
+            dbUser: wordpressuser
+            dbPassword: password
+            #isolatedInstall: true
+            tablePrefix: wp_
+            domain: "wordrpess.localhost"
+            adminEmail: "admin@wordpress.localhost"
+            plugins: []
+            activatePlugins: []
         WPDb:
-            dsn: 'mysql:host=localhost:8888;dbname=wordpress'
-            user: wordpress_user
+            dsn: 'mysql:host=localhost;dbname=wordpress'
+            user: wordpressuser
             password: password
             #dump: tests/_data/dump.sql
             populate: false
             cleanup: false
-            url: 'http://localhost:8888'
+            url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
             tablePrefix: wp_
         #WPWebDriver:
         WPBrowser:
-            url: 'http://localhost:8888'
+            url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
             window_size: maximize
             adminUsername: 'admin'
             adminPassword: 'password'

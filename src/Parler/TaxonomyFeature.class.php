@@ -10,15 +10,21 @@ class TaxonomyFeature{
             $DefaultCheckboxChecker = new DefaultCheckboxChecker;
             add_filter('wp_terms_checklist_args', array($DefaultCheckboxChecker, 'classicEditorDefaultCheckboxes'), 10, 2);
             $DefaultCheckboxChecker->gutenbergEditorDefaultCheckboxes();
-
-            //$DefaultCheckboxChecker->handleClassicEditor();
-            //add_action('admin_init', array($this, "onPagePostNew"));
-
-
         }
-
+        if(($pagenow == "post.php") or ( $pagenow == 'post-new.php')){
+            $this->cleanupEditorHTML();
+        }
     }
 
+    public function cleanupEditorHTML(){
+        add_action('admin_enqueue_scripts', array($this, 'doInjectJS'));
+    }
+
+    public function doInjectJS(){
+        $URL = get_site_url() . "/wp-content/plugins/parler-wordpress-php/src/Parler/post-new.js";
+         wp_enqueue_script('parler-checker', $URL, array('jquery'));
+    }
+    
     public function returnArrayOfParlerTermIDs($numbersOnly = null){
         $term1 =  term_exists( 'publish', 'parler');
         $term1 = intval($term1['term_id']);

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc190e8ade033370a5c8d0b58c17e931a
+class ComposerStaticInitdb44417ab3a4eee407876fd073a5f004
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -1201,17 +1201,16 @@ class ComposerStaticInitc190e8ade033370a5c8d0b58c17e931a
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
-        'someclass' => __DIR__ . '/../..' . '/parler/some-class.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc190e8ade033370a5c8d0b58c17e931a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc190e8ade033370a5c8d0b58c17e931a::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitc190e8ade033370a5c8d0b58c17e931a::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc190e8ade033370a5c8d0b58c17e931a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc190e8ade033370a5c8d0b58c17e931a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitdb44417ab3a4eee407876fd073a5f004::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitdb44417ab3a4eee407876fd073a5f004::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitdb44417ab3a4eee407876fd073a5f004::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitdb44417ab3a4eee407876fd073a5f004::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitdb44417ab3a4eee407876fd073a5f004::$classMap;
 
         }, null, ClassLoader::class);
     }
