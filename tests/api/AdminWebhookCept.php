@@ -4,7 +4,7 @@ $I = new ApiTester($scenario);
 
 $I->wantTo('test the admin webhook receiver');
 $I->expect("the hook to receive the data");
-$I->requireAutoloaders();
+//$I->requireAutoloaders();
 
 require_once('/var/www/html/wp-content/plugins/parler-wordpress-php/src/Parler/Constants.class.php');
 $Constants = new \Parler\Constants;

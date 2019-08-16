@@ -7,14 +7,24 @@ modules:
         - Asserts
         #- WPWebDriver
         - \Helper\Api
-        - WPLoader
+        #- WPLoader
         - REST:
            depends: WPBrowser
            url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
         - WPCLI:
-           path: /var/www/html/wp-content/plugins/parler-wordpress-php/bin
-           throw: true
     config:
+        WPDb:
+            dsn: 'mysql:host=localhost;dbname=wordpress'
+            user: wordpressuser
+            password: password
+            #dump: tests/_data/dump.sql
+            populate: false
+            cleanup: false
+            url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
+            tablePrefix: wp_
+        WPCLI:
+           path: /var/www/html/
+           throw: true
         WPLoader:
             multisite: false
             loadOnly: true
@@ -29,15 +39,6 @@ modules:
             adminEmail: "admin@wordpress.localhost"
             plugins: []
             activatePlugins: []
-        WPDb:
-            dsn: 'mysql:host=localhost;dbname=wordpress'
-            user: wordpressuser
-            password: password
-            #dump: tests/_data/dump.sql
-            populate: false
-            cleanup: false
-            url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
-            tablePrefix: wp_
         #WPWebDriver:
         WPBrowser:
             url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'

@@ -16,7 +16,7 @@ jQuery( document ).ready(function() {
 });
 
 function findElementByText(text) {
-	alert('yo');
+	//alert('yo');
     var jSpot = jQuery("b:contains(" + text + ")")
                 .filter(function() { return $(this).children().length === 0;})
                 .parent();  // because you asked the parent of that element
