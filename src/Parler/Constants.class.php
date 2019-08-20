@@ -8,23 +8,21 @@ class Constants{
     public $parlerForWordPressPublic = "https://plugin.parler.com/production/parler-for-wordpress-public.js#parlerasync";
     public $parlerReact = "https://plugin.parler.com/production/react.production.min.js";
     public $parlerDom = "https://plugin.parler.com/production/react-dom.production.min.js";
-    
-    //production:
-    //public $parlerServerUrl = "https://par.pw";
-    //public $syncInterval = 82800;
-    
-    //staging:
-    //public $parlerServerUrl = "https://staging.par.pw";
-    public $syncInterval = 30;
-    
-    
-    //public $syncApiEndpoint = "/v1/wp-plugin/sync";
-    //public $singlePostApiEndpoint = "/v1/wp-plugin/post";
-    
-    //public $parlerWPadmin = "https://home.parler.com/wp-json/parler/webhookReceiver";
+    public $syncInterval = 70000;
     public $syncApiEndpoint = "/wp-json/parler/webhookReceiver";
-    public $parlerServerUrl = "http://ec2-3-85-85-70.compute-1.amazonaws.com";
+    public $parlerServerUrl = "https://home.parler.com";
     
     
-
+    public function __construct(){
+        global $parlerIsStaging;
+        $parlerIsStaging = TRUE;
+        if ($parlerIsStaging == TRUE){
+            $this->setStaging();
+        }
+    }
+    
+    public function setStaging(){
+        $this->syncInterval = 30;
+        $this->parlerServerUrl = "http://ec2-3-85-85-70.compute-1.amazonaws.com";
+    }
 }

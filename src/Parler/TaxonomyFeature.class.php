@@ -23,6 +23,18 @@ class TaxonomyFeature{
     public function doInjectJS(){
         $URL = get_site_url() . "/wp-content/plugins/parler-wordpress-php/src/Parler/post-new.js";
          wp_enqueue_script('parler-checker', $URL, array('jquery'));
+         $IDs = $this->returnArrayOfParlerTermIDs();
+
+         $publish = $IDs['publish'];
+         $comments = $IDs['comments'];
+                  
+         $output = <<<OUTPUT
+<script>
+    var parlerPublish = $publish;
+    var parlerComments = $comments;
+</script>
+OUTPUT;
+
     }
     
     public function returnArrayOfParlerTermIDs($numbersOnly = null){
@@ -98,25 +110,6 @@ class TaxonomyFeature{
         // Restore original post data.
         wp_reset_postdata();
     }
-    
-    public function defaultClickParlerTermsOnPostNewPHPtemplate(){
-        add_action('init', array($this, 'outputDefaultClickParlerTermsOnPostNewPHPtemplate'));
-    }
-    
-    public function outputDefaultClickParlerTermsOnPostNewPHPtemplate(){
-        
-$output = <<<output
-<script>
-jQuery( document ).ready(function() {
-    alert("jQuery ready!");
-});
-</script>
-
-output;
-    echo $output;
-        
-    }
-    //the taxo selector is used to select which taxos are to be published to Parler   
     
     public function categoryColumns($out, $column_name, $category_id) {
         $category = get_term($category_id, 'category');
