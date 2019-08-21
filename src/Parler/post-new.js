@@ -7,10 +7,12 @@ jQuery( document ).ready(function() {
 	setTimeout(function(){
 	    jQuery(findElementByText("Parler").filter).hide();
 	    //alert('hid');
+
     }, 3000);
     //var parlerPublish = jQuery('#parlerPublish').val();
    // alert("yo");
-    alert(parlerPublish);
+    
+    //alert('hi');
 });
 
 function findElementByText(text) {

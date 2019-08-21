@@ -4,7 +4,7 @@ namespace Parler;
 
 class TaxonomyFeature{
 
-	public function __construct(){
+	public function modifyAdminArea(){
         global $pagenow;
         if ( $pagenow == 'post-new.php' ) {
             $DefaultCheckboxChecker = new DefaultCheckboxChecker;
@@ -18,11 +18,15 @@ class TaxonomyFeature{
 
     public function cleanupEditorHTML(){
         add_action('admin_enqueue_scripts', array($this, 'doInjectJS'));
+        add_action('admin_footer', array($this, 'doFooterInjection'));
     }
 
     public function doInjectJS(){
         $URL = get_site_url() . "/wp-content/plugins/parler-wordpress-php/src/Parler/post-new.js";
          wp_enqueue_script('parler-checker', $URL, array('jquery'));
+    }
+    
+    public function doFooterInjection(){
          $IDs = $this->returnArrayOfParlerTermIDs();
 
          $publish = $IDs['publish'];
@@ -30,10 +34,22 @@ class TaxonomyFeature{
                   
          $output = <<<OUTPUT
 <script>
-    var parlerPublish = $publish;
-    var parlerComments = $comments;
+/*global jQuery*/
+jQuery( document ).ready(function() {
+    jQuery("#in-parler-$comments").click(function(){
+        
+       if(jQuery("#in-parler-$comments").attr('checked')) { 
+        jQuery("#in-parler-$publish").attr('checked', 'checked');
+        jQuery("#in-parler-$publish").attr('disabled','disabled');
+        } else {
+            jQuery("#in-parler-$publish").removeAttr('disabled');
+}
+    });
+});
 </script>
+  <input type = "hidden" value = "$publish" name = "parlerPublish" id = "parlerPublish" />
 OUTPUT;
+        echo $output;
 
     }
     
