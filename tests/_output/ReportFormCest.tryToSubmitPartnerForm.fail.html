@@ -85,7 +85,7 @@ img.emoji {
 		<div class="row" style="margin: 18px 0;">
 			<span class="row-title">Please select the question type</span>
 			<div class="box-container">
-				<div class="col-2 hovered" id="delete">
+				<div class="col-2" id="delete">
 					<div><i class="fa fa-user-times" aria-hidden="true"></i></div>
 					<p>Delete Account</p>
 				</div>
@@ -98,7 +98,7 @@ img.emoji {
 					<div><i class="fa fa-bug" aria-hidden="true"></i></div>
 					<p>Bug Report</p>
 				</div>
-				<div class="col-2" id="partner">
+				<div class="col-2 hovered" id="partner">
 					<div><i class="fa fa-handshake" aria-hidden="true"></i></div>
 					<p>Partner Integration</p>
 				</div>
@@ -117,7 +117,7 @@ img.emoji {
 
 		<div class="form-controls-row">
 			<!-- delete form -->
-			<div class="" id="form-delete" style="display: block; overflow: hidden; height: 74.2626px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+			<div class="hidden" id="form-delete">
 				<ul class="flex-outer">
 					<li>
 						<label for="delete-user-name">Username</label>
@@ -133,7 +133,7 @@ img.emoji {
 					</li>
 					<li>
 						<label style="visibility: hidden;">Submit</label>
-						<input type="submit" class="btn btn-primary" name="parler-delete-ticket-submit-button" id="parler-ticket-submit-button" value="Submit" />
+						<input type="submit" class="btn btn-primary" name="parler-delete-ticket-submit-button" id="parler-delete-ticket-submit-button" value="Submit" />
 					</li>
 				</ul>
 			</div>
@@ -207,7 +207,7 @@ img.emoji {
 
 
 			<!-- partner form -->
-			<div class="hidden" id="form-partner">
+			<div class="" id="form-partner" style="display: block; overflow: hidden; height: 786.147px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
 				<ul class="flex-outer">
 					<li>
 						<label for="partner-company-name">Company Name</label>
@@ -226,7 +226,7 @@ img.emoji {
 						<input type="text" id="partner-first-name" name="partner-first-name" placeholder="Enter your first name here" />
 					</li>
 					<li>
-						<label for="partner-laste-name">Last Name</label>
+						<label for="partner-last-name">Last Name</label>
 						<input type="text" id="partner-last-name" name="partner-last-name" placeholder="Enter your last name here" />
 					</li>
 					<li>

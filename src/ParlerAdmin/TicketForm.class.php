@@ -5,7 +5,18 @@ namespace ParlerAdmin;
 class TicketForm
 {
     public function enableForm() {
-        if (isset($_POST['parler-ticket-submit-button'])) {
+        if (
+            isset($_POST['parler-ticket-submit-button']) or
+            isset($_POST['parler-delete-ticket-submit-button']) or
+            isset($_POST['parler-locked-ticket-submit-button']) or
+            isset($_POST['parler-bug-ticket-submit-button']) or
+            isset($_POST['parler-partner-ticket-submit-button']) or
+            isset($_POST['parler-media-ticket-submit-button']) or
+            isset($_POST['parler-public-ticket-submit-button'])
+
+            //parler-bug-ticket-submit-button
+
+        ) {
             add_action('init', array($this, "processFormSubmission"));
             add_shortcode('parler-support-form', array($this, "returnSubmittedFormHTML"));
         } else {
@@ -21,34 +32,7 @@ class TicketForm
         $output =
             <<<output
 
-<script>
 
-    jQuery( document ).ready(function() {
-            //alert('$jQueryIsReady');
-        	jQuery(".col-2").click(function(){          
-			var box = jQuery(this);
-			box.addClass("hovered");
-			box.siblings().removeClass("hovered");
-			var theForm = jQuery("#form-" + box.attr('id'));
-			theForm.slideDown("slow").removeClass("hidden");
-			theForm.siblings().slideUp("slow",function() { jQuery(this).addClass("hidden");
-			 			jQuery('#parler-form')[0].reset();
-			 });
-
-		});
-
-		/* Upload Event */
-		const uploadButton = jQuery('#browse-btn');
-		const realInput = jQuery('#screenshot');
-
-		uploadButton.click(function(e){
-			e.preventDefault();
-			realInput.click();
-		});
-        
-    });      
-
-</script>
 <script src="https://kit.fontawesome.com/48aa48d378.js"></script>
 <link rel="stylesheet" href="$siteUrl/wp-content/plugins/parler-wordpress-php/css/reset.css">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:700|Roboto:500&display=swap" rel="stylesheet">
@@ -101,15 +85,15 @@ class TicketForm
 					</li>
 					<li>
 						<label for="delete-email">Account Email</label>
-						<input type="delete-email" id="delete-email" name="delete-email" placeholder="Enter your email here">
+						<input type="email" id="delete-email" name="delete-email" placeholder="Enter your email here">
 					</li>
 					<li>
 						<label for="delete-message">Message</label>
-						<textarea rows="6" id="message" placeholder="Enter your message here" name = "delete-message"></textarea>
+						<textarea rows="6" id="delete-message" placeholder="Enter your message here" name = "delete-message"></textarea>
 					</li>
 					<li>
 						<label style="visibility: hidden;">Submit</label>
-												<input type="submit" class="btn btn-primary" name = "parler-ticket-submit-button" id = "parler-ticket-submit-button" value = "Submit" />
+						<input type="submit" class="btn btn-primary" name = "parler-delete-ticket-submit-button" id = "parler-delete-ticket-submit-button" value = "Submit" />
 					</li>
 				</ul>
 			</div>
@@ -133,7 +117,7 @@ class TicketForm
 					</li>
 					<li>
 						<label style="visibility: hidden;">Submit</label>
-												<input type="submit" class="btn btn-primary" name = "parler-ticket-submit-button" id = "parler-ticket-submit-button" value = "Submit" />
+						<input type="submit" class="btn btn-primary" name = "parler-locked-ticket-submit-button" id = "parler-locked-ticket-submit-button" value = "Submit" />
 					</li>
 				</ul>
 			</div>
@@ -175,7 +159,7 @@ class TicketForm
 					</li>
 					<li>
 						<label style="visibility: hidden;">Submit</label>
-												<input type="submit" class="btn btn-primary" name = "parler-ticket-submit-button" id = "parler-ticket-submit-button" value = "Submit" />
+						<input type="submit" class="btn btn-primary" name = "parler-bug-ticket-submit-button" id = "parler-bug-ticket-submit-button" value = "Submit" />
 					</li>
 				</ul>
 			</div>
@@ -202,7 +186,7 @@ class TicketForm
 						<input type="text" id="partner-first-name" name="partner-first-name" placeholder="Enter your first name here">
 					</li>
 					<li>
-						<label for="partner-laste-name">Last Name</label>
+						<label for="partner-last-name">Last Name</label>
 						<input type="text" id="partner-last-name" name="partner-last-name" placeholder="Enter your last name here">
 					</li>
 					<li>
@@ -228,7 +212,7 @@ class TicketForm
 					</li>
 					<li>
 						<label style="visibility: hidden;">Submit</label>
-												<input type="submit" class="btn btn-primary" name = "parler-ticket-submit-button" id = "parler-ticket-submit-button" value = "Submit" />
+						<input type="submit" class="btn btn-primary" name = "parler-partner-ticket-submit-button" id = "parler-partner-ticket-submit-button" value = "Submit" />
 					</li>
 				</ul>
 			</div>
@@ -250,7 +234,7 @@ class TicketForm
 						<label for="media-role">Your Role</label>
 						<input type="text" id="media-role" name="media-role" placeholder="Enter your role here">
 					</li>
-\					<li>
+					<li>
 						<label for="media-phone-number">Phone number</label>
 						<input type="text" id="media-phone-number" name="media-phone-number" placeholder="Enter your Phone number here">
 					</li>
@@ -297,7 +281,7 @@ class TicketForm
 					</li>
 					<li>
 						<label style="visibility: hidden;">Submit</label>
-												<input type="submit" class="btn btn-primary" name = "parler-ticket-submit-button" id = "parler-ticket-submit-button" value = "Submit" />
+						<input type="submit" class="btn btn-primary" name = "parler-media-ticket-submit-button" id = "parler-media-ticket-submit-button" value = "Submit" />
 					</li>
 				</ul>
 			</div>
@@ -343,7 +327,7 @@ class TicketForm
 					</li>
 					<li>
 						<label style="visibility: hidden;">Submit</label>
-						<input type="submit" class="btn btn-primary" name = "parler-ticket-submit-button" id = "parler-ticket-submit-button" value = "Submit" />
+						<input type="submit" class="btn btn-primary" name = "parler-public-ticket-submit-button" id = "parler-public-ticket-submit-button" value = "Submit" />
 					</li>
 				</ul>
 			</div>
@@ -398,12 +382,23 @@ output;
 
     }
 
-	public function compileContent(){
-		$content = "Contact Captain America is there is a problem.";
+	public function compileContent($carraigeReturn){
+
+        if( isset($_POST['parler-delete-ticket-submit-button']) or
+            isset($_POST['parler-locked-ticket-submit-button']) )
+        {
+                unset($_POST['bug-device']);
+                unset($_POST['media-type-outlet']);
+                unset($_POST['verification-type-account']);
+                unset($_POST['media-role']);
+                unset($_POST['verification-type-account']);
+        }
+
+        $content = "";
     	foreach ($_POST as $key => $value) {
     		$x = var_Export($value, true);
     		if ($value != ""){
-    			$content = $content .  "Field ".htmlspecialchars($key)." is \r\n".htmlspecialchars($value). "\r\n\r\n <br />";
+    			$content = $content .  "Field ".htmlspecialchars($key)." is ".htmlspecialchars($value). $carraigeReturn;
     		}
 		}
 		return $content;
@@ -411,14 +406,14 @@ output;
 	
     public function processFormSubmission()
 
-    {   
-  
-    	$content = $this->compileContent();
+    {
+
+        $content = $this->compileContent("<br />");
 		
     	$TicketEmailer = new TicketEmailer;
 		$subject = $TicketEmailer->sendCustomEmail($content);
-		
-    	
+
+        $content = $this->compileContent("\r\n");
     	$my_post = array(
 			'post_title'    => $subject,
 			'post_content'  => $content,
