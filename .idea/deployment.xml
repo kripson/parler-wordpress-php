@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="Parler Remote Server" compareModeInSync="TEXT" showEqualInSync="true" showDifferentInSync="false" showNewOnSourceInSync="false" showNewOnTargetInSync="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Parler Dev">
     <serverData>
-      <paths name="Parler Remote Server">
+      <paths name="Parler Dev">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="ec2-54-211-251-233.compute-1.amazonaws.com/wp-content/plugins/parler-wordpress-php" />
+            <mapping deploy="/var/www/html/wp-content/plugins/parler-wordpress-php" local="$PROJECT_DIR$" web="/wp-content/plugins/parler-wordpress-php" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

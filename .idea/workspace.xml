@@ -1,7 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dacf5ca9-19d6-4f89-9268-5a318f96d59a" name="Default Changelist" comment="" />
+    <list default="true" id="dacf5ca9-19d6-4f89-9268-5a318f96d59a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/API_Route_wp.json_parler_is.parlerCept.fail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/AdminWebhookCept.fail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/BrowserIsWorkingCept.fail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/BrowserIsWorkingCept.fail.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/CommentsFormShouldAppearCept.fail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/CommentsFormShouldAppearCept.fail.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/FetchByEmailCept.fail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/RemoveExtraneousStuffCept.fail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/RemoveExtraneousStuffCept.fail.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/TitleShouldBeCenteredCept.fail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/TitleShouldBeCenteredCept.fail.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/_output/report.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/acceptance/RemoveExtraneousStuffCept.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/acceptance/ReportFormCest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/acceptance/TitleShouldBeCenteredCept.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/api/AdminWebhookCept.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/api/CommentsFormShouldAppearCept.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Cast.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Mixin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/.github/FUNDING.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/.php_cs.dist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/tests/data/vendor/vendor-file.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/wp-cli/media-command/features/media-fix-orientation.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ParlerC9.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeception.yml" beforeDir="false" afterPath="$PROJECT_DIR$/codeception.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parler-for-wordpress.php" beforeDir="false" afterPath="$PROJECT_DIR$/parler-for-wordpress.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parler/Constants.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parler/Constants.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parler/TaxonomyFeature.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parler/TaxonomyFeature.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parler/WebhookFeature.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parler/WebhookFeature.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parler/post-new.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parler/post-new.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ParlerAdmin/TicketEmailer.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParlerAdmin/TicketEmailer.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ParlerAdmin/TicketForm.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParlerAdmin/TicketForm.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/_support/ApiTester.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/_support/ApiTester.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance.suite.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/acceptance.suite.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/acceptance/BrowserIsWorkingCept.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/acceptance/BrowserIsWorkingCept.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/api.suite.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/api.suite.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/api/API_Route_wp-json_parler_is-parlerCept.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/api/API_Route_wp-json_parler_is-parlerCept.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit.suite.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit.suite.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/FirstTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/FirstTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_real.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_real.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/illuminate/support/Facades/Password.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/illuminate/support/Facades/Password.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonInterval.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonInterval.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonPeriod.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonPeriod.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonTimeZone.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/CarbonTimeZone.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/fi.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/fi.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/pl.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/pl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/tr.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/tr.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/zh_HK.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/zh_HK.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/zh_TW.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Lang/zh_TW.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Converter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Converter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Date.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Date.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Difference.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Difference.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Localization.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Localization.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Macro.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Macro.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Modifiers.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Modifiers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Mutability.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Mutability.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Rounding.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Rounding.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Serialization.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Serialization.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Units.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/nesbot/carbon/src/Carbon/Traits/Units.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/ocramius/package-versions/src/PackageVersions/Versions.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/ocramius/package-versions/src/PackageVersions/Versions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpunit/phpunit/ChangeLog-8.3.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpunit/phpunit/ChangeLog-8.3.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/Constraint/ExceptionMessage.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/Constraint/ExceptionMessage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/TestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/TestCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Runner/Version.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Runner/Version.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Util/PHP/Template/TestCaseClass.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Util/PHP/Template/TestCaseClass.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Util/PHP/Template/TestCaseMethod.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpunit/phpunit/src/Util/PHP/Template/TestCaseMethod.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/src/Exporter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/src/Exporter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/sebastian/exporter/tests/ExporterTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/sebastian/exporter/tests/ExporterTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/features/makepot.feature" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/features/makepot.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/src/IterableCodeExtractor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/src/IterableCodeExtractor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/src/JsFunctionsScanner.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/src/JsFunctionsScanner.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/src/MakePotCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/src/MakePotCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/tests/IterableCodeExtractorTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/i18n-command/tests/IterableCodeExtractorTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/media-command/features/media-regenerate.feature" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/media-command/features/media-regenerate.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/media-command/src/Media_Command.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/media-command/src/Media_Command.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/features/search-replace-export.feature" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/features/search-replace-export.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/features/search-replace.feature" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/features/search-replace.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/src/Search_Replace_Command.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/search-replace-command/src/Search_Replace_Command.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/server-command/src/Server_Command.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/server-command/src/Server_Command.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli-bundle/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli-bundle/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli-bundle/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli-bundle/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli-bundle/utils/wp-cli-updatedeb.sh" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli-bundle/utils/wp-cli-updatedeb.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/.github/ISSUE_TEMPLATE/4-REGULAR_RELEASE_CHECKLIST.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/.github/ISSUE_TEMPLATE/4-REGULAR_RELEASE_CHECKLIST.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/VERSION" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/VERSION" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/features/bootstrap.feature" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/features/bootstrap.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/features/flags.feature" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/features/flags.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/features/help.feature" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/features/help.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Bootstrap/RegisterDeferredCommands.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Bootstrap/RegisterDeferredCommands.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Extractor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Extractor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Process.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Process.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/class-wp-cli.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/class-wp-cli.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/php/utils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/tests/test-extractor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/tests/test-extractor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/tests/test-utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-cli/tests/test-utils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-config-transformer/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-config-transformer/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/wp-cli/wp-config-transformer/src/WPConfigTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/wp-cli/wp-config-transformer/src/WPConfigTransformer.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +354,9 @@
       <workItem from="1565370933841" duration="29284000" />
       <workItem from="1565551263686" duration="571000" />
       <workItem from="1565552187220" duration="1517000" />
-      <workItem from="1565569467322" duration="48783000" />
+      <workItem from="1565569467322" duration="52998000" />
+      <workItem from="1566341470785" duration="2936000" />
+      <workItem from="1566490811725" duration="427000" />
     </task>
     <servers />
   </component>

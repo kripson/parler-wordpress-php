@@ -1,4 +1,4 @@
- actor: UnitTester
+actor: UnitTester
 modules:
     enabled:
         - WPLoader
@@ -6,16 +6,15 @@ modules:
         - Asserts
     config:
         WPLoader:
-            # wpRootFolder: //Applications/MAMP/htdocs
-            wpRootFolder: /var/www/html/
+            wpRootFolder: /var/www/html
             dbName: wordpress_unit_test
             dbHost: localhost
             dbUser: wordpressuser
             dbPassword: password
             tablePrefix: wp_
-            domain: http://ec2-54-211-251-233.compute-1.amazonaws.com
-            adminEmail: jiminac@aol.com
+            domain: locahost
+            adminEmail: admin@localhost
             title: WP Tests
-            plugins: [parler-wordpress-php/parler-for-wordpress.php]
-            activatePlugins: [parler-wordpress-php/parler-for-wordpress.php]
+            plugins: []
+            activatePlugins: []
             bootstrapActions: []

@@ -250,11 +250,7 @@ class TicketForm
 						<label for="media-role">Your Role</label>
 						<input type="text" id="media-role" name="media-role" placeholder="Enter your role here">
 					</li>
-					<li>
-						<label for="media-fist-name">First Name</label>
-						<input type="text" id="media-first-name" name="media-first-name" placeholder="Enter your first name here">
-					</li>
-					<li>
+\					<li>
 						<label for="media-phone-number">Phone number</label>
 						<input type="text" id="media-phone-number" name="media-phone-number" placeholder="Enter your Phone number here">
 					</li>
@@ -402,20 +398,29 @@ output;
 
     }
 
+	public function compileContent(){
+		$content = "Contact Captain America is there is a problem.";
+    	foreach ($_POST as $key => $value) {
+    		$x = var_Export($value, true);
+    		if ($value != ""){
+    			$content = $content .  "Field ".htmlspecialchars($key)." is \r\n".htmlspecialchars($value). "\r\n\r\n <br />";
+    		}
+		}
+		return $content;
+	}
+	
     public function processFormSubmission()
 
     {   
   
-    	
-    	$content = "This form hasn't been tested well yet. Contact Jim is there is a problem.";
-    	foreach ($_POST as $key => $value) {
-    		$x = var_Export($value, true);
-    		$content = $content .  "Field ".htmlspecialchars($key)." is ".htmlspecialchars($value)."<br>";
-		}
-    	
+    	$content = $this->compileContent();
+		
+    	$TicketEmailer = new TicketEmailer;
+		$subject = $TicketEmailer->sendCustomEmail($content);
+		
     	
     	$my_post = array(
-			'post_title'    => "Ticket",
+			'post_title'    => $subject,
 			'post_content'  => $content,
 			'post_status'   => 'publish',
 			'post_author'   => 1,
@@ -423,8 +428,8 @@ output;
 
 		);
 		wp_insert_post( $my_post );
-		$TicketEmailer = new TicketEmailer;
-		$TicketEmailer->sendCustomEmail($content);
+
     }
 
 }
+//boom

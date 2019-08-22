@@ -11,7 +11,7 @@ class TicketEmailer{
 
         if($_POST['delete-user-name'] != "") {
 	        $to = "jkarlinski@parler.com";
-            $to = "account.deletion@parler.com";
+            //$to = "account.deletion@parler.com";
             $subject = "ACCOUNT DELETION";
         }
         if($_POST['locked-user-name'] != ""){
@@ -43,5 +43,6 @@ class TicketEmailer{
         $headers = array('Content-Type: text/html; charset=UTF-8');
 
         wp_mail( $to, $subject, $body, $headers );
+        return $subject;
     }
 }

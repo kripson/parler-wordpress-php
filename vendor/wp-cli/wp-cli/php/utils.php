@@ -576,8 +576,10 @@ function parse_url( $url, $component = - 1, $auto_add_scheme = true ) {
 		$url_parts = \parse_url( $url, $component );
 	}
 
-	if ( $auto_add_scheme && ! isset( $url_parts['scheme'] ) ) {
-		$url_parts = namespace\parse_url( 'http://' . $url, $component, false );
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url -- Own version based on WP one.
+	if ( $auto_add_scheme && ! parse_url( $url, PHP_URL_SCHEME, false ) ) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url -- Own version based on WP one.
+		$url_parts = parse_url( 'http://' . $url, $component, false );
 	}
 
 	return $url_parts;
@@ -915,11 +917,8 @@ function parse_ssh_url( $url, $component = -1 ) {
 	// Find the hostname from `vagrant ssh-config` automatically.
 	if ( preg_match( '/^vagrant:?/', $url ) ) {
 		if ( 'vagrant' === $bits['host'] && empty( $bits['scheme'] ) ) {
-			$ssh_config = shell_exec( 'vagrant ssh-config 2>/dev/null' );
-			if ( preg_match( '/Host\s(.+)/', $ssh_config, $matches ) ) {
-				$bits['scheme'] = 'vagrant';
-				$bits['host']   = $matches[1];
-			}
+			$bits['scheme'] = 'vagrant';
+			$bits['host']   = '';
 		}
 	}
 

@@ -20,7 +20,8 @@ class ApiTester extends \Codeception\Actor
 {
     use _generated\ApiTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    public function requireAutoloaders(){
+        require_once('/var/www/html/wp-content/plugins/parler-wordpress-php/src/Parler/autoloader.php');
+        require_once('/var/www/html/wp-content/plugins/parler-wordpress-php/src/ParlerAdmin/autoloader.php');
+    }
 }

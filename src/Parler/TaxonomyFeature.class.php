@@ -4,21 +4,55 @@ namespace Parler;
 
 class TaxonomyFeature{
 
-	public function __construct(){
+	public function modifyAdminArea(){
         global $pagenow;
         if ( $pagenow == 'post-new.php' ) {
             $DefaultCheckboxChecker = new DefaultCheckboxChecker;
             add_filter('wp_terms_checklist_args', array($DefaultCheckboxChecker, 'classicEditorDefaultCheckboxes'), 10, 2);
             $DefaultCheckboxChecker->gutenbergEditorDefaultCheckboxes();
-
-            //$DefaultCheckboxChecker->handleClassicEditor();
-            //add_action('admin_init', array($this, "onPagePostNew"));
-
-
         }
-
+        if(($pagenow == "post.php") or ( $pagenow == 'post-new.php')){
+            $this->cleanupEditorHTML();
+        }
     }
 
+    public function cleanupEditorHTML(){
+        add_action('admin_enqueue_scripts', array($this, 'doInjectJS'));
+        add_action('admin_footer', array($this, 'doFooterInjection'));
+    }
+
+    public function doInjectJS(){
+        $URL = get_site_url() . "/wp-content/plugins/parler-wordpress-php/src/Parler/post-new.js";
+         wp_enqueue_script('parler-checker', $URL, array('jquery'));
+    }
+    
+    public function doFooterInjection(){
+         $IDs = $this->returnArrayOfParlerTermIDs();
+
+         $publish = $IDs['publish'];
+         $comments = $IDs['comments'];
+                  
+         $output = <<<OUTPUT
+<script>
+/*global jQuery*/
+jQuery( document ).ready(function() {
+    jQuery("#in-parler-$comments").click(function(){
+        
+       if(jQuery("#in-parler-$comments").attr('checked')) { 
+        jQuery("#in-parler-$publish").attr('checked', 'checked');
+        jQuery("#in-parler-$publish").attr('disabled','disabled');
+        } else {
+            jQuery("#in-parler-$publish").removeAttr('disabled');
+}
+    });
+});
+</script>
+  <input type = "hidden" value = "$publish" name = "parlerPublish" id = "parlerPublish" />
+OUTPUT;
+        echo $output;
+
+    }
+    
     public function returnArrayOfParlerTermIDs($numbersOnly = null){
         $term1 =  term_exists( 'publish', 'parler');
         $term1 = intval($term1['term_id']);
@@ -92,25 +126,6 @@ class TaxonomyFeature{
         // Restore original post data.
         wp_reset_postdata();
     }
-    
-    public function defaultClickParlerTermsOnPostNewPHPtemplate(){
-        add_action('init', array($this, 'outputDefaultClickParlerTermsOnPostNewPHPtemplate'));
-    }
-    
-    public function outputDefaultClickParlerTermsOnPostNewPHPtemplate(){
-        
-$output = <<<output
-<script>
-jQuery( document ).ready(function() {
-    alert("jQuery ready!");
-});
-</script>
-
-output;
-    echo $output;
-        
-    }
-    //the taxo selector is used to select which taxos are to be published to Parler   
     
     public function categoryColumns($out, $column_name, $category_id) {
         $category = get_term($category_id, 'category');

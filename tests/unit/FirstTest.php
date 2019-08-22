@@ -3,7 +3,7 @@
 class SyncFeatureTest extends \Codeception\TestCase\WPTestCase{
 
     public static function setUpBeforeClass() : void{
-        //require_once('/var/www/html/wp-content/plugins/parler-wordpress-php/src/Parler/autoloader.php');
+        require_once('/var/www/html/wp-content/plugins/parler-wordpress-php/src/Parler/autoloader.php');
 }
     /**
      *

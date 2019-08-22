@@ -22,6 +22,7 @@ function activate_parler_plugin() {
 
 //register_activation_hook( __FILE__, 'activate_parler_plugin' );
 $TaxonomyFeature = new \Parler\TaxonomyFeature;
+$TaxonomyFeature->modifyAdminArea();
 add_action('init', array(new \Parler\TaxonomyFeature, "createParlerTerms"));
 
 add_action('wp', array (new \Parler\CommentsFeature, 'injectParlerIntoCommentTemplate'));
