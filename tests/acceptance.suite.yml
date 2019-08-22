@@ -4,11 +4,7 @@ modules:
         - \Helper\Acceptance
         - WPDb
         - WPWebDriver
-        - WPCLI
     config:
-        WPCLI:
-           path: /var/www/html/
-           throw: true
         WPDb:
             dsn: 'mysql:host=localhost;dbname=wordpress'
             user: wordpressuser
@@ -20,7 +16,7 @@ modules:
             tablePrefix: wp_
         WPWebDriver:
             url: 'http://ec2-3-85-85-70.compute-1.amazonaws.com'
-            window_size: 800,480
+            #window_size: maximize
             adminUsername: 'admin'
             adminPassword: 'password'
             adminPath: /wp-admin

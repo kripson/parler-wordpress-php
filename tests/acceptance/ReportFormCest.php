@@ -6,6 +6,6 @@ class ReportFormCest
     public function tryToTest(\AcceptanceTester $I)
     {
         $I->amOnPage("/report");
-        $I-see("Please select the question type");
+        $I->see("Please select the question type");
     }
-
+}

@@ -11,7 +11,7 @@ $I->wantTo('See that extraneous elements are removed from the Parler taxo area')
 
 //When:
 $I->loginAsAdmin();
-$I->cli('plugin activate classic-editor');
+//$I->cli('plugin activate classic-editor');
 $I->amOnPage("/wp-admin/post-new.php");
 $I->see("Add New Post");
 

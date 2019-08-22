@@ -98,8 +98,10 @@ class ErrorHandler implements EventSubscriberInterface
         if (!$this->suiteFinished && (
             $error === null || !in_array($error['type'], [E_ERROR, E_COMPILE_ERROR, E_CORE_ERROR])
         )) {
-            throw new \RuntimeException('Command Did Not Finish Properly');
-        } elseif (!is_array($error)) {
+            echo "\n\n\nCOMMAND DID NOT FINISH PROPERLY.\n";
+            exit(255);
+        }
+        if (!is_array($error)) {
             return;
         }
         if (error_reporting() === 0) {
@@ -142,11 +144,11 @@ class ErrorHandler implements EventSubscriberInterface
         if (!($this->errorLevel & $type)) {
             return;
         }
-        if ($this->deprecationsInstalled && $this->oldHandler) {
-            call_user_func($this->oldHandler, $type, $message, $file, $line, $context);
+        if (strpos($message, 'Symfony 4.3')) { // skip Symfony 4.3 deprecations
             return;
         }
-        if (strpos($message, 'Symfony 4.3')) { // skip Symfony 4.3 deprecations
+        if ($this->deprecationsInstalled && $this->oldHandler) {
+            call_user_func($this->oldHandler, $type, $message, $file, $line, $context);
             return;
         }
         Notification::deprecate("$message", "$file:$line");

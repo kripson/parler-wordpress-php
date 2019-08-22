@@ -3,7 +3,7 @@
 use function GuzzleHttp\json_decode;
 
 $I = new ApiTester($scenario);
-
+$scenario->skip("Work in progress");
 $remoteSitePostIds = array (
     589,
     571,

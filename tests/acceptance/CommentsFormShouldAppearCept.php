@@ -1,5 +1,7 @@
 <?php
 $I = new AcceptanceTester($scenario);
+ $scenario->skip("Work in progress");
+
 $I->wantTo('Confirm Parler comment form appears on client site');
 
 
